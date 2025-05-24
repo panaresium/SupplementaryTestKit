@@ -1,4 +1,5 @@
 import json
+
 import os
 import uuid
 from http.server import HTTPServer, BaseHTTPRequestHandler
@@ -20,11 +21,13 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 init_db()
 
+
 class RequestHandler(BaseHTTPRequestHandler):
     def _set_json(self, code=200):
         self.send_response(code)
         self.send_header('Content-Type', 'application/json')
         self.end_headers()
+
 
     def _serve_file(self, path, content_type='application/octet-stream'):
         if not os.path.isfile(path):
@@ -38,6 +41,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(f.read())
 
     def do_POST(self):
+
         length = int(self.headers.get('Content-Length', 0))
         body = self.rfile.read(length)
         try:
@@ -84,6 +88,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             else:
                 self._set_json(400)
                 self.wfile.write(b'{"error":"unknown user"}')
+
         elif self.path == '/upload':
             form = FieldStorage(fp=self.rfile, headers=self.headers,
                                environ={'REQUEST_METHOD': 'POST'})
@@ -100,6 +105,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 f.write(fileitem.file.read())
             self._set_json(201)
             self.wfile.write(json.dumps({'path': f'/uploads/{fname}'}).encode())
+
         else:
             self._set_json(404)
             self.wfile.write(b'{"error":"not found"}')
@@ -111,6 +117,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             data = get_questionnaires(username)
             self._set_json(200)
             self.wfile.write(json.dumps({'data': data}).encode('utf-8'))
+
         elif parsed.path.startswith('/uploads/'):
             fpath = os.path.join(UPLOAD_DIR, os.path.basename(parsed.path))
             self._serve_file(fpath, 'application/octet-stream')
@@ -125,6 +132,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         else:
             self._set_json(404)
             self.wfile.write(b'{"error":"not found"}')
+
 
 if __name__ == '__main__':
     addr = ('', 8000)
