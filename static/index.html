@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Supplementary Test Kit</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; }
+section { margin-bottom: 1.5em; }
+label { display: block; margin-top: 0.5em; }
+</style>
+</head>
+<body>
+<h1>Supplementary Test Kit</h1>
+<section id="register">
+<h2>Register</h2>
+<input id="reg-user" placeholder="username">
+<input id="reg-pass" placeholder="password" type="password">
+<button onclick="register()">Register</button>
+<p id="reg-msg"></p>
+</section>
+<section id="login">
+<h2>Login</h2>
+<input id="log-user" placeholder="username">
+<input id="log-pass" placeholder="password" type="password">
+<button onclick="login()">Login</button>
+<p id="log-msg"></p>
+</section>
+<section id="question">
+<h2>Questionnaire</h2>
+<textarea id="answers" rows="6" cols="60" placeholder='{"q1": "answer"}'></textarea>
+<button onclick="submitQ()">Submit</button>
+<p id="q-msg"></p>
+</section>
+<section id="upload">
+<h2>Upload Image</h2>
+<input id="img-user" placeholder="username"><br>
+<input type="file" id="img-file"><br>
+<button onclick="uploadImg()">Upload</button>
+<p id="up-msg"></p>
+<img id="prev" style="max-width:300px;display:none;">
+</section>
+<script>
+function register() {
+  fetch('/register', {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({username:document.getElementById('reg-user').value,
+                         password:document.getElementById('reg-pass').value})})
+  .then(r=>r.json()).then(d=>{
+    document.getElementById('reg-msg').textContent = JSON.stringify(d);
+  });
+}
+function login() {
+  fetch('/login', {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({username:document.getElementById('log-user').value,
+                         password:document.getElementById('log-pass').value})})
+  .then(r=>r.json()).then(d=>{
+    document.getElementById('log-msg').textContent = JSON.stringify(d);
+  });
+}
+function submitQ() {
+  fetch('/questionnaire', {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({username:document.getElementById('log-user').value,
+                         answers: JSON.parse(document.getElementById('answers').value)})})
+  .then(r=>r.json()).then(d=>{
+    document.getElementById('q-msg').textContent = JSON.stringify(d);
+  });
+}
+function uploadImg() {
+  const file = document.getElementById('img-file').files[0];
+  if(!file) return;
+  const form = new FormData();
+  form.append('username', document.getElementById('img-user').value);
+  form.append('image', file);
+  fetch('/upload', {method:'POST', body:form})
+    .then(r=>r.json()).then(d=>{
+      document.getElementById('up-msg').textContent = JSON.stringify(d);
+      if(d.path){
+        const img = document.getElementById('prev');
+        img.src = d.path; img.style.display='block';
+      }
+    });
+}
+</script>
+</body>
+</html>
