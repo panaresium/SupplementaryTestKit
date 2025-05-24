@@ -1,4 +1,5 @@
 import json
+
 import os
 import uuid
 import cgi
@@ -16,6 +17,7 @@ init_db()
 os.makedirs(STATIC_DIR, exist_ok=True)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+
 class RequestHandler(BaseHTTPRequestHandler):
     def _set_json(self, code=200):
         self.send_response(code)
@@ -23,6 +25,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_POST(self):
+
         if self.path == '/upload':
             ctype, pdict = cgi.parse_header(self.headers.get('Content-Type', ''))
             if ctype == 'multipart/form-data':
@@ -102,6 +105,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             data = get_questionnaires(username)
             self._set_json(200)
             self.wfile.write(json.dumps({'data': data}).encode('utf-8'))
+
             return
 
         if parsed.path.startswith('/uploads/'):
@@ -139,6 +143,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 
         self._set_json(404)
         self.wfile.write(b'{"error":"not found"}')
+
 
 if __name__ == '__main__':
     addr = ('', 8000)

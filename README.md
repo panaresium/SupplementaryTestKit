@@ -14,7 +14,9 @@ The environment should have Python 3 installed. No external packages are require
 python3 backend/server.py
 ```
 
+
 The server listens on port `8000` by default. Open `http://localhost:8000/` in a browser to use the simple web interface.
+
 
 ### Endpoints
 
@@ -22,7 +24,9 @@ The server listens on port `8000` by default. Open `http://localhost:8000/` in a
 - `POST /login` – Validate credentials. Body: `{"username": "name", "password": "secret"}`
 - `POST /questionnaire` – Store questionnaire answers. Body:
   `{"username": "name", "answers": { ... }}`
+
 - `POST /upload` – Upload an image file using `multipart/form-data`. Returns the path to the stored file.
+
 - `GET /questionnaire/<username>` – Retrieve all questionnaire entries for the user.
 
 Questionnaire answers are stored as raw JSON strings in the SQLite database.
