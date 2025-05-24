@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Supplementary Test Kit</title>
+</head>
+<body>
+<h1>Supplementary Test Kit</h1>
+<div id="auth">
+  <h2>Register</h2>
+  <input id="reg-username" placeholder="Username">
+  <input id="reg-password" type="password" placeholder="Password">
+  <button onclick="register()">Register</button>
+  <h2>Login</h2>
+  <input id="login-username" placeholder="Username">
+  <input id="login-password" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
+
+<div id="questionnaire" style="display:none;">
+  <h2>Questionnaire</h2>
+  <label>งานของคุณต้องใช้แรงกายมากน้อยแค่ไหน?</label>
+  <select id="q_work">
+    <option value="hard">ใช้แรงมาก</option>
+    <option value="medium">ปานกลาง</option>
+    <option value="desk">นั่งหน้าคอม</option>
+    <option value="outdoor">ทำงานกลางแจ้ง</option>
+  </select><br>
+  <label>คุณทำงานกี่ชั่วโมงต่อวันโดยเฉลี่ย?</label>
+  <input id="q_hours" type="number"><br>
+
+  <label>คุณมีอาการใดบ้าง?</label>
+  <input type="checkbox" id="sym_tired" value="เหนื่อยง่าย">เหนื่อยง่าย
+  <input type="checkbox" id="sym_pain" value="ปวดเมื่อย">ปวดเมื่อย<br>
+
+  <label>อัปโหลดภาพจากชุดตรวจ</label>
+  <input type="file" id="image">
+  <button onclick="uploadImage()">Upload</button>
+  <div id="img_status"></div>
+
+  <button onclick="submitQuestionnaire()">Submit</button>
+</div>
+
+<div id="status"></div>
+
+<script>
+let currentUser = null;
+let imagePath = null;
+
+function register() {
+  const username = document.getElementById('reg-username').value;
+  const password = document.getElementById('reg-password').value;
+  fetch('/register', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({username, password})
+  }).then(r => r.json()).then(d => {
+    document.getElementById('status').innerText = JSON.stringify(d);
+  });
+}
+
+function login() {
+  const username = document.getElementById('login-username').value;
+  const password = document.getElementById('login-password').value;
+  fetch('/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({username, password})
+  }).then(r => r.json()).then(d => {
+    document.getElementById('status').innerText = JSON.stringify(d);
+    if (d.status === 'ok') {
+      currentUser = username;
+      document.getElementById('auth').style.display = 'none';
+      document.getElementById('questionnaire').style.display = 'block';
+    }
+  });
+}
+
+function uploadImage() {
+  const file = document.getElementById('image').files[0];
+  if (!file) return;
+  const fd = new FormData();
+  fd.append('file', file);
+  fetch('/upload', {method: 'POST', body: fd})
+    .then(r => r.json()).then(d => {
+      imagePath = d.path;
+      document.getElementById('img_status').innerText = 'Uploaded';
+    });
+}
+
+function submitQuestionnaire() {
+  const answers = {
+    work: document.getElementById('q_work').value,
+    hours: document.getElementById('q_hours').value,
+    symptoms: []
+  };
+  if (document.getElementById('sym_tired').checked) answers.symptoms.push('เหนื่อยง่าย');
+  if (document.getElementById('sym_pain').checked) answers.symptoms.push('ปวดเมื่อย');
+  if (imagePath) answers.image = imagePath;
+  fetch('/questionnaire', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({username: currentUser, answers})
+  }).then(r => r.json()).then(d => {
+    document.getElementById('status').innerText = JSON.stringify(d);
+  });
+}
+</script>
+</body>
+</html>
