@@ -2,85 +2,104 @@
 
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Supplementary Test Kit</title>
-<style>
-body { font-family: Arial, sans-serif; margin: 20px; }
-section { margin-bottom: 1.5em; }
-label { display: block; margin-top: 0.5em; }
-</style>
+    <meta charset="UTF-8">
+    <title>Supplementary Test Kit</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-<h1>Supplementary Test Kit</h1>
-<section id="register">
-<h2>Register</h2>
-<input id="reg-user" placeholder="username">
-<input id="reg-pass" placeholder="password" type="password">
-<button onclick="register()">Register</button>
-<p id="reg-msg"></p>
-</section>
-<section id="login">
-<h2>Login</h2>
-<input id="log-user" placeholder="username">
-<input id="log-pass" placeholder="password" type="password">
-<button onclick="login()">Login</button>
-<p id="log-msg"></p>
-</section>
-<section id="question">
-<h2>Questionnaire</h2>
-<textarea id="answers" rows="6" cols="60" placeholder='{"q1": "answer"}'></textarea>
-<button onclick="submitQ()">Submit</button>
-<p id="q-msg"></p>
-</section>
-<section id="upload">
-<h2>Upload Image</h2>
-<input id="img-user" placeholder="username"><br>
-<input type="file" id="img-file"><br>
-<button onclick="uploadImg()">Upload</button>
-<p id="up-msg"></p>
-<img id="prev" style="max-width:300px;display:none;">
-</section>
-<script>
-function register() {
-  fetch('/register', {method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({username:document.getElementById('reg-user').value,
-                         password:document.getElementById('reg-pass').value})})
-  .then(r=>r.json()).then(d=>{
-    document.getElementById('reg-msg').textContent = JSON.stringify(d);
-  });
-}
-function login() {
-  fetch('/login', {method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({username:document.getElementById('log-user').value,
-                         password:document.getElementById('log-pass').value})})
-  .then(r=>r.json()).then(d=>{
-    document.getElementById('log-msg').textContent = JSON.stringify(d);
-  });
-}
-function submitQ() {
-  fetch('/questionnaire', {method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({username:document.getElementById('log-user').value,
-                         answers: JSON.parse(document.getElementById('answers').value)})})
-  .then(r=>r.json()).then(d=>{
-    document.getElementById('q-msg').textContent = JSON.stringify(d);
-  });
-}
-function uploadImg() {
-  const file = document.getElementById('img-file').files[0];
-  if(!file) return;
-  const form = new FormData();
-  form.append('username', document.getElementById('img-user').value);
-  form.append('image', file);
-  fetch('/upload', {method:'POST', body:form})
-    .then(r=>r.json()).then(d=>{
-      document.getElementById('up-msg').textContent = JSON.stringify(d);
-      if(d.path){
-        const img = document.getElementById('prev');
-        img.src = d.path; img.style.display='block';
-      }
-    });
-}
+    <h1>Supplementary Test Kit</h1>
+    <section id="register">
+        <h2>Register</h2>
+        <form id="registerForm">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Register</button>
+        </form>
+        <pre id="registerResult"></pre>
+    </section>
+    <section id="login">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <pre id="loginResult"></pre>
+    </section>
+    <section id="questionnaire" style="display:none;">
+        <h2>Questionnaire</h2>
+        <form id="questionForm">
+            <label>Work intensity:</label>
+            <select name="work">
+                <option>Heavy labour</option>
+                <option>Moderate</option>
+                <option>Desk job</option>
+                <option>Outdoor</option>
+                <option>Other</option>
+            </select><br>
+            <label>Hours per day:</label>
+            <input type="number" name="hours" min="0" max="24" value="8"><br>
+            <label>Symptoms (check all that apply):</label><br>
+            <label><input type="checkbox" name="symptoms" value="tired"> Tired</label>
+            <label><input type="checkbox" name="symptoms" value="pain"> Muscle pain</label>
+            <label><input type="checkbox" name="symptoms" value="focus"> Poor focus</label>
+            <label><input type="checkbox" name="symptoms" value="insomnia"> Insomnia</label>
+            <label><input type="checkbox" name="symptoms" value="constipation"> Constipation</label>
+            <label><input type="checkbox" name="symptoms" value="digestion"> Poor digestion</label>
+            <label><input type="checkbox" name="symptoms" value="none"> None</label><br>
+            <label>Main health concern:</label>
+            <input type="text" name="concern"><br>
+            <label>Diet preference:</label>
+            <select name="diet">
+                <option>Home cooked</option>
+                <option>Food court</option>
+                <option>Fast food</option>
+                <option>Vegetarian/Vegan</option>
+                <option>Keto/Low carb</option>
+                <option>Mixed</option>
+            </select><br>
+            <label>Water intake (litres per day):</label>
+            <input type="number" name="water" step="0.1" value="2"><br>
+            <label>Sleep hours per day:</label>
+            <select name="sleep">
+                <option>&lt;5</option>
+                <option>5-6</option>
+                <option>7-8</option>
+                <option>&gt;8</option>
+            </select><br>
+            <label>Wake up refreshed?</label>
+            <select name="refreshed">
+                <option>Yes</option>
+                <option>No</option>
+            </select><br>
+            <label>Supplement usage:</label>
+            <select name="supplement">
+                <option>Regular</option>
+                <option>Sometimes</option>
+                <option>Never</option>
+            </select><br>
+            <label>Most important expectation:</label>
+            <select name="expect">
+                <option>Energy</option>
+                <option>Brain/eyes</option>
+                <option>Sleep</option>
+                <option>Detox</option>
+                <option>Skin</option>
+                <option>Immunity</option>
+            </select><br>
+            <button type="submit">Submit Questionnaire</button>
+        </form>
+        <pre id="questionResult"></pre>
+    </section>
+    <section id="upload" style="display:none;">
+        <h2>Upload Test Image</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit">Upload</button>
+        </form>
+        <pre id="uploadResult"></pre>
+    </section>
+    <script src="/static/script.js"></script>
 
-</script>
 </body>
 </html>
