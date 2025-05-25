@@ -1,65 +1,42 @@
-const regForm = document.getElementById('registerForm');
-const regResult = document.getElementById('registerResult');
-regForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(regForm).entries());
+
+async function register() {
   const res = await fetch('/register', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
+    body: JSON.stringify({username: document.getElementById('reg-user').value,
+                         password: document.getElementById('reg-pass').value})
   });
-  regResult.textContent = await res.text();
-});
+  alert(await res.text());
+}
 
-const loginForm = document.getElementById('loginForm');
-const loginResult = document.getElementById('loginResult');
-const questionSection = document.getElementById('questionnaire');
-const uploadSection = document.getElementById('upload');
-let currentUser = '';
-loginForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(loginForm).entries());
+async function login() {
   const res = await fetch('/login', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
+    body: JSON.stringify({username: document.getElementById('log-user').value,
+                         password: document.getElementById('log-pass').value})
   });
-  const text = await res.text();
-  loginResult.textContent = text;
-  if (res.ok) {
-    currentUser = data.username;
-    questionSection.style.display = 'block';
-    uploadSection.style.display = 'block';
-  }
-});
+  alert(await res.text());
+}
 
-const qForm = document.getElementById('questionForm');
-const qResult = document.getElementById('questionResult');
-qForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const form = new FormData(qForm);
-  const answers = {};
-  form.forEach((v, k) => {
-    if (answers[k]) {
-      if (Array.isArray(answers[k])) answers[k].push(v); else answers[k] = [answers[k], v];
-    } else {
-      answers[k] = v;
-    }
-  });
+async function submitAnswers() {
   const res = await fetch('/questionnaire', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({username: currentUser, answers})
+    body: JSON.stringify({username: document.getElementById('log-user').value,
+                         answers: JSON.parse(document.getElementById('answers').value)})
   });
-  qResult.textContent = await res.text();
-});
+  alert(await res.text());
+}
 
-const upForm = document.getElementById('uploadForm');
-const upResult = document.getElementById('uploadResult');
-upForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const data = new FormData(upForm);
-  data.append('username', currentUser);
-  const res = await fetch('/upload', {method:'POST', body:data});
-  upResult.textContent = await res.text();
-});
+async function uploadFile() {
+  const fileInput = document.getElementById('file');
+  if (!fileInput.files.length) return;
+  const formData = new FormData();
+  formData.append('image', fileInput.files[0]);
+  const res = await fetch('/upload', {method:'POST', body: formData});
+  const text = await res.text();
+  document.getElementById('preview').innerHTML = text.includes('url') ?
+    `<img src="${JSON.parse(text).url}" width="200">` : text;
+}
+
