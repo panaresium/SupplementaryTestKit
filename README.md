@@ -17,6 +17,7 @@ python3 backend/server.py
 The server listens on port `8000`.
 Open `http://localhost:8000/` in your browser to use the web interface.
 
+
 ### Endpoints
 
 - `POST /register` – Register a new user. Body: `{"username": "name", "password": "secret"}`

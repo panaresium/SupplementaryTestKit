@@ -74,12 +74,14 @@ class RequestHandler(BaseHTTPRequestHandler):
             username = data.get('username')
             password = data.get('password')
             if not username or not password:
+
                 self._send_json({'error': 'username and password required'}, 400)
                 return
             if register_user(username, password):
                 self._send_json({'status': 'registered'}, 201)
             else:
                 self._send_json({'error': 'user exists'}, 409)
+
         elif self.path == '/login':
             username = data.get('username')
             password = data.get('password')
@@ -87,6 +89,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 self._send_json({'status': 'ok'})
             else:
                 self._send_json({'error': 'invalid credentials'}, 401)
+
         elif self.path == '/questionnaire':
             username = data.get('username')
             answers = data.get('answers')
@@ -145,3 +148,4 @@ class RequestHandler(BaseHTTPRequestHandler):
 
 if __name__ == '__main__':
     HTTPServer(('', 8000), RequestHandler).serve_forever()
+

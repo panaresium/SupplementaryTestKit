@@ -1,3 +1,4 @@
+
 async function register() {
   const res = await fetch('/register', {
     method: 'POST',
@@ -38,3 +39,4 @@ async function uploadFile() {
   document.getElementById('preview').innerHTML = text.includes('url') ?
     `<img src="${JSON.parse(text).url}" width="200">` : text;
 }
+
