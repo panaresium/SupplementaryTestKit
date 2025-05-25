@@ -1,4 +1,5 @@
 import json
+
 import os
 import mimetypes
 import cgi
@@ -25,9 +26,11 @@ class RequestHandler(BaseHTTPRequestHandler):
             ctype = 'application/octet-stream'
         self.send_response(200)
         self.send_header('Content-Type', ctype)
+
         self.end_headers()
         with open(path, 'rb') as f:
             self.wfile.write(f.read())
+
 
     def _set_json(self, code=200):
         self.send_response(code)
@@ -35,6 +38,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_POST(self):
+
         length = int(self.headers.get('Content-Length', 0))
         body = self.rfile.read(length)
         try:
@@ -81,6 +85,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             else:
                 self._set_json(400)
                 self.wfile.write(b'{"error":"unknown user"}')
+
         elif self.path == '/upload':
             ctype = self.headers.get('Content-Type', '')
             if not ctype.startswith('multipart/form-data'):
@@ -105,12 +110,14 @@ class RequestHandler(BaseHTTPRequestHandler):
                 f.write(fileitem.file.read())
             self._set_json(201)
             self.wfile.write(json.dumps({'file': os.path.basename(dest)}).encode())
+
         else:
             self._set_json(404)
             self.wfile.write(b'{"error":"not found"}')
 
     def do_GET(self):
         parsed = urlparse(self.path)
+
         if parsed.path == '/':
             self._serve_file(os.path.join(STATIC_DIR, 'index.html'))
         elif parsed.path.startswith('/static/'):
@@ -120,13 +127,16 @@ class RequestHandler(BaseHTTPRequestHandler):
             rel = parsed.path[len('/uploads/') :]
             self._serve_file(os.path.join(UPLOAD_DIR, rel))
         elif parsed.path.startswith('/questionnaire/'):
+
             username = parsed.path.split('/')[-1]
             data = get_questionnaires(username)
             self._set_json(200)
             self.wfile.write(json.dumps({'data': data}).encode('utf-8'))
+
         else:
             self._set_json(404)
             self.wfile.write(b'{"error":"not found"}')
+
 
 if __name__ == '__main__':
     addr = ('', 8000)
