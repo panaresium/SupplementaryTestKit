@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Supplementary Test Kit</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Supplementary Test Kit</h1>
+    <section id="register">
+        <h2>Register</h2>
+        <form id="registerForm">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Register</button>
+        </form>
+        <pre id="registerResult"></pre>
+    </section>
+    <section id="login">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <pre id="loginResult"></pre>
+    </section>
+    <section id="questionnaire" style="display:none;">
+        <h2>Questionnaire</h2>
+        <form id="questionForm">
+            <label>Work intensity:</label>
+            <select name="work">
+                <option>Heavy labour</option>
+                <option>Moderate</option>
+                <option>Desk job</option>
+                <option>Outdoor</option>
+                <option>Other</option>
+            </select><br>
+            <label>Hours per day:</label>
+            <input type="number" name="hours" min="0" max="24" value="8"><br>
+            <label>Symptoms (check all that apply):</label><br>
+            <label><input type="checkbox" name="symptoms" value="tired"> Tired</label>
+            <label><input type="checkbox" name="symptoms" value="pain"> Muscle pain</label>
+            <label><input type="checkbox" name="symptoms" value="focus"> Poor focus</label>
+            <label><input type="checkbox" name="symptoms" value="insomnia"> Insomnia</label>
+            <label><input type="checkbox" name="symptoms" value="constipation"> Constipation</label>
+            <label><input type="checkbox" name="symptoms" value="digestion"> Poor digestion</label>
+            <label><input type="checkbox" name="symptoms" value="none"> None</label><br>
+            <label>Main health concern:</label>
+            <input type="text" name="concern"><br>
+            <label>Diet preference:</label>
+            <select name="diet">
+                <option>Home cooked</option>
+                <option>Food court</option>
+                <option>Fast food</option>
+                <option>Vegetarian/Vegan</option>
+                <option>Keto/Low carb</option>
+                <option>Mixed</option>
+            </select><br>
+            <label>Water intake (litres per day):</label>
+            <input type="number" name="water" step="0.1" value="2"><br>
+            <label>Sleep hours per day:</label>
+            <select name="sleep">
+                <option>&lt;5</option>
+                <option>5-6</option>
+                <option>7-8</option>
+                <option>&gt;8</option>
+            </select><br>
+            <label>Wake up refreshed?</label>
+            <select name="refreshed">
+                <option>Yes</option>
+                <option>No</option>
+            </select><br>
+            <label>Supplement usage:</label>
+            <select name="supplement">
+                <option>Regular</option>
+                <option>Sometimes</option>
+                <option>Never</option>
+            </select><br>
+            <label>Most important expectation:</label>
+            <select name="expect">
+                <option>Energy</option>
+                <option>Brain/eyes</option>
+                <option>Sleep</option>
+                <option>Detox</option>
+                <option>Skin</option>
+                <option>Immunity</option>
+            </select><br>
+            <button type="submit">Submit Questionnaire</button>
+        </form>
+        <pre id="questionResult"></pre>
+    </section>
+    <section id="upload" style="display:none;">
+        <h2>Upload Test Image</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit">Upload</button>
+        </form>
+        <pre id="uploadResult"></pre>
+    </section>
+    <script src="/static/script.js"></script>
+</body>
+</html>
