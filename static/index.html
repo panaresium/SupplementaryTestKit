@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sample Submission Form</title>
+</head>
+<body>
+    <h1>Submit Your Information</h1>
+    <form action="/submit" method="POST">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        <label for="comment">Comment:</label><br>
+        <textarea id="comment" name="comment" rows="4" cols="50"></textarea><br><br>
+        <label>
+            <input type="checkbox" name="consent" required>
+            I agree to the <a href="/privacy_policy.html" target="_blank">Privacy Policy</a>
+        </label><br><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
