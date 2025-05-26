@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Supplementary Test Kit</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<h1>Supplementary Test Kit</h1>
+<section id="auth">
+    <h2>Register</h2>
+    <input id="reg-user" placeholder="Username">
+    <input id="reg-pass" type="password" placeholder="Password">
+    <button onclick="register()">Register</button>
+    <h2>Login</h2>
+    <input id="log-user" placeholder="Username">
+    <input id="log-pass" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+</section>
+
+<section id="questionnaire" style="display:none;">
+    <div id="progress"></div>
+    <div id="step1" class="step">
+        <h2>Work and Diet</h2>
+        <label>How physically demanding is your work?</label>
+        <select id="q_work" required>
+            <option value="">Select...</option>
+            <option value="hard">Hard labour</option>
+            <option value="medium">Moderate</option>
+            <option value="desk">Desk job</option>
+            <option value="outdoor">Outdoor</option>
+        </select>
+        <label>Average work hours per day?</label>
+        <input id="q_hours" type="number" required>
+        <label>What best describes your diet?</label>
+        <select id="q_diet" required>
+            <option value="">Select...</option>
+            <option value="omnivore">Omnivore</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="other">Other</option>
+        </select>
+        <button onclick="nextStep()">Next</button>
+    </div>
+    <div id="step2" class="step" style="display:none;">
+        <h2>Goals and Supplements</h2>
+        <label>Health goals</label>
+        <label><input type="checkbox" name="goal" value="weight_loss">Weight loss</label>
+        <label><input type="checkbox" name="goal" value="muscle_gain">Muscle gain</label>
+        <label><input type="checkbox" name="goal" value="energy">Boost energy</label>
+        <label><input type="checkbox" name="goal" value="wellness">General wellness</label>
+        <label>Do you currently use supplements?</label>
+        <label><input type="radio" name="supplement_use" value="yes">Yes</label>
+        <label><input type="radio" name="supplement_use" value="no">No</label>
+        <label>If yes, list them</label>
+        <input id="supplements" placeholder="e.g. Vitamin C, Protein">
+        <button onclick="prevStep()">Back</button>
+        <button onclick="nextStep()">Next</button>
+    </div>
+    <div id="step3" class="step" style="display:none;">
+        <h2>Symptoms</h2>
+        <label><input type="checkbox" id="sym_tired">Tiredness</label>
+        <label><input type="checkbox" id="sym_pain">Muscle pain</label>
+        <button onclick="prevStep()">Back</button>
+        <button onclick="submitAnswers()">Submit</button>
+    </div>
+</section>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
