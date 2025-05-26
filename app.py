@@ -1,6 +1,6 @@
 import os
 import sqlite3
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from uuid import uuid4
 from datetime import datetime
@@ -9,6 +9,11 @@ app = Flask(__name__)
 CORS(app)
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
+
+# Serve the survey front-end
+@app.route('/')
+def index():
+    return send_from_directory('.', 'index.html')
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
