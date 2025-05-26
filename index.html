@@ -4,15 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survey Form</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 2em; }
-        form { max-width: 600px; margin: auto; }
-        label { display: block; margin-top: 1em; }
-        input, textarea { width: 100%; padding: 0.5em; }
-        .notice { font-size: 0.9em; color: #555; margin-top: 2em; }
-    </style>
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
+<div class="container">
     <h1>Product Feedback Survey</h1>
     <form id="surveyForm">
         <label>
@@ -34,6 +29,7 @@
             We collect your responses without any personally identifiable information. Data is stored with a unique identifier and timestamp. It is used only for analytical purposes and product suggestion improvements.
         </p>
     </div>
+</div>
     <script>
         const form = document.getElementById('surveyForm');
         form.addEventListener('submit', async (e) => {
