@@ -1,1 +1,4 @@
+
 openai
+Flask
+flask-cors
