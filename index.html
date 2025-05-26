@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        form { max-width: 600px; margin: auto; }
+        label { display: block; margin-top: 1em; }
+        input, textarea { width: 100%; padding: 0.5em; }
+        .notice { font-size: 0.9em; color: #555; margin-top: 2em; }
+    </style>
+</head>
+<body>
+    <h1>Product Feedback Survey</h1>
+    <form id="surveyForm">
+        <label>
+            What products are you interested in?
+            <input type="text" name="products" required>
+        </label>
+        <label>
+            What features do you value the most?
+            <textarea name="features" required></textarea>
+        </label>
+        <button type="submit">Submit</button>
+    </form>
+    <p class="notice">
+        This survey does not collect personal data. Answers provided are used solely for analysis and to improve product recommendations. See our privacy notice below.
+    </p>
+    <div id="privacy">
+        <h2>Privacy Notice</h2>
+        <p>
+            We collect your responses without any personally identifiable information. Data is stored with a unique identifier and timestamp. It is used only for analytical purposes and product suggestion improvements.
+        </p>
+    </div>
+    <script>
+        const form = document.getElementById('surveyForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const data = {
+                products: formData.get('products'),
+                features: formData.get('features')
+            };
+            const response = await fetch('/api/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            if (response.ok) {
+                alert('Thank you for your feedback!');
+                form.reset();
+            } else {
+                alert('Submission failed.');
+            }
+        });
+    </script>
+</body>
+</html>
