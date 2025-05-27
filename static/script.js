@@ -45,7 +45,10 @@ function validateStep(step) {
         !document.getElementById('q_wake').value ||
         !document.getElementById('q_food_like').value ||
         !document.getElementById('q_food_dislike').value ||
-        !document.getElementById('q_diet').value) {
+        !document.getElementById('q_diet').value ||
+        !document.getElementById('q_avg_sleep').value ||
+        !document.getElementById('q_meals_per_day').value ||
+        !document.getElementById('q_beverages').value) {
       alert('Please answer all questions on this step');
       return false;
     }
@@ -53,6 +56,11 @@ function validateStep(step) {
     if (!document.querySelector('input[name="smoke"]:checked') ||
         !document.querySelector('input[name="alcohol"]:checked') ||
         !document.querySelector('input[name="supplement_use"]:checked')) {
+      alert('Please answer all questions on this step');
+      return false;
+    }
+  } else if (step === 5) { // New validation for step 5
+    if (!document.getElementById('q_stress_level').value) {
       alert('Please answer all questions on this step');
       return false;
     }
@@ -104,27 +112,48 @@ async function submitAnswers() {
     transport: document.getElementById('q_transport').value,
     physical_demand: document.getElementById('q_work').value,
     exercise_freq: document.getElementById('q_exercise').value,
+    // New exercise fields
+    exercise_duration: document.getElementById('q_exercise_duration').value,
+    exercise_type: document.getElementById('q_exercise_type').value,
+    // New commute field
+    commute_time: document.getElementById('q_commute_time').value,
+    // Sleep fields
     sleep_time: document.getElementById('q_sleep').value,
     wake_time: document.getElementById('q_wake').value,
+    avg_sleep: document.getElementById('q_avg_sleep').value, // New
+    // Diet fields
     food_like: document.getElementById('q_food_like').value,
     food_dislike: document.getElementById('q_food_dislike').value,
-    diet: document.getElementById('q_diet').value,
+    diet_preference: document.getElementById('q_diet').value, // Renamed q_diet to diet_preference for clarity
+    diet_restrictions: document.getElementById('q_diet_restrictions').value, // New
+    meals_per_day: document.getElementById('q_meals_per_day').value, // New
+    beverages: document.getElementById('q_beverages').value, // New
+    // Lifestyle fields
     smoke: document.querySelector('input[name="smoke"]:checked').value,
     alcohol: document.querySelector('input[name="alcohol"]:checked').value,
-    goals: Array.from(document.querySelectorAll('input[name="goal"]:checked')).map(el => el.value),
+    health_goals: Array.from(document.querySelectorAll('input[name="goal"]:checked')).map(el => el.value), // Renamed goals to health_goals
     supplement_use: document.querySelector('input[name="supplement_use"]:checked').value,
-    supplements: document.getElementById('supplements').value,
-    symptoms: []
+    current_supplements: document.getElementById('supplements').value, // Renamed supplements to current_supplements
+    medical_conditions: document.getElementById('q_medical_conditions').value, // New
+    // New demographic field
+    gender: document.getElementById('q_gender').value,
+    // Symptoms / Health Info
+    symptoms: {
+      checklist: [],
+      other_concerns: document.getElementById('q_health_concerns_text').value,
+      stress_level: document.getElementById('q_stress_level').value
+    }
   };
-  if (document.getElementById('sym_tired').checked) answers.symptoms.push('tired');
-  if (document.getElementById('sym_pain').checked) answers.symptoms.push('pain');
-  if (document.getElementById('sym_digestive').checked) answers.symptoms.push('digestive');
-  if (document.getElementById('sym_sleep').checked) answers.symptoms.push('sleep');
+  if (document.getElementById('sym_tired').checked) answers.symptoms.checklist.push('tiredness_fatigue');
+  if (document.getElementById('sym_pain').checked) answers.symptoms.checklist.push('muscle_joint_pain');
+  if (document.getElementById('sym_digestive').checked) answers.symptoms.checklist.push('digestive_issues');
+  if (document.getElementById('sym_sleep').checked) answers.symptoms.checklist.push('poor_sleep_quality');
 
-  const res = await fetch('/questionnaire', {
+  const res = await fetch('/api/submit', { // Updated endpoint
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({username: currentUser, answers})
+    // Updated payload structure
+    body: JSON.stringify({ features: JSON.stringify(answers), products: "" })
   });
   alert(await res.text());
 }
