@@ -3,12 +3,22 @@ import sqlite3
 import json # Added json import
 from flask import Flask, request, jsonify, send_from_directory, render_template # Added render_template
 import openai
+
+try:
+    from dotenv import load_dotenv
+except ImportError:  # python-dotenv may not be installed during testing
+    def load_dotenv():
+        return False
+
 from flask_cors import CORS
 from uuid import uuid4
 from datetime import datetime, timezone # Updated import
 
 app = Flask(__name__)
 CORS(app)
+
+load_dotenv()
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
@@ -36,7 +46,8 @@ GROUP_INFO_FILE = os.path.join(os.path.dirname(__file__), 'group_info.json')
 def _load_group_info() -> dict:
     if os.path.exists(GROUP_INFO_FILE):
 
-        with open(GROUP_INFO_FILE, 'r', encoding='utf-8') as f:
+        with open(GROUP_INFO_FILE, 'r') as f:
+
             try:
                 return json.load(f)
             except json.JSONDecodeError:
@@ -53,7 +64,8 @@ def _load_group_info() -> dict:
 
 
 def _save_group_info(data: dict):
-    with open(GROUP_INFO_FILE, 'w', encoding='utf-8') as f:
+
+    with open(GROUP_INFO_FILE, 'w') as f:
 
         json.dump(data, f, indent=2)
 
@@ -144,9 +156,11 @@ def _ai_suggestion(text: str) -> str:
     try:
         messages = [
             {"role": "system", "content": "You are a helpful assistant providing supplement advice."},
+
             {"role": "user", "content": "Please return the suggestion in " +langcode+" language code where the symptom is follow: " + text +". You will return what should I do to have better health including how to exercise, relax, and use supplements."},
         ]
-        resp = openai.ChatCompletion.create(model="gpt-4.1", messages=messages)
+        resp = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
+
         return resp.choices[0].message["content"].strip()
     except Exception as exc:
         return f"AI suggestion unavailable: {exc}"

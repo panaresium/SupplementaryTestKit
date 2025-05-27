@@ -1,6 +1,7 @@
 let currentStep = 1;
 let questionnaireDef = null;
 let currentLang = 'en';
+
 const uiTranslations = {
     en: {
         lang_en: "English",
@@ -41,16 +42,18 @@ const uiTranslations = {
         main_title: "\u0e0a\u0e38\u0e14\u0e17\u0e14\u0e2a\u0e2d\u0e1a\u0e2d\u0e32\u0e2b\u0e32\u0e23\u0e40\u0e2a\u0e23\u0e34\u0e21",
         progress_step: "\u0e02\u0e31\u0e49\u0e19\u0e15\u0e2d\u0e19",
         progress_of: "\u0e08\u0e32\u0e01",
-        step1_title: "ข้อมูลพื้นฐาน",
-        step2_title: "สิ่งแวดล้อมในที่ทำงาน",
-        step3_title: "การนอนหลับและการกิน",
-        step4_title: "วิถีชีวิต",
-        step5_title: "อาการต่างๆ",
+
+        step1_title: "\u0e02\u0e49\u0e2d\u0e21\u0e1e\u0e37\u0e49\u0e19\u0e10\u0e32\u0e19",
+        step2_title: "\u0e2a\u0e34\u0e48\u0e07\u0e41\u0e27\u0e14\u0e25\u0e49\u0e2d\u0e21\u0e43\u0e19\u0e17\u0e35\u0e48\u0e17\u0e33\u0e07\u0e32\u0e19",
+        step3_title: "\u0e01\u0e32\u0e23\u0e19\u0e2d\u0e19\u0e2b\u0e25\u0e31\u0e1a\u0e41\u0e25\u0e30\u0e01\u0e32\u0e23\u0e01\u0e34\u0e19",
+        step4_title: "\u0e27\u0e34\u0e16\u0e35\u0e0a\u0e35\u0e27\u0e34\u0e15\u0e41\u0e25\u0e30\u0e40\u0e1b\u0e49\u0e32\u0e2b\u0e21\u0e32\u0e22",
+        step5_title: "\u0e2d\u0e32\u0e01\u0e32\u0e23\u0e15\u0e48\u0e32\u0e07\u0e46",
         next_button: "\u0e15\u0e48\u0e2d\u0e44\u0e1b",
         back_button: "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
         submit_button: "\u0e2a\u0e48\u0e07\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25"
     }
 };
+
 let totalSteps = 5; // Default, will be updated
 
 // --- 1. Global Variables (already defined above) ---
@@ -87,8 +90,30 @@ function loadLanguage(lang) {
         languageSelector.value = currentLang;
     }
 
-    if (questionnaireDef) {
-        renderQuestionnaire();
+    try {
+        if (!uiTranslations[currentLang]) {
+            throw new Error(`Translations for ${currentLang} not available`);
+        }
+        console.log(`Using embedded translations for ${currentLang}`);
+        
+        if (questionnaireDef) { // Ensure questionnaireDef is loaded before rendering
+             renderQuestionnaire();
+        } else {
+            // This case might happen if loadLanguage is called before fetchQuestionnaireDef completes
+            // The IIFE ensures fetchQuestionnaireDef is called first, then loadLanguage, then render.
+            console.warn("Questionnaire definition not yet loaded. Rendering might be incomplete or skipped.");
+        }
+
+    } catch (error) {
+        console.error(`Error loading language ${currentLang}:`, error);
+        if (currentLang !== 'en') {
+            console.warn('Falling back to English language.');
+            currentLang = 'en';
+        }
+        if (questionnaireDef && uiTranslations[currentLang]) {
+            renderQuestionnaire();
+        }
+
     }
 }
 
