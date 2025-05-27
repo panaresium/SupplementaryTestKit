@@ -65,6 +65,28 @@
             <h3>Recommended Profile Focus:</h3>
             <p id="recommendedGroupsText">{{ recommendation_text }}</p>
         </div>
+
+        {% if rec_groups %}
+        <div class="results-display" id="supplementSuggestions" style="margin-top:2rem;">
+            <h3>Supplement Suggestions</h3>
+            {% for gid in rec_groups %}
+            <div class="group-suggestion">
+                <h4>{{ gid }}</h4>
+                <p>{{ group_info[gid].message }}</p>
+                {% if group_info[gid].image %}
+                <img src="{{ group_info[gid].image }}" alt="{{ gid }}" style="max-width:200px;">
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if ai_suggestion %}
+        <div class="results-display" id="aiSuggestion" style="margin-top:2rem;">
+            <h3>AI Suggestion</h3>
+            <p>{{ ai_suggestion }}</p>
+        </div>
+        {% endif %}
         {% else %}
         <p>No submission data found.</p>
         {% endif %}

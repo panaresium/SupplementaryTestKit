@@ -2,12 +2,14 @@ import os
 import sqlite3
 import json # Added json import
 from flask import Flask, request, jsonify, send_from_directory, render_template # Added render_template
+import openai
 from flask_cors import CORS
 from uuid import uuid4
 from datetime import datetime, timezone # Updated import
 
 app = Flask(__name__)
 CORS(app)
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 
@@ -21,11 +23,37 @@ from urllib.parse import unquote
 
 def _load_questionnaire_structure() -> dict:
     path = os.path.join(app.root_path, 'static', 'questionnaire_structure.json')
-    with open(path, 'r') as f:
+    with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 
-def _calculate_scores(user_answers: dict, structure: dict):
+GROUP_INFO_FILE = os.path.join(os.path.dirname(__file__), 'group_info.json')
+
+
+def _load_group_info() -> dict:
+    if os.path.exists(GROUP_INFO_FILE):
+        with open(GROUP_INFO_FILE, 'r', encoding='utf-8') as f:
+            try:
+                return json.load(f)
+            except json.JSONDecodeError:
+                pass
+    # Default structure if file does not exist or is invalid
+    return {
+        "G1": {"message": "", "image": ""},
+        "G2": {"message": "", "image": ""},
+        "G3": {"message": "", "image": ""},
+        "G4": {"message": "", "image": ""},
+        "G5": {"message": "", "image": ""},
+        "G6": {"message": "", "image": ""},
+    }
+
+
+def _save_group_info(data: dict):
+    with open(GROUP_INFO_FILE, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2)
+
+
+def _calculate_scores(user_answers: dict, structure: dict, lang_code: str = "en"):
     group_scores = {"G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0}
     submitted = []
 
@@ -34,14 +62,14 @@ def _calculate_scores(user_answers: dict, structure: dict):
         if qid not in user_answers:
             continue
         val = user_answers[qid]
-        text = q.get('questionText', {}).get('en', '')
+        text = q.get('questionText', {}).get(lang_code, q.get('questionText', {}).get('en', ''))
         display = 'N/A'
 
         if q.get('type') == 'radio':
             if val not in (None, ''):
                 opt = next((o for o in q.get('answers', []) if o.get('value') == val), None)
                 if opt:
-                    display = opt.get('text', {}).get('en', val)
+                    display = opt.get('text', {}).get(lang_code, opt.get('text', {}).get('en', val))
                     for g, w in opt.get('weights', {}).items():
                         if g in group_scores and isinstance(w, (int, float)):
                             group_scores[g] += w
@@ -53,7 +81,7 @@ def _calculate_scores(user_answers: dict, structure: dict):
                 for choice in val:
                     opt = next((o for o in q.get('answers', []) if o.get('value') == choice), None)
                     if opt:
-                        texts.append(opt.get('text', {}).get('en', choice))
+                        texts.append(opt.get('text', {}).get(lang_code, opt.get('text', {}).get('en', choice)))
                         for g, w in opt.get('weights', {}).items():
                             if g in group_scores and isinstance(w, (int, float)):
                                 group_scores[g] += w
@@ -104,6 +132,21 @@ def _generate_recommendation(group_scores: dict) -> str:
     return f"Your profile suggests you align with: {' and '.join(group_texts)}."
 
 
+def _ai_suggestion(text: str) -> str:
+    """Query OpenAI for a supplement suggestion based on user text."""
+    if not text:
+        return ""
+    try:
+        messages = [
+            {"role": "system", "content": "You are a helpful assistant providing supplement advice."},
+            {"role": "user", "content": text},
+        ]
+        resp = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
+        return resp.choices[0].message["content"].strip()
+    except Exception as exc:
+        return f"AI suggestion unavailable: {exc}"
+
+
 @app.route('/thank_you.html')
 def thank_you():
     data_param = request.args.get('data')
@@ -117,11 +160,33 @@ def thank_you():
     except Exception as exc:
         return f"Invalid data parameter: {exc}", 400
 
+    language = request.args.get('lang', 'en')
     structure = _load_questionnaire_structure()
-    scores, submitted = _calculate_scores(answers, structure)
+    scores, submitted = _calculate_scores(answers, structure, language)
     recommendation = _generate_recommendation(scores)
-    return render_template('thank_you.html', submitted_answers=submitted,
-                           group_scores=scores, recommendation_text=recommendation)
+
+    # Use the freetext from the last question (id 26) for AI suggestion
+    last_text = answers.get('26', '')
+    ai_suggestion = _ai_suggestion(last_text)
+
+    group_info = _load_group_info()
+    top_groups = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
+    rec_groups = []
+    if top_groups:
+        rec_groups.append(top_groups[0][0])
+        if len(top_groups) > 1 and (top_groups[0][1] - top_groups[1][1] <= 5):
+            rec_groups.append(top_groups[1][0])
+
+    return render_template(
+        'thank_you.html',
+        submitted_answers=submitted,
+        group_scores=scores,
+        recommendation_text=recommendation,
+        ai_suggestion=ai_suggestion,
+        group_info=group_info,
+        rec_groups=rec_groups,
+        language_code=language,
+    )
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
@@ -200,6 +265,17 @@ def admin_results():
         processed_results.append(row_dict)
     
     return render_template('results.html', results=processed_results)
+
+
+@app.route('/admin/group_info', methods=['GET', 'POST'])
+def admin_group_info():
+    group_info = _load_group_info()
+    if request.method == 'POST':
+        for gid in group_info.keys():
+            group_info[gid]['message'] = request.form.get(f'{gid}_message', '')
+            group_info[gid]['image'] = request.form.get(f'{gid}_image', '')
+        _save_group_info(group_info)
+    return render_template('group_info.html', group_info=group_info)
 
 if __name__ == '__main__':
     init_db()
