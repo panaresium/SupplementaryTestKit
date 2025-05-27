@@ -1,7 +1,7 @@
 let currentStep = 1;
 let questionnaireDef = null;
 let currentLang = 'en';
-// Basic translations embedded to avoid extra network requests
+
 const uiTranslations = {
     en: {
         lang_en: "English",
@@ -42,6 +42,7 @@ const uiTranslations = {
         main_title: "\u0e0a\u0e38\u0e14\u0e17\u0e14\u0e2a\u0e2d\u0e1a\u0e2d\u0e32\u0e2b\u0e32\u0e23\u0e40\u0e2a\u0e23\u0e34\u0e21",
         progress_step: "\u0e02\u0e31\u0e49\u0e19\u0e15\u0e2d\u0e19",
         progress_of: "\u0e08\u0e32\u0e01",
+
         step1_title: "\u0e02\u0e49\u0e2d\u0e21\u0e1e\u0e37\u0e49\u0e19\u0e10\u0e32\u0e19",
         step2_title: "\u0e2a\u0e34\u0e48\u0e07\u0e41\u0e27\u0e14\u0e25\u0e49\u0e2d\u0e21\u0e43\u0e19\u0e17\u0e35\u0e48\u0e17\u0e33\u0e07\u0e32\u0e19",
         step3_title: "\u0e01\u0e32\u0e23\u0e19\u0e2d\u0e19\u0e2b\u0e25\u0e31\u0e1a\u0e41\u0e25\u0e30\u0e01\u0e32\u0e23\u0e01\u0e34\u0e19",
@@ -52,7 +53,7 @@ const uiTranslations = {
         submit_button: "\u0e2a\u0e48\u0e07\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25"
     }
 };
-let totalSteps = 5; // Default, will be updated
+
 let totalSteps = 5; // Default, will be updated
 
 // --- 1. Global Variables (already defined above) ---
@@ -81,7 +82,7 @@ async function fetchQuestionnaireDef() {
 }
 
 // --- 3. loadLanguage() ---
-async function loadLanguage(lang) {
+function loadLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('language', lang);
     const languageSelector = document.getElementById('languageSelector');
@@ -112,6 +113,7 @@ async function loadLanguage(lang) {
         if (questionnaireDef && uiTranslations[currentLang]) {
             renderQuestionnaire();
         }
+
     }
 }
 
@@ -412,23 +414,20 @@ async function submitAnswers() {
     if (languageSelectorElement) {
         languageSelectorElement.value = currentLang;
     }
-    
-    await fetchQuestionnaireDef(); // Must complete before language loading if language loading depends on it (e.g. for titles)
-    await loadLanguage(currentLang); // Fetches UI translations and then calls renderQuestionnaire
 
-    // renderQuestionnaire and showStep(1) are now called inside loadLanguage after translations are ready
-    // and questionnaireDef is available.
-    // If questionnaireDef failed to load, an error is shown, and rendering won't proceed.
-    if (questionnaireDef && uiTranslations[currentLang]) {
-         showStep(1); // Ensure initial step is shown if all loaded correctly.
+    await fetchQuestionnaireDef();
+    loadLanguage(currentLang);
+
+    if (questionnaireDef) {
+        showStep(1);
     }
 })();
 
 // --- 9. Language Selector Event Listener ---
 const languageSelector = document.getElementById('languageSelector');
 if (languageSelector) {
-    languageSelector.addEventListener('change', async (event) => {
-        await loadLanguage(event.target.value);
+    languageSelector.addEventListener('change', (event) => {
+        loadLanguage(event.target.value);
     });
 }
 

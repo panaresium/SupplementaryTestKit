@@ -28,6 +28,7 @@ The application will be available at `http://localhost:5000/`.
 
 ## Development
 
+
 Tests can be run with `pytest`.
 
 The questionnaire text and translations are stored in `static/questionnaire_structure.json` and rendered dynamically by `static/script.js`.

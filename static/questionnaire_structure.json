@@ -1,5 +1,5 @@
 {
-  "questionnaireTitleKey": "main_title", 
+  "questionnaireTitleKey": "main_title",
   "totalSteps": 5,
   "questions": [
     {
@@ -8,27 +8,27 @@
       "type": "radio",
       "questionText": {
         "en": "How many hours per day do you spend sitting at a desk or computer?",
-        "fr": "[FR] How many hours per day do you spend sitting at a desk or computer?",
-        "th": "[TH] How many hours per day do you spend sitting at a desk or computer?"
+        "fr": "Combien d'heures par jour passez-vous assis à un bureau ou devant un ordinateur ?",
+        "th": "คุณใช้เวลากี่ชั่วโมงต่อวันในการนั่งที่โต๊ะทำงานหรือหน้าคอมพิวเตอร์?"
       },
       "answers": [
         {
-          "text": { "en": "Less than 1 hour", "fr": "[FR] Less than 1 hour", "th": "[TH] Less than 1 hour" },
+          "text": { "en": "Less than 1 hour", "fr": "Moins d’une heure", "th": "น้อยกว่า 1 ชั่วโมง" },
           "value": "Less than 1 hour",
           "weights": { "G1": 0, "G2": 1, "G3": 1, "G4": 2, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "1–3 hours", "fr": "[FR] 1–3 hours", "th": "[TH] 1–3 hours" },
+          "text": { "en": "1–3 hours", "fr": "1–3 heures", "th": "1–3 ชั่วโมง" },
           "value": "1–3 hours",
           "weights": { "G1": 1, "G2": 1, "G3": 1, "G4": 1, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "4–6 hours", "fr": "[FR] 4–6 hours", "th": "[TH] 4–6 hours" },
+          "text": { "en": "4–6 hours", "fr": "4–6 heures", "th": "4–6 ชั่วโมง" },
           "value": "4–6 hours",
           "weights": { "G1": 2, "G2": 0, "G3": 0, "G4": 0, "G5": 1, "G6": 0 }
         },
         {
-          "text": { "en": "More than 6 hours", "fr": "[FR] More than 6 hours", "th": "[TH] More than 6 hours" },
+          "text": { "en": "More than 6 hours", "fr": "Plus de 6 heures", "th": "มากกว่า 6 ชั่วโมง" },
           "value": "More than 6 hours",
           "weights": { "G1": 3, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0 }
         }
@@ -40,27 +40,27 @@
       "type": "radio",
       "questionText": {
         "en": "How much physical lifting or carrying heavy items is involved in your typical day?",
-        "fr": "[FR] How much physical lifting or carrying heavy items is involved in your typical day?",
-        "th": "[TH] How much physical lifting or carrying heavy items is involved in your typical day?"
+        "fr": "Dans une journée typique, quelle part de votre temps consiste à soulever ou porter des objets lourds ?",
+        "th": "ในหนึ่งวันปกติ งานของคุณต้องยกหรือขนของหนักมากเพียงใด?"
       },
       "answers": [
         {
-          "text": { "en": "Almost none ( < 5% of the time )", "fr": "[FR] Almost none ( < 5% of the time )", "th": "[TH] Almost none ( < 5% of the time )" },
+          "text": { "en": "Almost none ( < 5% of the time )", "fr": "Presque jamais (< 5 % du temps)", "th": "แทบไม่มีเลย (< 5% ของเวลา)" },
           "value": "Almost none ( < 5% of the time )",
           "weights": { "G1": 3, "G2": 1, "G3": 0, "G4": 0, "G5": 1, "G6": 0 }
         },
         {
-          "text": { "en": "Some lifting (5–20% of the time)", "fr": "[FR] Some lifting (5–20% of the time)", "th": "[TH] Some lifting (5–20% of the time)" },
+          "text": { "en": "Some lifting (5–20% of the time)", "fr": "Un peu de port de charge (5–20 % du temps)", "th": "ยกของบ้าง (5–20% ของเวลา)" },
           "value": "Some lifting (5–20% of the time)",
           "weights": { "G1": 1, "G2": 1, "G3": 1, "G4": 1, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "Frequent lifting (over 20% of the time)", "fr": "[FR] Frequent lifting (over 20% of the time)", "th": "[TH] Frequent lifting (over 20% of the time)" },
+          "text": { "en": "Frequent lifting (over 20% of the time)", "fr": "Port de charge fréquent (> 20 % du temps)", "th": "ยกของบ่อย (> 20% ของเวลา)" },
           "value": "Frequent lifting (over 20% of the time)",
           "weights": { "G1": 0, "G2": 1, "G3": 2, "G4": 2, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "Heavy, continuous lifting is a major part of my work", "fr": "[FR] Heavy, continuous lifting is a major part of my work", "th": "[TH] Heavy, continuous lifting is a major part of my work" },
+          "text": { "en": "Heavy, continuous lifting is a major part of my work", "fr": "Le levage lourd et continu constitue une grande partie de mon travail", "th": "การยกของหนักต่อเนื่องเป็นส่วนหลักของงานของฉัน" },
           "value": "Heavy, continuous lifting is a major part of my work",
           "weights": { "G1": 0, "G2": 0, "G3": 1, "G4": 3, "G5": 0, "G6": 1 }
         }
@@ -72,27 +72,27 @@
       "type": "radio",
       "questionText": {
         "en": "Which scenario best describes your main working area?",
-        "fr": "[FR] Which scenario best describes your main working area?",
-        "th": "[TH] Which scenario best describes your main working area?"
+        "fr": "Quel scénario décrit le mieux votre principal lieu de travail ?",
+        "th": "สถานการณ์ใดต่อไปนี้อธิบายพื้นที่ทำงานหลักของคุณได้ดีที่สุด?"
       },
       "answers": [
         {
-          "text": { "en": "Indoors, climate-controlled, at a desk or workstation", "fr": "[FR] Indoors, climate-controlled, at a desk or workstation", "th": "[TH] Indoors, climate-controlled, at a desk or workstation" },
+          "text": { "en": "Indoors, climate-controlled, at a desk or workstation", "fr": "Intérieur, climatisé, à un bureau ou poste de travail", "th": "ในอาคาร มีการควบคุมอุณหภูมิ นั่งโต๊ะหรือเวิร์กสเตชัน" },
           "value": "Indoors, climate-controlled, at a desk or workstation",
           "weights": { "G1": 3, "G2": 2, "G3": 1, "G4": 0, "G5": 2, "G6": 0 }
         },
         {
-          "text": { "en": "Indoors, but involves standing/moving around a production line or specialized equipment", "fr": "[FR] Indoors, but involves standing/moving around a production line or specialized equipment", "th": "[TH] Indoors, but involves standing/moving around a production line or specialized equipment" },
+          "text": { "en": "Indoors, but involves standing/moving around a production line or specialized equipment", "fr": "Intérieur, mais nécessite de rester debout/se déplacer autour d’une ligne de production ou d’équipements spécialisés", "th": "ในอาคาร แต่ต้องยืน/เคลื่อนที่รอบสายการผลิตหรืออุปกรณ์เฉพาะ" },
           "value": "Indoors, but involves standing/moving around a production line or specialized equipment",
           "weights": { "G1": 0, "G2": 1, "G3": 3, "G4": 1, "G5": 1, "G6": 0 }
         },
         {
-          "text": { "en": "Indoors/outdoors with direct contact with many people (customers, patients, etc.)", "fr": "[FR] Indoors/outdoors with direct contact with many people (customers, patients, etc.)", "th": "[TH] Indoors/outdoors with direct contact with many people (customers, patients, etc.)" },
+          "text": { "en": "Indoors/outdoors with direct contact with many people (customers, patients, etc.)", "fr": "Intérieur/extérieur avec contact direct avec de nombreuses personnes (clients, patients, etc.)", "th": "ในอาคาร/กลางแจ้ง มีการติดต่อกับผู้คนจำนวนมากโดยตรง (ลูกค้า ผู้ป่วย ฯลฯ)" },
           "value": "Indoors/outdoors with direct contact with many people (customers, patients, etc.)",
           "weights": { "G1": 0, "G2": 3, "G3": 0, "G4": 0, "G5": 3, "G6": 0 }
         },
         {
-          "text": { "en": "Mostly outdoors in physically challenging conditions (construction sites, farmland, ships, etc.)", "fr": "[FR] Mostly outdoors in physically challenging conditions (construction sites, farmland, ships, etc.)", "th": "[TH] Mostly outdoors in physically challenging conditions (construction sites, farmland, ships, etc.)" },
+          "text": { "en": "Mostly outdoors in physically challenging conditions (construction sites, farmland, ships, etc.)", "fr": "Principalement à l’extérieur dans des conditions physiques exigeantes (chantier, exploitation agricole, navire, etc.)", "th": "ส่วนใหญ่นอกอาคารในสภาพแวดล้อมที่ท้าทายทางกาย (ไซต์ก่อสร้าง ไร่นา เรือ ฯลฯ)" },
           "value": "Mostly outdoors in physically challenging conditions (construction sites, farmland, ships, etc.)",
           "weights": { "G1": 0, "G2": 0, "G3": 0, "G4": 3, "G5": 0, "G6": 3 }
         }
@@ -104,22 +104,22 @@
       "type": "radio",
       "questionText": {
         "en": "What level of direct contact with people do you have during your work?",
-        "fr": "[FR] What level of direct contact with people do you have during your work?",
-        "th": "[TH] What level of direct contact with people do you have during your work?"
+        "fr": "Quel est votre niveau de contact direct avec les personnes dans votre travail ?",
+        "th": "งานของคุณต้องติดต่อกับผู้คนโดยตรงในระดับใด?"
       },
       "answers": [
         {
-          "text": { "en": "Very minimal; I mostly work alone or with a small team", "fr": "[FR] Very minimal; I mostly work alone or with a small team", "th": "[TH] Very minimal; I mostly work alone or with a small team" },
+          "text": { "en": "Very minimal; I mostly work alone or with a small team", "fr": "Très minimal ; je travaille surtout seul ou avec une petite équipe", "th": "น้อยมาก; ฉันทำงานคนเดียวหรือกับทีมเล็กๆ เป็นส่วนใหญ่" },
           "value": "Very minimal; I mostly work alone or with a small team",
           "weights": { "G1": 3, "G2": 0, "G3": 2, "G4": 1, "G5": 0, "G6": 1 }
         },
         {
-          "text": { "en": "Moderate contact; I interact with colleagues but not the general public", "fr": "[FR] Moderate contact; I interact with colleagues but not the general public", "th": "[TH] Moderate contact; I interact with colleagues but not the general public" },
+          "text": { "en": "Moderate contact; I interact with colleagues but not the general public", "fr": "Contact modéré ; j’interagis avec mes collègues mais pas avec le grand public", "th": "ปานกลาง; ติดต่อกับเพื่อนร่วมงานแต่ไม่ใช้กับบุคคลทั่วไป" },
           "value": "Moderate contact; I interact with colleagues but not the general public",
           "weights": { "G1": 1, "G2": 1, "G3": 2, "G4": 1, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "High contact with customers/clients/patients daily", "fr": "[FR] High contact with customers/clients/patients daily", "th": "[TH] High contact with customers/clients/patients daily" },
+          "text": { "en": "High contact with customers/clients/patients daily", "fr": "Contact élevé avec des clients/patients chaque jour", "th": "ติดต่อกับลูกค้า/ผู้รับบริการ/ผู้ป่วยจำนวนมากทุกวัน" },
           "value": "High contact with customers/clients/patients daily",
           "weights": { "G1": 0, "G2": 3, "G3": 0, "G4": 0, "G5": 3, "G6": 0 }
         }
@@ -131,22 +131,22 @@
       "type": "radio",
       "questionText": {
         "en": "How often are you exposed to sunlight during working hours?",
-        "fr": "[FR] How often are you exposed to sunlight during working hours?",
-        "th": "[TH] How often are you exposed to sunlight during working hours?"
+        "fr": "À quelle fréquence êtes-vous exposé à la lumière du soleil pendant vos heures de travail ?",
+        "th": "คุณได้รับแสงแดดบ่อยแค่ไหนในเวลาทำงาน?"
       },
       "answers": [
         {
-          "text": { "en": "Rarely (almost never see direct sun while working)", "fr": "[FR] Rarely (almost never see direct sun while working)", "th": "[TH] Rarely (almost never see direct sun while working)" },
+          "text": { "en": "Rarely (almost never see direct sun while working)", "fr": "Rarement (je ne vois presque jamais le soleil directement en travaillant)", "th": "แทบไม่เคย (แทบไม่เจอแสงแดดโดยตรงขณะทำงาน)" },
           "value": "Rarely (almost never see direct sun while working)",
           "weights": { "G1": 3, "G2": 2, "G3": 1, "G4": 0, "G5": 1, "G6": 0 }
         },
         {
-          "text": { "en": "Occasional (some parts of my job are outdoors or near windows)", "fr": "[FR] Occasional (some parts of my job are outdoors or near windows)", "th": "[TH] Occasional (some parts of my job are outdoors or near windows)" },
+          "text": { "en": "Occasional (some parts of my job are outdoors or near windows)", "fr": "Occasionnel (certaines tâches sont à l’extérieur ou près de fenêtres)", "th": "เป็นบางครั้ง (บางส่วนของงานอยู่นอกอาคารหรือใกล้หน้าต่าง)" },
           "value": "Occasional (some parts of my job are outdoors or near windows)",
           "weights": { "G1": 1, "G2": 1, "G3": 2, "G4": 1, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "Frequent (I'm outside a lot, in the sun most days)", "fr": "[FR] Frequent (I'm outside a lot, in the sun most days)", "th": "[TH] Frequent (I'm outside a lot, in the sun most days)" },
+          "text": { "en": "Frequent (I'm outside a lot, in the sun most days)", "fr": "Fréquent (je suis souvent dehors, au soleil la plupart des jours)", "th": "บ่อย (อยู่นอกอาคารบ่อย เจอแดดเกือบทุกวัน)" },
           "value": "Frequent (I'm outside a lot, in the sun most days)",
           "weights": { "G1": 0, "G2": 0, "G3": 0, "G4": 3, "G5": 0, "G6": 3 }
         }
@@ -158,22 +158,22 @@
       "type": "radio",
       "questionText": {
         "en": "Do you work in shifts that can include nights or overnight?",
-        "fr": "[FR] Do you work in shifts that can include nights or overnight?",
-        "th": "[TH] Do you work in shifts that can include nights or overnight?"
+        "fr": "Travaillez-vous par équipes pouvant inclure la nuit ?",
+        "th": "คุณทำงานเป็นกะที่อาจรวมถึงกะกลางคืนหรือข้ามคืนหรือไม่?"
       },
       "answers": [
         {
-          "text": { "en": "I always work standard daytime hours", "fr": "[FR] I always work standard daytime hours", "th": "[TH] I always work standard daytime hours" },
+          "text": { "en": "I always work standard daytime hours", "fr": "Je travaille toujours en horaires de jour standard", "th": "ฉันทำงานเวลาปกติเวลากลางวันเสมอ" },
           "value": "I always work standard daytime hours",
           "weights": { "G1": 2, "G2": 0, "G3": 1, "G4": 1, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "I have occasional night shifts (less than 4 times/month)", "fr": "[FR] I have occasional night shifts (less than 4 times/month)", "th": "[TH] I have occasional night shifts (less than 4 times/month)" },
+          "text": { "en": "I have occasional night shifts (less than 4 times/month)", "fr": "J’effectue parfois des gardes de nuit (moins de 4 fois/mois)", "th": "ฉันมีกะกลางคืนเป็นครั้งคราว (น้อยกว่า 4 ครั้ง/เดือน)" },
           "value": "I have occasional night shifts (less than 4 times/month)",
           "weights": { "G1": 1, "G2": 2, "G3": 2, "G4": 2, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "I often work rotating or overnight shifts", "fr": "[FR] I often work rotating or overnight shifts", "th": "[TH] I often work rotating or overnight shifts" },
+          "text": { "en": "I often work rotating or overnight shifts", "fr": "Je travaille souvent en rotation ou de nuit", "th": "ฉันทำงานกะหมุนเวียนหรือกะกลางคืนบ่อยๆ" },
           "value": "I often work rotating or overnight shifts",
           "weights": { "G1": 0, "G2": 3, "G3": 3, "G4": 2, "G5": 2, "G6": 1 }
         }
@@ -185,22 +185,22 @@
       "type": "radio",
       "questionText": {
         "en": "Do you perform a lot of repetitive tasks or handle machinery?",
-        "fr": "[FR] Do you perform a lot of repetitive tasks or handle machinery?",
-        "th": "[TH] Do you perform a lot of repetitive tasks or handle machinery?"
+        "fr": "Effectuez-vous de nombreuses tâches répétitives ou manipulez-vous des machines ?",
+        "th": "งานของคุณมีงานซ้ำๆ หรือต้องควบคุมเครื่องจักรมากหรือไม่?"
       },
       "answers": [
         {
-          "text": { "en": "Mostly varied tasks, not repetitive", "fr": "[FR] Mostly varied tasks, not repetitive", "th": "[TH] Mostly varied tasks, not repetitive" },
+          "text": { "en": "Mostly varied tasks, not repetitive", "fr": "Tâches principalement variées, pas répétitives", "th": "งานหลากหลาย ส่วนใหญ่ไม่ซ้ำ" },
           "value": "Mostly varied tasks, not repetitive",
           "weights": { "G1": 2, "G2": 2, "G3": 0, "G4": 0, "G5": 2, "G6": 0 }
         },
         {
-          "text": { "en": "Some repetitive tasks, but also other duties", "fr": "[FR] Some repetitive tasks, but also other duties", "th": "[TH] Some repetitive tasks, but also other duties" },
+          "text": { "en": "Some repetitive tasks, but also other duties", "fr": "Certaines tâches répétitives mais aussi d’autres fonctions", "th": "มีงานซ้ำบ้าง แต่ก็มีงานอื่นๆ ด้วย" },
           "value": "Some repetitive tasks, but also other duties",
           "weights": { "G1": 1, "G2": 1, "G3": 2, "G4": 1, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "Highly repetitive tasks; or I operate/monitor machinery for hours", "fr": "[FR] Highly repetitive tasks; or I operate/monitor machinery for hours", "th": "[TH] Highly repetitive tasks; or I operate/monitor machinery for hours" },
+          "text": { "en": "Highly repetitive tasks; or I operate/monitor machinery for hours", "fr": "Tâches hautement répétitives ; ou je fais fonctionner/surveille des machines pendant des heures", "th": "งานซ้ำมาก; หรือฉันควบคุม/เฝ้าดูเครื่องจักรเป็นเวลาหลายชั่วโมง" },
           "value": "Highly repetitive tasks; or I operate/monitor machinery for hours",
           "weights": { "G1": 0, "G2": 0, "G3": 3, "G4": 2, "G5": 0, "G6": 1 }
         }
@@ -212,17 +212,17 @@
       "type": "radio",
       "questionText": {
         "en": "Does your job involve direct patient care (lifting patients, giving treatments, etc.)?",
-        "fr": "[FR] Does your job involve direct patient care (lifting patients, giving treatments, etc.)?",
-        "th": "[TH] Does your job involve direct patient care (lifting patients, giving treatments, etc.)?"
+        "fr": "Votre travail implique-t-il des soins directs aux patients (soulever des patients, dispenser des traitements, etc.) ?",
+        "th": "งานของคุณเกี่ยวข้องกับการดูแลผู้ป่วยโดยตรงหรือไม่ (ยกผู้ป่วย ให้การรักษา ฯลฯ)"
       },
       "answers": [
         {
-          "text": { "en": "Yes, frequently (nurse, doctor, caregiver, therapist, etc.)", "fr": "[FR] Yes, frequently (nurse, doctor, caregiver, therapist, etc.)", "th": "[TH] Yes, frequently (nurse, doctor, caregiver, therapist, etc.)" },
+          "text": { "en": "Yes, frequently (nurse, doctor, caregiver, therapist, etc.)", "fr": "Oui, fréquemment (infirmier, médecin, soignant, thérapeute, etc.)", "th": "ใช่ บ่อยครั้ง (พยาบาล แพทย์ ผู้ดูแล ผู้ทำกายภาพ ฯลฯ)" },
           "value": "Yes, frequently (nurse, doctor, caregiver, therapist, etc.)",
           "weights": { "G1": 0, "G2": 3, "G3": 0, "G4": 0, "G5": 0, "G6": 0 }
         },
         {
-          "text": { "en": "Rarely or never", "fr": "[FR] Rarely or never", "th": "[TH] Rarely or never" },
+          "text": { "en": "Rarely or never", "fr": "Rarement ou jamais", "th": "แทบไม่ หรือ ไม่เลย" },
           "value": "Rarely or never",
           "weights": { "G1": 1, "G2": 0, "G3": 1, "G4": 1, "G5": 1, "G6": 1 }
         }
@@ -234,22 +234,22 @@
       "type": "radio",
       "questionText": {
         "en": "How physically exhausting is your typical workday?",
-        "fr": "[FR] How physically exhausting is your typical workday?",
-        "th": "[TH] How physically exhausting is your typical workday?"
+        "fr": "À quel point votre journée de travail typique est-elle physiquement épuisante ?",
+        "th": "วันทำงานปกติของคุณเหนื่อยล้าทางกายมากเพียงใด?"
       },
       "answers": [
         {
-          "text": { "en": "Light (mostly mental tasks, minimal physical strain)", "fr": "[FR] Light (mostly mental tasks, minimal physical strain)", "th": "[TH] Light (mostly mental tasks, minimal physical strain)" },
+          "text": { "en": "Light (mostly mental tasks, minimal physical strain)", "fr": "Légère (tâches surtout mentales, effort physique minimal)", "th": "เบา (งานด้านความคิดเป็นหลัก ใช้แรงกายน้อย)" },
           "value": "Light (mostly mental tasks, minimal physical strain)",
           "weights": { "G1": 3, "G2": 1, "G3": 0, "G4": 0, "G5": 1, "G6": 0 }
         },
         {
-          "text": { "en": "Moderate (some moving, lifting, or standing)", "fr": "[FR] Moderate (some moving, lifting, or standing)", "th": "[TH] Moderate (some moving, lifting, or standing)" },
+          "text": { "en": "Moderate (some moving, lifting, or standing)", "fr": "Modérée (un peu de déplacement, de port, ou de station debout)", "th": "ปานกลาง (มีการเคลื่อนไหว ยกของ หรือยืนนานบ้าง)" },
           "value": "Moderate (some moving, lifting, or standing)",
           "weights": { "G1": 1, "G2": 2, "G3": 2, "G4": 1, "G5": 2, "G6": 1 }
         },
         {
-          "text": { "en": "High (often end the day very tired, sweaty, muscle ache)", "fr": "[FR] High (often end the day very tired, sweaty, muscle ache)", "th": "[TH] High (often end the day very tired, sweaty, muscle ache)" },
+          "text": { "en": "High (often end the day very tired, sweaty, muscle ache)", "fr": "Élevée (je termine souvent la journée très fatigué, en sueur, endolori)", "th": "สูง (หมดวันมักเหนื่อยมาก เหงื่อออก ปวดกล้ามเนื้อ)" },
           "value": "High (often end the day very tired, sweaty, muscle ache)",
           "weights": { "G1": 0, "G2": 0, "G3": 2, "G4": 3, "G5": 0, "G6": 2 }
         }
@@ -261,22 +261,22 @@
       "type": "radio",
       "questionText": {
         "en": "Which describes your main stress on the job?",
-        "fr": "[FR] Which describes your main stress on the job?",
-        "th": "[TH] Which describes your main stress on the job?"
+        "fr": "Quel énoncé décrit le mieux votre principal stress au travail ?",
+        "th": "ข้อความใดต่อไปนี้อธิบายความเครียดหลักในการทำงานของคุณ?"
       },
       "answers": [
         {
-          "text": { "en": "Mental/brainwork stress (deadlines, computer tasks)", "fr": "[FR] Mental/brainwork stress (deadlines, computer tasks)", "th": "[TH] Mental/brainwork stress (deadlines, computer tasks)" },
+          "text": { "en": "Mental/brainwork stress (deadlines, computer tasks)", "fr": "Stress mental/intellectuel (délais, tâches informatiques)", "th": "ความเครียดทางสมอง/งานคิด (เดดไลน์ งานคอมพ์)" },
           "value": "Mental/brainwork stress (deadlines, computer tasks)",
           "weights": { "G1": 3, "G2": 1, "G3": 0, "G4": 0, "G5": 0, "G6": 0 }
         },
         {
-          "text": { "en": "Emotional stress from interacting with people in tough conditions", "fr": "[FR] Emotional stress from interacting with people in tough conditions", "th": "[TH] Emotional stress from interacting with people in tough conditions" },
+          "text": { "en": "Emotional stress from interacting with people in tough conditions", "fr": "Stress émotionnel lié à l’interaction avec des personnes dans des situations difficiles", "th": "ความเครียดทางอารมณ์จากการติดต่อกับผู้คนในสภาวะยากลำบาก" },
           "value": "Emotional stress from interacting with people in tough conditions",
           "weights": { "G1": 0, "G2": 3, "G3": 0, "G4": 0, "G5": 2, "G6": 0 }
         },
         {
-          "text": { "en": "Physical stress (heavy tasks, tough environment, heat, dust, etc.)", "fr": "[FR] Physical stress (heavy tasks, tough environment, heat, dust, etc.)", "th": "[TH] Physical stress (heavy tasks, tough environment, heat, dust, etc.)" },
+          "text": { "en": "Physical stress (heavy tasks, tough environment, heat, dust, etc.)", "fr": "Stress physique (tâches lourdes, environnement difficile, chaleur, poussière, etc.)", "th": "ความเครียดทางกาย (งานหนัก สภาพแวดล้อมโหดร้าย ความร้อน ฝุ่น ฯลฯ)" },
           "value": "Physical stress (heavy tasks, tough environment, heat, dust, etc.)",
           "weights": { "G1": 0, "G2": 0, "G3": 2, "G4": 3, "G5": 1, "G6": 2 }
         }
@@ -288,22 +288,22 @@
       "type": "radio",
       "questionText": {
         "en": "Which best describes your typical footwear at work?",
-        "fr": "[FR] Which best describes your typical footwear at work?",
-        "th": "[TH] Which best describes your typical footwear at work?"
+        "fr": "Quels sont généralement vos chaussures au travail ?",
+        "th": "รองเท้าประจำที่คุณใส่เวลาทำงานเป็นแบบใด?"
       },
       "answers": [
         {
-          "text": { "en": "Standard shoes in an office or professional environment", "fr": "[FR] Standard shoes in an office or professional environment", "th": "[TH] Standard shoes in an office or professional environment" },
+          "text": { "en": "Standard shoes in an office or professional environment", "fr": "Chaussures standards en environnement de bureau ou professionnel", "th": "รองเท้ามาตรฐานในสำนักงานหรือสภาพแวดล้อมมืออาชีพ" },
           "value": "Standard shoes in an office or professional environment",
           "weights": { "G1": 3, "G2": 2, "G3": 1, "G4": 0, "G5": 2, "G6": 0 }
         },
         {
-          "text": { "en": "Safety shoes/boots for industrial or heavy tasks", "fr": "[FR] Safety shoes/boots for industrial or heavy tasks", "th": "[TH] Safety shoes/boots for industrial or heavy tasks" },
+          "text": { "en": "Safety shoes/boots for industrial or heavy tasks", "fr": "Chaussures/bottes de sécurité pour travaux industriels ou lourds", "th": "รองเท้านิรภัย/บูทสำหรับงานอุตสาหกรรมหรืองานหนัก" },
           "value": "Safety shoes/boots for industrial or heavy tasks",
           "weights": { "G1": 0, "G2": 1, "G3": 3, "G4": 3, "G5": 0, "G6": 1 }
         },
         {
-          "text": { "en": "Other (comfortable, casual, or specialized)", "fr": "[FR] Other (comfortable, casual, or specialized)", "th": "[TH] Other (comfortable, casual, or specialized)" },
+          "text": { "en": "Other (comfortable, casual, or specialized)", "fr": "Autre (confort, décontracté ou spécialisé)", "th": "อื่นๆ (ใส่สบาย ลำลอง หรือเฉพาะทาง)" },
           "value": "Other (comfortable, casual, or specialized)",
           "weights": { "G1": 1, "G2": 1, "G3": 1, "G4": 1, "G5": 1, "G6": 1 }
         }
@@ -315,22 +315,22 @@
       "type": "radio",
       "questionText": {
         "en": "How often do you walk or stand while performing your job?",
-        "fr": "[FR] How often do you walk or stand while performing your job?",
-        "th": "[TH] How often do you walk or stand while performing your job?"
+        "fr": "À quelle fréquence marchez-vous ou restez-vous debout pendant votre travail ?",
+        "th": "คุณต้องเดินหรือยืนขณะทำงานบ่อยเพียงใด?"
       },
       "answers": [
         {
-          "text": { "en": "Very little (mostly seated)", "fr": "[FR] Very little (mostly seated)", "th": "[TH] Very little (mostly seated)" },
+          "text": { "en": "Very little (mostly seated)", "fr": "Très peu (principalement assis)", "th": "น้อยมาก (นั่งเป็นหลัก)" },
           "value": "Very little (mostly seated)",
           "weights": { "G1": 3, "G2": 1, "G3": 0, "G4": 0, "G5": 1, "G6": 0 }
         },
         {
-          "text": { "en": "Some walking/standing, half the time", "fr": "[FR] Some walking/standing, half the time", "th": "[TH] Some walking/standing, half the time" },
+          "text": { "en": "Some walking/standing, half the time", "fr": "Un peu de marche/de station debout, environ la moitié du temps", "th": "เดิน/ยืนบ้าง ประมาณครึ่งหนึ่งของเวลา" },
           "value": "Some walking/standing, half the time",
           "weights": { "G1": 1, "G2": 2, "G3": 2, "G4": 1, "G5": 2, "G6": 1 }
         },
         {
-          "text": { "en": "Almost constantly on my feet", "fr": "[FR] Almost constantly on my feet", "th": "[TH] Almost constantly on my feet" },
+          "text": { "en": "Almost constantly on my feet", "fr": "Presque constamment debout", "th": "แทบตลอดเวลาอยู่บนเท้า" },
           "value": "Almost constantly on my feet",
           "weights": { "G1": 0, "G2": 1, "G3": 2, "G4": 3, "G5": 3, "G6": 2 }
         }
@@ -342,22 +342,22 @@
       "type": "radio",
       "questionText": {
         "en": "Are you exposed to chemicals, dust, or potential airborne hazards in your workplace?",
-        "fr": "[FR] Are you exposed to chemicals, dust, or potential airborne hazards in your workplace?",
-        "th": "[TH] Are you exposed to chemicals, dust, or potential airborne hazards in your workplace?"
+        "fr": "Êtes-vous exposé à des produits chimiques, à la poussière ou à des risques aériens potentiels sur votre lieu de travail ?",
+        "th": "คุณต้องสัมผัสสารเคมี ฝุ่น หรืออันตรายทางอากาศในที่ทำงานหรือไม่?"
       },
       "answers": [
         {
-          "text": { "en": "Rarely or never", "fr": "[FR] Rarely or never", "th": "[TH] Rarely or never" },
+          "text": { "en": "Rarely or never", "fr": "Rarement ou jamais", "th": "แทบไม่ หรือ ไม่เลย" },
           "value": "Rarely or never",
           "weights": { "G1": 2, "G2": 2, "G3": 0, "G4": 0, "G5": 1, "G6": 0 }
         },
         {
-          "text": { "en": "Occasionally (some mild exposure)", "fr": "[FR] Occasionally (some mild exposure)", "th": "[TH] Occasionally (some mild exposure)" },
+          "text": { "en": "Occasionally (some mild exposure)", "fr": "Occasionnellement (exposition légère)", "th": "เป็นบางครั้ง (สัมผัสเล็กน้อย)" },
           "value": "Occasionally (some mild exposure)",
           "weights": { "G1": 1, "G2": 1, "G3": 2, "G4": 1, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "Regular or heavy exposure (factories, construction dust, farm chemicals, etc.)", "fr": "[FR] Regular or heavy exposure (factories, construction dust, farm chemicals, etc.)", "th": "[TH] Regular or heavy exposure (factories, construction dust, farm chemicals, etc.)" },
+          "text": { "en": "Regular or heavy exposure (factories, construction dust, farm chemicals, etc.)", "fr": "Exposition régulière ou forte (usines, poussière de chantier, produits chimiques agricoles, etc.)", "th": "สัมผัสเป็นประจำหรือหนัก (โรงงาน ฝุ่นก่อสร้าง สารเคมีการเกษตร ฯลฯ)" },
           "value": "Regular or heavy exposure (factories, construction dust, farm chemicals, etc.)",
           "weights": { "G1": 0, "G2": 0, "G3": 3, "G4": 3, "G5": 0, "G6": 3 }
         }
@@ -369,22 +369,22 @@
       "type": "radio",
       "questionText": {
         "en": "Do you handle or operate specialized industrial/farming equipment daily?",
-        "fr": "[FR] Do you handle or operate specialized industrial/farming equipment daily?",
-        "th": "[TH] Do you handle or operate specialized industrial/farming equipment daily?"
+        "fr": "Manipulez-vous ou utilisez-vous quotidiennement du matériel industriel/agricole spécialisé ?",
+        "th": "คุณต้องใช้หรือควบคุมอุปกรณ์อุตสาหกรรม/เกษตรเฉพาะทางทุกวันหรือไม่?"
       },
       "answers": [
         {
-          "text": { "en": "Yes, industrial or factory equipment", "fr": "[FR] Yes, industrial or factory equipment", "th": "[TH] Yes, industrial or factory equipment" },
+          "text": { "en": "Yes, industrial or factory equipment", "fr": "Oui, équipements industriels ou d’usine", "th": "ใช่ อุปกรณ์อุตสาหกรรมหรือโรงงาน" },
           "value": "Yes, industrial or factory equipment",
           "weights": { "G1": 0, "G2": 0, "G3": 3, "G4": 1, "G5": 0, "G6": 1 }
         },
         {
-          "text": { "en": "Yes, farming machinery, fishing boats, or field tools", "fr": "[FR] Yes, farming machinery, fishing boats, or field tools", "th": "[TH] Yes, farming machinery, fishing boats, or field tools" },
+          "text": { "en": "Yes, farming machinery, fishing boats, or field tools", "fr": "Oui, machines agricoles, bateaux de pêche ou outils de terrain", "th": "ใช่ เครื่องจักรการเกษตร เรือประมง หรือเครื่องมือภาคสนาม" },
           "value": "Yes, farming machinery, fishing boats, or field tools",
           "weights": { "G1": 0, "G2": 0, "G3": 1, "G4": 0, "G5": 0, "G6": 3 }
         },
         {
-          "text": { "en": "No, not really", "fr": "[FR] No, not really", "th": "[TH] No, not really" },
+          "text": { "en": "No, not really", "fr": "Non, pas vraiment", "th": "ไม่ ไม่จริงเท่าไร" },
           "value": "No, not really",
           "weights": { "G1": 2, "G2": 2, "G3": 0, "G4": 1, "G5": 2, "G6": 0 }
         }
@@ -396,22 +396,22 @@
       "type": "radio",
       "questionText": {
         "en": "Do you handle money, serve customers, or stand behind a counter frequently?",
-        "fr": "[FR] Do you handle money, serve customers, or stand behind a counter frequently?",
-        "th": "[TH] Do you handle money, serve customers, or stand behind a counter frequently?"
+        "fr": "Gérez-vous de l’argent, servez-vous des clients ou restez-vous souvent derrière un comptoir ?",
+        "th": "คุณต้องรับเงิน ให้บริการลูกค้า หรือยืนหลังเคาน์เตอร์บ่อยหรือไม่?"
       },
       "answers": [
         {
-          "text": { "en": "Yes, daily or most of the time (cashier, barista, front-desk, etc.)", "fr": "[FR] Yes, daily or most of the time (cashier, barista, front-desk, etc.)", "th": "[TH] Yes, daily or most of the time (cashier, barista, front-desk, etc.)" },
+          "text": { "en": "Yes, daily or most of the time (cashier, barista, front-desk, etc.)", "fr": "Oui, quotidiennement ou la plupart du temps (caissier, barista, accueil, etc.)", "th": "ใช่ ทุกวันหรือเกือบตลอดเวลา (แคชเชียร์ บาริสต้า พนักงานต้อนรับ ฯลฯ)" },
           "value": "Yes, daily or most of the time (cashier, barista, front-desk, etc.)",
           "weights": { "G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 3, "G6": 0 }
         },
         {
-          "text": { "en": "Occasionally", "fr": "[FR] Occasionally", "th": "[TH] Occasionally" },
+          "text": { "en": "Occasionally", "fr": "Occasionnellement", "th": "เป็นบางครั้ง" },
           "value": "Occasionally",
           "weights": { "G1": 1, "G2": 1, "G3": 1, "G4": 1, "G5": 2, "G6": 1 }
         },
         {
-          "text": { "en": "Not at all", "fr": "[FR] Not at all", "th": "[TH] Not at all" },
+          "text": { "en": "Not at all", "fr": "Pas du tout", "th": "ไม่เลย" },
           "value": "Not at all",
           "weights": { "G1": 2, "G2": 2, "G3": 2, "G4": 2, "G5": 0, "G6": 2 }
         }
@@ -423,22 +423,22 @@
       "type": "radio",
       "questionText": {
         "en": "How regularly do you travel to different sites as part of your job?",
-        "fr": "[FR] How regularly do you travel to different sites as part of your job?",
-        "th": "[TH] How regularly do you travel to different sites as part of your job?"
+        "fr": "À quelle fréquence vous déplacez-vous sur différents sites dans le cadre de votre travail ?",
+        "th": "งานของคุณต้องเดินทางไปยังสถานที่ต่างๆ บ่อยเพียงใด?"
       },
       "answers": [
         {
-          "text": { "en": "Rarely (I stay in one location/office)", "fr": "[FR] Rarely (I stay in one location/office)", "th": "[TH] Rarely (I stay in one location/office)" },
+          "text": { "en": "Rarely (I stay in one location/office)", "fr": "Rarement (je reste dans un seul lieu/bureau)", "th": "ไม่ค่อย (อยู่ที่เดียว/ออฟฟิศเดียว)" },
           "value": "Rarely (I stay in one location/office)",
           "weights": { "G1": 3, "G2": 2, "G3": 1, "G4": 0, "G5": 1, "G6": 0 }
         },
         {
-          "text": { "en": "Sometimes (visit client sites, occasional field visits)", "fr": "[FR] Sometimes (visit client sites, occasional field visits)", "th": "[TH] Sometimes (visit client sites, occasional field visits)" },
+          "text": { "en": "Sometimes (visit client sites, occasional field visits)", "fr": "Parfois (visites clients, quelques déplacements terrain)", "th": "บางครั้ง (เยี่ยมลูกค้า ลงพื้นที่เป็นครั้งคราว)" },
           "value": "Sometimes (visit client sites, occasional field visits)",
           "weights": { "G1": 1, "G2": 1, "G3": 2, "G4": 1, "G5": 2, "G6": 1 }
         },
         {
-          "text": { "en": "Constantly (multiple job sites, farmland, or different environments)", "fr": "[FR] Constantly (multiple job sites, farmland, or different environments)", "th": "[TH] Constantly (multiple job sites, farmland, or different environments)" },
+          "text": { "en": "Constantly (multiple job sites, farmland, or different environments)", "fr": "Constamment (plusieurs sites, champs, environnements différents)", "th": "ตลอดเวลา (หลายไซต์งาน ไร่นา หรือสภาพแวดล้อมต่างๆ)" },
           "value": "Constantly (multiple job sites, farmland, or different environments)",
           "weights": { "G1": 0, "G2": 0, "G3": 1, "G4": 3, "G5": 0, "G6": 3 }
         }
@@ -450,27 +450,27 @@
       "type": "radio",
       "questionText": {
         "en": "Which best describes your typical daily tasks?",
-        "fr": "[FR] Which best describes your typical daily tasks?",
-        "th": "[TH] Which best describes your typical daily tasks?"
+        "fr": "Quelle affirmation décrit le mieux vos tâches quotidiennes typiques ?",
+        "th": "ข้อความใดอธิบายงานประจำวันของคุณได้ดีที่สุด?"
       },
       "answers": [
         {
-          "text": { "en": "Data entry, analysis, or computer-based (reports, coding, design)", "fr": "[FR] Data entry, analysis, or computer-based (reports, coding, design)", "th": "[TH] Data entry, analysis, or computer-based (reports, coding, design)" },
+          "text": { "en": "Data entry, analysis, or computer-based (reports, coding, design)", "fr": "Saisie de données, analyse ou travail informatique (rapports, codage, design)", "th": "ป้อนข้อมูล วิเคราะห์ หรือใช้คอมพิวเตอร์ (รายงาน เขียนโค้ด ออกแบบ)" },
           "value": "Data entry, analysis, or computer-based (reports, coding, design)",
           "weights": { "G1": 3, "G2": 1, "G3": 0, "G4": 0, "G5": 0, "G6": 0 }
         },
         {
-          "text": { "en": "Providing care/services directly to people (patients, customers)", "fr": "[FR] Providing care/services directly to people (patients, customers)", "th": "[TH] Providing care/services directly to people (patients, customers)" },
+          "text": { "en": "Providing care/services directly to people (patients, customers)", "fr": "Fournir des soins/services directement aux personnes (patients, clients)", "th": "ให้การดูแล/บริการกับผู้คนโดยตรง (ผู้ป่วย ลูกค้า)" },
           "value": "Providing care/services directly to people (patients, customers)",
           "weights": { "G1": 0, "G2": 3, "G3": 1, "G4": 0, "G5": 3, "G6": 0 }
         },
         {
-          "text": { "en": "Working with machinery, repetitive line work, or handling goods", "fr": "[FR] Working with machinery, repetitive line work, or handling goods", "th": "[TH] Working with machinery, repetitive line work, or handling goods" },
+          "text": { "en": "Working with machinery, repetitive line work, or handling goods", "fr": "Travail avec des machines, travail à la chaîne répétitif ou manutention de marchandises", "th": "ทำงานกับเครื่องจักร งานไลน์ซ้ำๆ หรือขนสินค้า" },
           "value": "Working with machinery, repetitive line work, or handling goods",
           "weights": { "G1": 0, "G2": 0, "G3": 3, "G4": 1, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "Outdoor labor, farmland, or construction tasks", "fr": "[FR] Outdoor labor, farmland, or construction tasks", "th": "[TH] Outdoor labor, farmland, or construction tasks" },
+          "text": { "en": "Outdoor labor, farmland, or construction tasks", "fr": "Travail extérieur, agricole ou de construction", "th": "งานกลางแจ้ง ไร่นา หรือก่อสร้าง" },
           "value": "Outdoor labor, farmland, or construction tasks",
           "weights": { "G1": 0, "G2": 0, "G3": 0, "G4": 3, "G5": 0, "G6": 3 }
         }
@@ -482,22 +482,22 @@
       "type": "radio",
       "questionText": {
         "en": "Are you responsible for preparing or cooking food in your daily role?",
-        "fr": "[FR] Are you responsible for preparing or cooking food in your daily role?",
-        "th": "[TH] Are you responsible for preparing or cooking food in your daily role?"
+        "fr": "Êtes-vous responsable de la préparation ou de la cuisson des aliments dans votre rôle quotidien ?",
+        "th": "หน้าที่ประจำวันของคุณต้องเตรียมหรือทำอาหารหรือไม่?"
       },
       "answers": [
         {
-          "text": { "en": "Yes, it’s my main job", "fr": "[FR] Yes, it’s my main job", "th": "[TH] Yes, it’s my main job" },
+          "text": { "en": "Yes, it’s my main job", "fr": "Oui, c’est mon travail principal", "th": "ใช่ เป็นงานหลักของฉัน" },
           "value": "Yes, it’s my main job",
           "weights": { "G1": 0, "G2": 0, "G3": 1, "G4": 0, "G5": 3, "G6": 0 }
         },
         {
-          "text": { "en": "Sometimes help with it", "fr": "[FR] Sometimes help with it", "th": "[TH] Sometimes help with it" },
+          "text": { "en": "Sometimes help with it", "fr": "Parfois, j’aide à le faire", "th": "บางครั้งช่วยทำ" },
           "value": "Sometimes help with it",
           "weights": { "G1": 1, "G2": 1, "G3": 1, "G4": 1, "G5": 2, "G6": 1 }
         },
         {
-          "text": { "en": "No, not related", "fr": "[FR] No, not related", "th": "[TH] No, not related" },
+          "text": { "en": "No, not related", "fr": "Non, pas concerné", "th": "ไม่ เกี่ยวข้อง" },
           "value": "No, not related",
           "weights": { "G1": 2, "G2": 2, "G3": 2, "G4": 2, "G5": 0, "G6": 2 }
         }
@@ -509,27 +509,27 @@
       "type": "radio",
       "questionText": {
         "en": "In a typical shift/day, how many hours do you spend talking (actively conversing) with others?",
-        "fr": "[FR] In a typical shift/day, how many hours do you spend talking (actively conversing) with others?",
-        "th": "[TH] In a typical shift/day, how many hours do you spend talking (actively conversing) with others?"
+        "fr": "Dans une journée/shift typique, combien d’heures passez-vous à parler (conversation active) avec d’autres personnes ?",
+        "th": "ในกะ/วันทำงานทั่วไป คุณใช้เวลากี่ชั่วโมงในการสนทนากับผู้อื่น?"
       },
       "answers": [
         {
-          "text": { "en": "Less than 1 hour", "fr": "[FR] Less than 1 hour", "th": "[TH] Less than 1 hour" },
+          "text": { "en": "Less than 1 hour", "fr": "Moins d’une heure", "th": "น้อยกว่า 1 ชั่วโมง" },
           "value": "Less than 1 hour",
           "weights": { "G1": 2, "G2": 1, "G3": 2, "G4": 1, "G5": 0, "G6": 1 }
         },
         {
-          "text": { "en": "1–3 hours", "fr": "[FR] 1–3 hours", "th": "[TH] 1–3 hours" },
+          "text": { "en": "1–3 hours", "fr": "1–3 heures", "th": "1–3 ชั่วโมง" },
           "value": "1–3 hours",
           "weights": { "G1": 2, "G2": 2, "G3": 2, "G4": 1, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "3–6 hours", "fr": "[FR] 3–6 hours", "th": "[TH] 3–6 hours" },
+          "text": { "en": "3–6 hours", "fr": "3–6 heures", "th": "3–6 ชั่วโมง" },
           "value": "3–6 hours",
           "weights": { "G1": 1, "G2": 2, "G3": 1, "G4": 1, "G5": 3, "G6": 1 }
         },
         {
-          "text": { "en": "More than 6 hours", "fr": "[FR] More than 6 hours", "th": "[TH] More than 6 hours" },
+          "text": { "en": "More than 6 hours", "fr": "Plus de 6 heures", "th": "มากกว่า 6 ชั่วโมง" },
           "value": "More than 6 hours",
           "weights": { "G1": 0, "G2": 2, "G3": 0, "G4": 0, "G5": 3, "G6": 0 }
         }
@@ -541,27 +541,27 @@
       "type": "radio",
       "questionText": {
         "en": "How often do you have urgent tasks that lead to skipping breaks/meals?",
-        "fr": "[FR] How often do you have urgent tasks that lead to skipping breaks/meals?",
-        "th": "[TH] How often do you have urgent tasks that lead to skipping breaks/meals?"
+        "fr": "À quelle fréquence avez-vous des tâches urgentes qui vous font sauter les pauses/repas ?",
+        "th": "คุณมีงานเร่งด่วนจนต้องข้ามพัก/มื้ออาหารบ่อยแค่ไหน?"
       },
       "answers": [
         {
-          "text": { "en": "Rarely or never", "fr": "[FR] Rarely or never", "th": "[TH] Rarely or never" },
+          "text": { "en": "Rarely or never", "fr": "Rarement ou jamais", "th": "แทบไม่ หรือ ไม่เลย" },
           "value": "Rarely or never",
           "weights": { "G1": 2, "G2": 1, "G3": 1, "G4": 1, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "Occasionally (1–2 times a week)", "fr": "[FR] Occasionally (1–2 times a week)", "th": "[TH] Occasionally (1–2 times a week)" },
+          "text": { "en": "Occasionally (1–2 times a week)", "fr": "Occasionnellement (1–2 fois par semaine)", "th": "เป็นบางครั้ง (1–2 ครั้งต่อสัปดาห์)" },
           "value": "Occasionally (1–2 times a week)",
           "weights": { "G1": 2, "G2": 2, "G3": 2, "G4": 2, "G5": 2, "G6": 2 }
         },
         {
-          "text": { "en": "Often (most days)", "fr": "[FR] Often (most days)", "th": "[TH] Often (most days)" },
+          "text": { "en": "Often (most days)", "fr": "Souvent (la plupart des jours)", "th": "บ่อย (เกือบทุกวัน)" },
           "value": "Often (most days)",
           "weights": { "G1": 1, "G2": 2, "G3": 2, "G4": 2, "G5": 3, "G6": 1 }
         },
         {
-          "text": { "en": "Constantly, I rarely have a calm day", "fr": "[FR] Constantly, I rarely have a calm day", "th": "[TH] Constantly, I rarely have a calm day" },
+          "text": { "en": "Constantly, I rarely have a calm day", "fr": "Constamment, j’ai rarement une journée tranquille", "th": "ตลอดเวลา แทบไม่มีวันสงบ" },
           "value": "Constantly, I rarely have a calm day",
           "weights": { "G1": 0, "G2": 3, "G3": 3, "G4": 2, "G5": 3, "G6": 1 }
         }
@@ -573,42 +573,42 @@
       "type": "checkbox_group",
       "questionText": {
         "en": "Check the environment(s) that closely match your daily setting (select all that apply).",
-        "fr": "[FR] Check the environment(s) that closely match your daily setting (select all that apply).",
-        "th": "[TH] Check the environment(s) that closely match your daily setting (select all that apply)."
+        "fr": "Cochez le/les environnement(s) qui correspondent le mieux à votre cadre quotidien (sélectionnez tout ce qui s'applique).",
+        "th": "เลือกสภาพแวดล้อมที่ตรงกับการทำงานประจำวันของคุณ (เลือกได้หลายข้อ)"
       },
       "answers": [
         {
-          "text": { "en": "Air-conditioned office environment", "fr": "[FR] Air-conditioned office environment", "th": "[TH] Air-conditioned office environment" },
+          "text": { "en": "Air-conditioned office environment", "fr": "Bureau climatisé", "th": "สำนักงานปรับอากาศ" },
           "value": "Air-conditioned office environment",
           "weights": { "G1": 2, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0 }
         },
         {
-          "text": { "en": "Clinic/hospital environment", "fr": "[FR] Clinic/hospital environment", "th": "[TH] Clinic/hospital environment" },
+          "text": { "en": "Clinic/hospital environment", "fr": "Environnement clinique/hôpital", "th": "สภาพแวดล้อมคลินิก/โรงพยาบาล" },
           "value": "Clinic/hospital environment",
           "weights": { "G1": 0, "G2": 3, "G3": 0, "G4": 0, "G5": 0, "G6": 0 }
         },
         {
-          "text": { "en": "Factory floor or production line", "fr": "[FR] Factory floor or production line", "th": "[TH] Factory floor or production line" },
+          "text": { "en": "Factory floor or production line", "fr": "Atelier ou ligne de production", "th": "พื้นโรงงานหรือสายการผลิต" },
           "value": "Factory floor or production line",
           "weights": { "G1": 0, "G2": 0, "G3": 3, "G4": 0, "G5": 0, "G6": 0 }
         },
         {
-          "text": { "en": "Construction site", "fr": "[FR] Construction site", "th": "[TH] Construction site" },
+          "text": { "en": "Construction site", "fr": "Chantier de construction", "th": "ไซต์ก่อสร้าง" },
           "value": "Construction site",
           "weights": { "G1": 0, "G2": 0, "G3": 0, "G4": 3, "G5": 0, "G6": 0 }
         },
         {
-          "text": { "en": "Restaurant / hotel / retail / service location", "fr": "[FR] Restaurant / hotel / retail / service location", "th": "[TH] Restaurant / hotel / retail / service location" },
+          "text": { "en": "Restaurant / hotel / retail / service location", "fr": "Restaurant / hôtel / commerce / service", "th": "ร้านอาหาร / โรงแรม / ค้าปลีก / บริการ" },
           "value": "Restaurant / hotel / retail / service location",
           "weights": { "G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 3, "G6": 0 }
         },
         {
-          "text": { "en": "Farmland, fishing boat, or open field", "fr": "[FR] Farmland, fishing boat, or open field", "th": "[TH] Farmland, fishing boat, or open field" },
+          "text": { "en": "Farmland, fishing boat, or open field", "fr": "Terres agricoles, bateau de pêche ou plein air", "th": "ไร่นา เรือประมง หรือทุ่งโล่ง" },
           "value": "Farmland, fishing boat, or open field",
           "weights": { "G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 3 }
         },
         {
-          "text": { "en": "None of the above", "fr": "[FR] None of the above", "th": "[TH] None of the above" },
+          "text": { "en": "None of the above", "fr": "Aucun des précédents", "th": "ไม่มีข้อใดข้างต้น" },
           "value": "None of the above",
           "weights": { "G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0 }
         }
@@ -620,27 +620,27 @@
       "type": "checkbox_group",
       "questionText": {
         "en": "Which daily hazards do you face?",
-        "fr": "[FR] Which daily hazards do you face?",
-        "th": "[TH] Which daily hazards do you face?"
+        "fr": "Quels dangers quotidiens rencontrez-vous ?",
+        "th": "คุณเผชิญอันตรายอะไรบ้างในแต่ละวัน?"
       },
       "answers": [
         {
-          "text": { "en": "Repetitive strain from keyboard/computer use", "fr": "[FR] Repetitive strain from keyboard/computer use", "th": "[TH] Repetitive strain from keyboard/computer use" },
+          "text": { "en": "Repetitive strain from keyboard/computer use", "fr": "Effort répétitif lié à l’utilisation du clavier/ordinateur", "th": "อาการเมื่อยซ้ำจากการใช้คีย์บอร์ด/คอมพิวเตอร์" },
           "value": "Repetitive strain from keyboard/computer use",
           "weights": { "G1": 3, "G2": 1, "G3": 0, "G4": 0, "G5": 1, "G6": 0 }
         },
         {
-          "text": { "en": "Exposure to illnesses (patients) or strict hygiene protocols", "fr": "[FR] Exposure to illnesses (patients) or strict hygiene protocols", "th": "[TH] Exposure to illnesses (patients) or strict hygiene protocols" },
+          "text": { "en": "Exposure to illnesses (patients) or strict hygiene protocols", "fr": "Exposition aux maladies (patients) ou protocoles d’hygiène stricts", "th": "เสี่ยงต่อการติดโรค (ผู้ป่วย) หรือมาตรฐานสุขลักษณะเข้มงวด" },
           "value": "Exposure to illnesses (patients) or strict hygiene protocols",
           "weights": { "G1": 0, "G2": 3, "G3": 0, "G4": 0, "G5": 1, "G6": 0 }
         },
         {
-          "text": { "en": "Operating heavy/dangerous machinery (warehouse, factory)", "fr": "[FR] Operating heavy/dangerous machinery (warehouse, factory)", "th": "[TH] Operating heavy/dangerous machinery (warehouse, factory)" },
+          "text": { "en": "Operating heavy/dangerous machinery (warehouse, factory)", "fr": "Utilisation de machines lourdes/dangereuses (entrepôt, usine)", "th": "ควบคุมเครื่องจักรหนัก/อันตราย (คลังสินค้า โรงงาน)" },
           "value": "Operating heavy/dangerous machinery (warehouse, factory)",
           "weights": { "G1": 0, "G2": 0, "G3": 3, "G4": 1, "G5": 0, "G6": 1 }
         },
         {
-          "text": { "en": "High risk of injuries from heights, large tools, or open fields", "fr": "[FR] High risk of injuries from heights, large tools, or open fields", "th": "[TH] High risk of injuries from heights, large tools, or open fields" },
+          "text": { "en": "High risk of injuries from heights, large tools, or open fields", "fr": "Risque élevé de blessures (hauteur, gros outils, plein air)", "th": "เสี่ยงบาดเจ็บสูงจากที่สูง เครื่องมือใหญ่ หรือพื้นที่โล่ง" },
           "value": "High risk of injuries from heights, large tools, or open fields",
           "weights": { "G1": 0, "G2": 0, "G3": 1, "G4": 3, "G5": 0, "G6": 3 }
         }
@@ -652,42 +652,42 @@
       "type": "checkbox_group",
       "questionText": {
         "en": "During your work, do you handle or manage any of the following? (Check all that apply.)",
-        "fr": "[FR] During your work, do you handle or manage any of the following? (Check all that apply.)",
-        "th": "[TH] During your work, do you handle or manage any of the following? (Check all that apply.)"
+        "fr": "Dans votre travail, gérez-vous l’un des éléments suivants ? (Cochez tout ce qui s'applique.)",
+        "th": "ระหว่างทำงาน คุณต้องจัดการสิ่งใดต่อไปนี้หรือไม่ (เลือกได้หลายข้อ)"
       },
       "answers": [
         {
-          "text": { "en": "Medical records, prescriptions, or patient charts", "fr": "[FR] Medical records, prescriptions, or patient charts", "th": "[TH] Medical records, prescriptions, or patient charts" },
+          "text": { "en": "Medical records, prescriptions, or patient charts", "fr": "Dossiers médicaux, ordonnances ou dossiers patients", "th": "เวชระเบียน ใบสั่งยา หรือแฟ้มประวัติผู้ป่วย" },
           "value": "Medical records, prescriptions, or patient charts",
           "weights": { "G2": 3 }
         },
         {
-          "text": { "en": "Cash registers, customer orders, or reservations", "fr": "[FR] Cash registers, customer orders, or reservations", "th": "[TH] Cash registers, customer orders, or reservations" },
+          "text": { "en": "Cash registers, customer orders, or reservations", "fr": "Caisses, commandes clients ou réservations", "th": "เครื่องรับเงิน ใบสั่งลูกค้า หรือการจอง" },
           "value": "Cash registers, customer orders, or reservations",
           "weights": { "G5": 3 }
         },
         {
-          "text": { "en": "Software coding, spreadsheets, or data analytics", "fr": "[FR] Software coding, spreadsheets, or data analytics", "th": "[TH] Software coding, spreadsheets, or data analytics" },
+          "text": { "en": "Software coding, spreadsheets, or data analytics", "fr": "Codage logiciel, feuilles de calcul ou analyse de données", "th": "การเขียนโค้ดซอฟต์แวร์ สเปรดชีต หรือการวิเคราะห์ข้อมูล" },
           "value": "Software coding, spreadsheets, or data analytics",
           "weights": { "G1": 3 }
         },
         {
-          "text": { "en": "Heavy equipment, steel, wood, or building materials", "fr": "[FR] Heavy equipment, steel, wood, or building materials", "th": "[TH] Heavy equipment, steel, wood, or building materials" },
+          "text": { "en": "Heavy equipment, steel, wood, or building materials", "fr": "Équipement lourd, acier, bois ou matériaux de construction", "th": "อุปกรณ์หนัก เหล็ก ไม้ หรือวัสดุก่อสร้าง" },
           "value": "Heavy equipment, steel, wood, or building materials",
           "weights": { "G4": 3 }
         },
         {
-          "text": { "en": "Assembly line or manual repetitive tasks", "fr": "[FR] Assembly line or manual repetitive tasks", "th": "[TH] Assembly line or manual repetitive tasks" },
+          "text": { "en": "Assembly line or manual repetitive tasks", "fr": "Chaîne de montage ou tâches manuelles répétitives", "th": "สายการประกอบหรือภารกิจซ้ำด้วยมือ" },
           "value": "Assembly line or manual repetitive tasks",
           "weights": { "G3": 3 }
         },
         {
-          "text": { "en": "Planting, fishing nets, or livestock", "fr": "[FR] Planting, fishing nets, or livestock", "th": "[TH] Planting, fishing nets, or livestock" },
+          "text": { "en": "Planting, fishing nets, or livestock", "fr": "Plantation, filets de pêche ou bétail", "th": "การปลูกพืช อวนประมง หรือปศุสัตว์" },
           "value": "Planting, fishing nets, or livestock",
           "weights": { "G6": 3 }
         },
         {
-          "text": { "en": "None of the above", "fr": "[FR] None of the above", "th": "[TH] None of the above" },
+          "text": { "en": "None of the above", "fr": "Aucun des précédents", "th": "ไม่มีข้อใดข้างต้น" },
           "value": "None of the above",
           "weights": {}
         }
@@ -699,22 +699,22 @@
       "type": "radio",
       "questionText": {
         "en": "Which pace best describes your typical work shift?",
-        "fr": "[FR] Which pace best describes your typical work shift?",
-        "th": "[TH] Which pace best describes your typical work shift?"
+        "fr": "Quel rythme décrit le mieux votre équipe de travail typique ?",
+        "th": "จังหวะการทำงานกะปกติของคุณเป็นอย่างไร?"
       },
       "answers": [
         {
-          "text": { "en": "Mostly steady, I can manage tasks at my own pace", "fr": "[FR] Mostly steady, I can manage tasks at my own pace", "th": "[TH] Mostly steady, I can manage tasks at my own pace" },
+          "text": { "en": "Mostly steady, I can manage tasks at my own pace", "fr": "Plutôt régulier, je gère les tâches à mon rythme", "th": "ค่อนข้างสม่ำเสมอ ฉันจัดการงานได้ตามจังหวะของตน" },
           "value": "Mostly steady, I can manage tasks at my own pace",
           "weights": { "G1": 3, "G2": 1, "G3": 1, "G4": 1, "G5": 1, "G6": 1 }
         },
         {
-          "text": { "en": "Intermittent bursts of high activity, but some downtime", "fr": "[FR] Intermittent bursts of high activity, but some downtime", "th": "[TH] Intermittent bursts of high activity, but some downtime" },
+          "text": { "en": "Intermittent bursts of high activity, but some downtime", "fr": "Pics d’activité intense intermittents, mais aussi des temps morts", "th": "มีช่วงงานเร่งเป็นพักๆ พร้อมช่วงผ่อนบ้าง" },
           "value": "Intermittent bursts of high activity, but some downtime",
           "weights": { "G1": 1, "G2": 2, "G3": 2, "G4": 2, "G5": 2, "G6": 1 }
         },
         {
-          "text": { "en": "Constant hustle (serving lots of people or working continuously)", "fr": "[FR] Constant hustle (serving lots of people or working continuously)", "th": "[TH] Constant hustle (serving lots of people or working continuously)" },
+          "text": { "en": "Constant hustle (serving lots of people or working continuously)", "fr": "Agitation constante (servir beaucoup de personnes ou travailler sans arrêt)", "th": "เร่งรีบตลอด (บริการคนจำนวนมากหรือทำงานต่อเนื่อง)" },
           "value": "Constant hustle (serving lots of people or working continuously)",
           "weights": { "G1": 0, "G2": 2, "G3": 2, "G4": 2, "G5": 3, "G6": 2 }
         }
@@ -726,32 +726,32 @@
       "type": "radio",
       "questionText": {
         "en": "Which statement best sums up your work environment?",
-        "fr": "[FR] Which statement best sums up your work environment?",
-        "th": "[TH] Which statement best sums up your work environment?"
+        "fr": "Quelle affirmation résume le mieux votre environnement de travail ?",
+        "th": "ข้อความใดสรุปสภาพแวดล้อมการทำงานของคุณได้ดีที่สุด?"
       },
       "answers": [
         {
-          "text": { "en": "I’m in front of a computer, dealing with digital/office tasks.", "fr": "[FR] I’m in front of a computer, dealing with digital/office tasks.", "th": "[TH] I’m in front of a computer, dealing with digital/office tasks." },
+          "text": { "en": "I’m in front of a computer, dealing with digital/office tasks.", "fr": "Je suis devant un ordinateur, effectuant des tâches numériques/de bureau.", "th": "ฉันอยู่หน้าคอมพิวเตอร์ ทำงานดิจิทัล/งานสำนักงาน" },
           "value": "I’m in front of a computer, dealing with digital/office tasks.",
           "weights": { "G1": 3, "G2": 1, "G3": 0, "G4": 0, "G5": 0, "G6": 0 }
         },
         {
-          "text": { "en": "I’m looking after people’s health/well-being (medical or care setting).", "fr": "[FR] I’m looking after people’s health/well-being (medical or care setting).", "th": "[TH] I’m looking after people’s health/well-being (medical or care setting)." },
+          "text": { "en": "I’m looking after people’s health/well-being (medical or care setting).", "fr": "Je prends soin de la santé/bien‑être des personnes (cadre médical ou de soin).", "th": "ฉันดูแลสุขภาพ/ความเป็นอยู่ของผู้คน (สภาพแวดล้อมทางการแพทย์หรือการดูแล)" },
           "value": "I’m looking after people’s health/well-being (medical or care setting).",
           "weights": { "G1": 0, "G2": 3, "G3": 0, "G4": 0, "G5": 0, "G6": 0 }
         },
         {
-          "text": { "en": "I’m standing/moving around a factory floor or controlling machinery.", "fr": "[FR] I’m standing/moving around a factory floor or controlling machinery.", "th": "[TH] I’m standing/moving around a factory floor or controlling machinery." },
+          "text": { "en": "I’m standing/moving around a factory floor or controlling machinery.", "fr": "Je me tiens/m déplace sur le plancher d’usine ou je contrôle des machines.", "th": "ฉันยืน/เคลื่อนรอบพื้นโรงงานหรือควบคุมเครื่องจักร" },
           "value": "I’m standing/moving around a factory floor or controlling machinery.",
           "weights": { "G1": 0, "G2": 0, "G3": 3, "G4": 0, "G5": 1, "G6": 0 }
         },
         {
-          "text": { "en": "I’m doing physically demanding outdoor work (construction/farm).", "fr": "[FR] I’m doing physically demanding outdoor work (construction/farm).", "th": "[TH] I’m doing physically demanding outdoor work (construction/farm)." },
+          "text": { "en": "I’m doing physically demanding outdoor work (construction/farm).", "fr": "Je réalise un travail physique exigeant à l’extérieur (construction/ferme).", "th": "ฉันทำงานกลางแจ้งที่ต้องใช้แรงกายมาก (ก่อสร้าง/เกษตร)" },
           "value": "I’m doing physically demanding outdoor work (construction/farm).",
           "weights": { "G1": 0, "G2": 0, "G3": 1, "G4": 3, "G5": 0, "G6": 3 }
         },
         {
-          "text": { "en": "I’m serving or hosting in a service/hospitality environment.", "fr": "[FR] I’m serving or hosting in a service/hospitality environment.", "th": "[TH] I’m serving or hosting in a service/hospitality environment." },
+          "text": { "en": "I’m serving or hosting in a service/hospitality environment.", "fr": "Je sers ou j’accueille dans un environnement de service/hôtellerie.", "th": "ฉันให้บริการหรือต้อนรับในสภาพแวดล้อมบริการ/การโรงแรม" },
           "value": "I’m serving or hosting in a service/hospitality environment.",
           "weights": { "G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 3, "G6": 0 }
         }
@@ -759,17 +759,17 @@
     },
     {
       "id": 26,
-      "step": 5, 
+      "step": 5,
       "type": "freetext",
       "questionText": {
         "en": "Is there any other information about your symptoms or other details you would like to share?",
-        "fr": "[FR] Is there any other information about your symptoms or other details you would like to share?",
-        "th": "[TH] Is there any other information about your symptoms or other details you would like to share?"
+        "fr": "Y a-t-il d’autres informations sur vos symptômes ou détails que vous souhaiteriez partager ?",
+        "th": "มีข้อมูลอื่นเกี่ยวกับอาการหรือรายละเอียดอื่นใดที่คุณต้องการแบ่งปันหรือไม่?"
       },
       "placeholderText": {
         "en": "Enter additional information here...",
-        "fr": "[FR] Enter additional information here...",
-        "th": "[TH] Enter additional information here..."
+        "fr": "Saisissez des informations supplémentaires ici...",
+        "th": "กรอกข้อมูลเพิ่มเติมที่นี่..."
       }
     }
   ]
