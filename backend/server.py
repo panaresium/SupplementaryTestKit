@@ -45,6 +45,12 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(json.dumps(obj).encode('utf-8'))
 
     def do_POST(self):
+        # --- BEGIN ADDED DEBUG LOGGING ---
+        print(f"DEBUG: do_POST received path: '{self.path}' (length: {len(self.path)})")
+        print(f"DEBUG: self.path bytes: {self.path.encode('utf-8')!r}") # Using !r for unambiguous byte string representation
+        print(f"DEBUG: Is path == '/questionnaire'? {self.path == '/questionnaire'}")
+        # --- END ADDED DEBUG LOGGING ---
+
         length = int(self.headers.get('Content-Length', 0))
         body = self.rfile.read(length)
         if self.path == '/upload':

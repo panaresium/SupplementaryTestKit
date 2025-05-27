@@ -38,7 +38,8 @@ def init_db():
             physical_demand TEXT,
             exercise_freq TEXT,
             exercise_duration TEXT,
-            exercise_type TEXT,
+            exercise_types TEXT, -- RENAMED from exercise_type
+            exercise_type_other TEXT, -- ADDED
             sleep_time TEXT,
             wake_time TEXT,
             avg_sleep TEXT,
@@ -47,7 +48,8 @@ def init_db():
             diet_preference TEXT,
             diet_restrictions TEXT,
             meals_per_day TEXT,
-            beverages TEXT,
+            beverage_choices TEXT, -- RENAMED from beverages
+            beverages_other TEXT, -- ADDED
             smoke TEXT,
             alcohol TEXT,
             health_goals TEXT,
@@ -66,6 +68,7 @@ def init_db():
 @app.route('/api/submit', methods=['POST'])
 def submit():
     data = request.get_json(force=True)
+    language_code = data.get('language') # Extract language_code
     response_id = str(uuid4())
     timestamp = datetime.utcnow().isoformat()
 
@@ -94,7 +97,10 @@ def submit():
     physical_demand = survey_answers.get('physical_demand')
     exercise_freq = survey_answers.get('exercise_freq')
     exercise_duration = survey_answers.get('exercise_duration')
-    exercise_type = survey_answers.get('exercise_type')
+    # exercise_type = survey_answers.get('exercise_type') # Removed/Commented out
+    exercise_types_list = survey_answers.get('exercise_types', [])
+    exercise_types_str = json.dumps(exercise_types_list)
+    exercise_type_other = survey_answers.get('exercise_type_other')
     sleep_time = survey_answers.get('sleep_time')
     wake_time = survey_answers.get('wake_time')
     avg_sleep = survey_answers.get('avg_sleep')
@@ -103,7 +109,10 @@ def submit():
     diet_preference = survey_answers.get('diet_preference')
     diet_restrictions = survey_answers.get('diet_restrictions')
     meals_per_day = survey_answers.get('meals_per_day')
-    beverages = survey_answers.get('beverages')
+    # beverages = survey_answers.get('beverages') # Removed/Commented out
+    beverage_choices_list = survey_answers.get('beverage_choices', [])
+    beverage_choices_str = json.dumps(beverage_choices_list)
+    beverages_other = survey_answers.get('beverages_other')
     smoke = survey_answers.get('smoke')
     alcohol = survey_answers.get('alcohol')
     
@@ -124,11 +133,12 @@ def submit():
     cur = conn.cursor()
 
     column_names = [
-        "id", "timestamp", "age", "gender", "occupation", "location", "work_hours",
+        "id", "timestamp", "language_code", "age", "gender", "occupation", "location", "work_hours",
         "work_env", "posture", "transport", "commute_time", "physical_demand",
-        "exercise_freq", "exercise_duration", "exercise_type", "sleep_time", "wake_time",
-        "avg_sleep", "food_like", "food_dislike", "diet_preference", "diet_restrictions",
-        "meals_per_day", "beverages", "smoke", "alcohol", "health_goals",
+        "exercise_freq", "exercise_duration", "exercise_types", "exercise_type_other", 
+        "sleep_time", "wake_time", "avg_sleep", "food_like", "food_dislike", 
+        "diet_preference", "diet_restrictions", "meals_per_day", 
+        "beverage_choices", "beverages_other", "smoke", "alcohol", "health_goals",
         "supplement_use", "current_supplements", "medical_conditions",
         "symptoms_checklist", "symptoms_other_concerns", "symptoms_stress_level", "products"
     ]
@@ -137,11 +147,12 @@ def submit():
     sql = f"INSERT INTO responses ({', '.join(column_names)}) VALUES ({placeholders})"
     
     values_tuple = (
-        response_id, timestamp, age, gender, occupation, location, work_hours,
+        response_id, timestamp, language_code, age, gender, occupation, location, work_hours,
         work_env, posture, transport, commute_time, physical_demand,
-        exercise_freq, exercise_duration, exercise_type, sleep_time, wake_time,
-        avg_sleep, food_like, food_dislike, diet_preference, diet_restrictions,
-        meals_per_day, beverages, smoke, alcohol, health_goals_str,
+        exercise_freq, exercise_duration, exercise_types_str, exercise_type_other,
+        sleep_time, wake_time, avg_sleep, food_like, food_dislike,
+        diet_preference, diet_restrictions, meals_per_day,
+        beverage_choices_str, beverages_other, smoke, alcohol, health_goals_str,
         supplement_use, current_supplements, medical_conditions,
         symptoms_checklist_str, symptoms_other_concerns, symptoms_stress_level, products_data
     )

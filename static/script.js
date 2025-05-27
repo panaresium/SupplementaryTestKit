@@ -98,15 +98,15 @@ async function submitAnswers() {
 
   const currentLang = localStorage.getItem('language') || 'en'; // Get current language
   const payload = {
-      username: "testuser", // Using a placeholder username
-      answers: answers, // The existing answers object
-      language: currentLang
+      features: JSON.stringify(answers), // 'answers' is the existing large object of responses
+      language: currentLang,
+      products: "" // Include this empty string field as app.py might expect it
   };
 
-  const res = await fetch('/questionnaire', { // Corrected endpoint
+  const res = await fetch('/api/submit', { // Changed endpoint back to /api/submit
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(payload) // Updated payload
+    body: JSON.stringify(payload) // Updated payload structure
   });
 
   if (res.ok) {
