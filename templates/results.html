@@ -64,6 +64,10 @@
 <body>
     <div class="container">
         <h1>Survey Submissions</h1>
+        <div style="text-align:right; margin-bottom:10px;">
+            <a href="{{ url_for('logout') }}" class="btn-secondary">Logout</a>
+            <a href="{{ url_for('admin_export_csv') }}" class="btn-secondary">Export CSV</a>
+        </div>
         {% if totals %}
         <div>
             <strong>Aggregate Scores:</strong>
@@ -71,9 +75,17 @@
             G4 {{ totals['G4'] }} | G5 {{ totals['G5'] }} | G6 {{ totals['G6'] }}
         </div>
         {% endif %}
+        <div style="margin-top:40px;">
+            <canvas id="categoryChart" height="150"></canvas>
+        </div>
+        <div style="margin-top:40px;">
+            <canvas id="questionChart" height="150"></canvas>
+        </div>
+        <div id="freeTextContainer" style="margin-top:40px;"></div>
+
         <input type="text" id="filterInput" placeholder="Filter results" style="margin-top:10px;">
         {% if results %}
-        <div class="table-container" style="overflow-x:auto;">
+        <div class="table-container" style="overflow-x:auto; margin-top:20px;">
 
             <table id="resultsTable">
                 <thead>
@@ -98,6 +110,7 @@
             <p>No survey results found.</p>
         {% endif %}
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     const filterInput = document.getElementById('filterInput');
     const table = document.getElementById('resultsTable');
@@ -122,6 +135,55 @@
             sorted.forEach(r => tbody.appendChild(r));
         });
     });
+
+    const categoryData = {{ totals | tojson }};
+    const ctxCat = document.getElementById('categoryChart').getContext('2d');
+    const catColors = Object.keys(categoryData).map((_, i) =>
+        `hsl(${i * 60},70%,60%)`);
+    new Chart(ctxCat, {
+        type: 'pie',
+        data: {
+            labels: Object.keys(categoryData),
+            datasets: [{
+                data: Object.values(categoryData),
+                backgroundColor: catColors
+            }]
+        },
+        options: {responsive: true}
+    });
+
+    const questionCounts = {{ question_counts | tojson }};
+    const labels = Object.keys(questionCounts).map(k => 'Q' + k);
+    const qTotals = labels.map((_, idx) => {
+        const counts = Object.values(questionCounts[Object.keys(questionCounts)[idx]] || {});
+        return counts.reduce((a, b) => a + b, 0);
+    });
+    const ctxQ = document.getElementById('questionChart').getContext('2d');
+    const qColors = labels.map((_, i) => `hsl(${i * 30},65%,65%)`);
+    new Chart(ctxQ, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: qTotals,
+                backgroundColor: qColors
+            }]
+        },
+        options: {responsive: true}
+    });
+
+    const freeTexts = {{ free_texts | tojson }};
+    if (freeTexts.length) {
+        const container = document.getElementById('freeTextContainer');
+        const list = document.createElement('ul');
+        freeTexts.forEach(t => {
+            const li = document.createElement('li');
+            li.textContent = t;
+            list.appendChild(li);
+        });
+        container.innerHTML = '<h3>Free Text Responses</h3>';
+        container.appendChild(list);
+    }
     </script>
 </body>
 </html>
