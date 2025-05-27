@@ -272,6 +272,8 @@ function showStep(n) {
         const progressPercentage = totalSteps > 0 ? (n / totalSteps) * 100 : 0;
         progressBarFillElement.style.width = `${progressPercentage}%`;
     }
+    // Scroll to top whenever we change steps for better UX
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     currentStep = n;
 }
 
@@ -342,7 +344,8 @@ async function submitAnswers() {
                 // Pass the collected answersData to thank_you.html
                 const answersJson = JSON.stringify(answersData);
                 const encodedAnswers = encodeURIComponent(answersJson);
-                window.location.href = `thank_you.html?data=${encodedAnswers}`;
+                const encodedLang = encodeURIComponent(currentLang);
+                window.location.href = `thank_you.html?data=${encodedAnswers}&lang=${encodedLang}`;
             } else {
                 alert(`Submission was not successful. Server responded with: ${responseData.message || 'Unknown error'}`);
             }
