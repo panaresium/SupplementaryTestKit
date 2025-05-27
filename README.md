@@ -17,6 +17,22 @@ This project provides a small Flask application that serves a multi-language hea
    ```
    OPENAI_API_KEY=your-key-here
    ```
+   The value should appear exactly as in the OpenAI dashboard with no quotes or
+   trailing spaces. Quoting the key (e.g. `OPENAI_API_KEY="sk-..."`) will cause a
+   "Malformed API key" error.
+
+### Configuring your OpenAI API key
+
+If you prefer not to use a `.env` file, you can set the key in other ways:
+
+* Set the environment variable directly before running the application:
+  ```bash
+  export OPENAI_API_KEY=your-key-here
+  ```
+* Assign it in code with `openai.api_key = "your-key-here"`.
+* Point the OpenAI library to a file containing the key using `openai.api_key_path = "/path/to/key.txt"`.
+
+You can generate API keys in the [OpenAI dashboard](https://platform.openai.com/account/api-keys).
 
 ## Running
 
