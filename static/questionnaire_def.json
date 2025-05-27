@@ -2,6 +2,7 @@
   "questionnaireTitleKey": "main_title",
   "totalSteps": 5,
   "questions": [
+    // --- STEP 1 QUESTIONS ---
     {
       "id": "age",
       "step": 1,
@@ -57,6 +58,306 @@
         { "value": "6-8", "label_key": "hours_6_8", "weight": 0 },
         { "value": "8-10", "label_key": "hours_8_10", "weight": 0 },
         { "value": "gt_10", "label_key": "hours_gt_10", "weight": 0 }
+      ]
+    },
+    // --- STEP 2 QUESTIONS ---
+    {
+      "id": "work_env",
+      "step": 2,
+      "type": "select",
+      "label_key": "q_environment_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "indoor", "label_key": "work_env_option_indoor", "weight": 0 },
+        { "value": "outdoor", "label_key": "work_env_option_outdoor", "weight": 0 },
+        { "value": "both", "label_key": "work_env_option_both", "weight": 0 }
+      ]
+    },
+    {
+      "id": "posture",
+      "step": 2,
+      "type": "select",
+      "label_key": "q_posture_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "standing", "label_key": "posture_option_standing", "weight": 0 },
+        { "value": "sitting", "label_key": "posture_option_sitting", "weight": 0 },
+        { "value": "mixed", "label_key": "posture_option_mixed", "weight": 0 }
+      ]
+    },
+    {
+      "id": "transport",
+      "step": 2,
+      "type": "select",
+      "label_key": "q_transport_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "public", "label_key": "transport_option_public", "weight": 0 },
+        { "value": "taxi", "label_key": "transport_option_taxi", "weight": 0 },
+        { "value": "rideshare", "label_key": "transport_option_rideshare", "weight": 0 },
+        { "value": "car", "label_key": "transport_option_car", "weight": 0 },
+        { "value": "motorbike", "label_key": "transport_option_motorbike", "weight": 0 },
+        { "value": "bicycle", "label_key": "transport_option_bicycle", "weight": 0 },
+        { "value": "walking", "label_key": "transport_option_walking", "weight": 0 },
+        { "value": "other", "label_key": "transport_option_other", "weight": 0 }
+      ]
+    },
+    {
+      "id": "commute_time",
+      "step": 2,
+      "type": "select",
+      "label_key": "q_commute_time_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "lt_15_min", "label_key": "commute_lt_15", "weight": 0 },
+        { "value": "15-30_min", "label_key": "commute_15_30", "weight": 0 },
+        { "value": "30-60_min", "label_key": "commute_30_60", "weight": 0 },
+        { "value": "60-90_min", "label_key": "commute_60_90", "weight": 0 },
+        { "value": "gt_90_min", "label_key": "commute_gt_90", "weight": 0 }
+      ]
+    },
+    {
+      "id": "physical_demand",
+      "step": 2,
+      "type": "select",
+      "label_key": "q_work_demand_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "hard", "label_key": "work_demand_option_hard", "weight": 0 },
+        { "value": "medium", "label_key": "work_demand_option_medium", "weight": 0 },
+        { "value": "desk", "label_key": "work_demand_option_desk", "weight": 0 },
+        { "value": "outdoor", "label_key": "work_demand_option_outdoor", "weight": 0 } 
+      ]
+    },
+    {
+      "id": "exercise_freq",
+      "step": 2,
+      "type": "select",
+      "label_key": "q_exercise_freq_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "daily", "label_key": "exercise_freq_option_daily", "weight": 0 },
+        { "value": "weekly", "label_key": "exercise_freq_option_weekly", "weight": 0 },
+        { "value": "rarely", "label_key": "exercise_freq_option_rarely", "weight": 0 },
+        { "value": "never", "label_key": "exercise_freq_option_never", "weight": 0 }
+      ]
+    },
+    {
+      "id": "exercise_duration", 
+      "step": 2,
+      "type": "select", 
+      "label_key": "q_exercise_duration_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "lt_30_min", "label_key": "duration_lt_30_min", "weight": 0 }, 
+        { "value": "30-60_min", "label_key": "duration_30_60_min", "weight": 0 },
+        { "value": "60-90_min", "label_key": "duration_60_90_min", "weight": 0 },
+        { "value": "gt_90_min", "label_key": "duration_gt_90_min", "weight": 0 }
+      ]
+    },
+    {
+      "id": "exercise_types",
+      "step": 2,
+      "type": "checkbox_group",
+      "label_key": "q_exercise_type_label",
+      "options": [
+        { "value": "cardio", "label_key": "ex_type_cardio_label", "weight": 0 },
+        { "value": "strength", "label_key": "ex_type_strength_label", "weight": 0 },
+        { "value": "flexibility", "label_key": "ex_type_flexibility_label", "weight": 0 },
+        { "value": "team_sports", "label_key": "ex_type_team_sports_label", "weight": 0 }
+      ]
+    },
+    {
+      "id": "exercise_type_other",
+      "step": 2,
+      "type": "text",
+      "label_key": "ex_type_other_label",
+      "placeholder_key": "ex_type_other_placeholder"
+    },
+    // --- STEP 3 QUESTIONS ---
+    {
+      "id": "sleep_time",
+      "step": 3,
+      "type": "time",
+      "label_key": "q_sleep_time_label"
+    },
+    {
+      "id": "wake_time",
+      "step": 3,
+      "type": "time",
+      "label_key": "q_wake_time_label"
+    },
+    {
+      "id": "avg_sleep",
+      "step": 3,
+      "type": "select",
+      "label_key": "q_avg_sleep_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "lt_5_hours", "label_key": "sleep_lt_5", "weight": 0 },
+        { "value": "5-6_hours", "label_key": "sleep_5_6", "weight": 0 },
+        { "value": "6-7_hours", "label_key": "sleep_6_7", "weight": 0 },
+        { "value": "7-8_hours", "label_key": "sleep_7_8", "weight": 0 },
+        { "value": "gt_8_hours", "label_key": "sleep_gt_8", "weight": 0 }
+      ]
+    },
+    {
+      "id": "food_like",
+      "step": 3,
+      "type": "textarea", 
+      "label_key": "q_food_like_label",
+      "placeholder_key": "food_like_placeholder" 
+    },
+    {
+      "id": "food_dislike",
+      "step": 3,
+      "type": "textarea", 
+      "label_key": "q_food_dislike_label",
+      "placeholder_key": "food_dislike_placeholder"
+    },
+    {
+      "id": "diet_preference",
+      "step": 3,
+      "type": "select",
+      "label_key": "q_diet_pref_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "omnivore", "label_key": "diet_pref_option_omnivore", "weight": 0 },
+        { "value": "vegetarian", "label_key": "diet_pref_option_vegetarian", "weight": 0 },
+        { "value": "vegan", "label_key": "diet_pref_option_vegan", "weight": 0 },
+        { "value": "other", "label_key": "diet_pref_option_other", "weight": 0 }
+      ]
+    },
+    {
+      "id": "diet_restrictions",
+      "step": 3,
+      "type": "text",
+      "label_key": "q_diet_restrictions_label",
+      "placeholder_key": "diet_restrictions_placeholder"
+    },
+    {
+      "id": "meals_per_day",
+      "step": 3,
+      "type": "select",
+      "label_key": "q_meals_per_day_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "1", "label_key": "meals_1", "weight": 0 },
+        { "value": "2", "label_key": "meals_2", "weight": 0 },
+        { "value": "3", "label_key": "meals_3", "weight": 0 },
+        { "value": "4", "label_key": "meals_4", "weight": 0 },
+        { "value": "5_plus", "label_key": "meals_5_plus", "weight": 0 },
+        { "value": "varies", "label_key": "meals_varies", "weight": 0 }
+      ]
+    },
+    {
+      "id": "beverage_choices",
+      "step": 3,
+      "type": "checkbox_group",
+      "label_key": "q_beverages_label",
+      "options": [
+        { "value": "water", "label_key": "bev_water_label", "weight": 0 },
+        { "value": "coffee", "label_key": "bev_coffee_label", "weight": 0 },
+        { "value": "tea", "label_key": "bev_tea_label", "weight": 0 },
+        { "value": "juice", "label_key": "bev_juice_label", "weight": 0 },
+        { "value": "soda", "label_key": "bev_soda_label", "weight": 0 }
+      ]
+    },
+    {
+      "id": "beverages_other",
+      "step": 3,
+      "type": "text",
+      "label_key": "bev_other_label",
+      "placeholder_key": "bev_other_placeholder"
+    },
+    // --- STEP 4 QUESTIONS ---
+    {
+      "id": "smoke",
+      "step": 4,
+      "type": "radio",
+      "label_key": "q_smoke_label",
+      "options": [
+        { "value": "yes", "label_key": "yes_option", "weight": 0 },
+        { "value": "no", "label_key": "no_option", "weight": 0 }
+      ]
+    },
+    {
+      "id": "alcohol",
+      "step": 4,
+      "type": "radio",
+      "label_key": "q_alcohol_label",
+      "options": [
+        { "value": "yes", "label_key": "yes_option", "weight": 0 },
+        { "value": "no", "label_key": "no_option", "weight": 0 }
+      ]
+    },
+    {
+      "id": "health_goals",
+      "step": 4,
+      "type": "checkbox_group",
+      "label_key": "q_health_goals_label",
+      "options": [
+        { "value": "weight_management", "label_key": "goal_option_weight_management", "weight": 0 },
+        { "value": "more_energy", "label_key": "goal_option_more_energy", "weight": 0 },
+        { "value": "general_health", "label_key": "goal_option_general_health", "weight": 0 },
+        { "value": "improved_sleep", "label_key": "goal_option_improved_sleep", "weight": 0 },
+        { "value": "stress_reduction", "label_key": "goal_option_stress_reduction", "weight": 0 }
+      ]
+    },
+    {
+      "id": "supplement_use",
+      "step": 4,
+      "type": "radio",
+      "label_key": "q_supplement_use_label",
+      "options": [
+        { "value": "yes", "label_key": "yes_option", "weight": 0 },
+        { "value": "no", "label_key": "no_option", "weight": 0 }
+      ]
+    },
+    {
+      "id": "current_supplements",
+      "step": 4,
+      "type": "textarea",
+      "label_key": "q_supplements_which_label",
+      "placeholder_key": "supplements_placeholder"
+    },
+    {
+      "id": "medical_conditions",
+      "step": 4,
+      "type": "textarea",
+      "label_key": "q_medical_conditions_label",
+      "placeholder_key": "medical_conditions_placeholder" 
+    },
+    // --- STEP 5 QUESTIONS ---
+    {
+      "id": "symptoms_checklist", 
+      "step": 5,
+      "type": "checkbox_group",
+      "label_key": "symptoms_checklist_label", 
+      "options": [
+        { "value": "tiredness_fatigue", "label_key": "symptom_tiredness", "weight": 0 },
+        { "value": "muscle_joint_pain", "label_key": "symptom_muscle_pain", "weight": 0 },
+        { "value": "digestive_issues", "label_key": "symptom_digestive_issues", "weight": 0 },
+        { "value": "poor_sleep_quality", "label_key": "symptom_sleep_problems", "weight": 0 }
+      ]
+    },
+    {
+      "id": "symptoms_other_concerns",
+      "step": 5,
+      "type": "textarea",
+      "label_key": "q_health_concerns_label",
+      "placeholder_key": "health_concerns_placeholder"
+    },
+    {
+      "id": "symptoms_stress_level",
+      "step": 5,
+      "type": "select",
+      "label_key": "q_stress_level_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "low", "label_key": "stress_level_option_low", "weight": 0 },
+        { "value": "medium", "label_key": "stress_level_option_medium", "weight": 0 },
+        { "value": "high", "label_key": "stress_level_option_high", "weight": 0 }
       ]
     }
   ]
