@@ -137,7 +137,24 @@ async function submitAnswers() {
     // Updated payload structure
     body: JSON.stringify({ features: JSON.stringify(answers), products: "" })
   });
-  alert(await res.text());
+
+  if (res.ok) {
+    try {
+      const responseData = await res.json();
+      if (responseData.status === 'success') {
+        const answersJson = JSON.stringify(answers);
+        const encodedAnswers = encodeURIComponent(answersJson);
+        window.location.href = 'thank_you.html?data=' + encodedAnswers;
+      } else {
+        alert('Submission was not successful. Server responded with: ' + (responseData.message || 'Unknown error'));
+      }
+    } catch (e) {
+      alert('Error parsing server response. Please try again.');
+      console.error("Error parsing JSON response:", e);
+    }
+  } else {
+    alert('There was an issue submitting your answers. Server responded with status: ' + res.status);
+  }
 }
 
 // Initialize the first step of the questionnaire on load

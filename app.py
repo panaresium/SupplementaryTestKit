@@ -1,7 +1,7 @@
 import os
 import sqlite3
 import json # Added json import
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, render_template # Added render_template
 from flask_cors import CORS
 from uuid import uuid4
 from datetime import datetime
@@ -151,6 +151,35 @@ def submit():
     conn.close()
     
     return jsonify({'status': 'success', 'id': response_id, 'timestamp': timestamp})
+
+@app.route('/admin/results')
+def admin_results():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row # This allows accessing columns by name
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM responses ORDER BY timestamp DESC")
+    results = cur.fetchall()
+    conn.close()
+    # For 'health_goals' and 'symptoms_checklist', which are stored as JSON strings,
+    # it might be beneficial to parse them back into Python lists here
+    # before sending to the template, or handle parsing in the template itself.
+    # For now, we'll pass them as raw strings and let the template handle display.
+    # If parsing here:
+    # processed_results = []
+    # for row in results:
+    #     row_dict = dict(row) # Convert sqlite3.Row to a mutable dict
+    #     try:
+    #         if row_dict.get('health_goals'):
+    #             row_dict['health_goals'] = json.loads(row_dict['health_goals'])
+    #         if row_dict.get('symptoms_checklist'):
+    #             row_dict['symptoms_checklist'] = json.loads(row_dict['symptoms_checklist'])
+    #     except json.JSONDecodeError:
+    #         # Handle cases where the string might not be valid JSON, though it should be
+    #         pass # Keep as original string if parsing fails
+    #     processed_results.append(row_dict)
+    # return render_template('results.html', results=processed_results)
+    
+    return render_template('results.html', results=results) # results is a list of Row objects
 
 if __name__ == '__main__':
     init_db()
