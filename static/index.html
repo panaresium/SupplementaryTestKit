@@ -17,60 +17,12 @@
 <h1 data-i18n-key="main_title">Supplementary Test Kit</h1>
 <section id="questionnaire" style="display:block;">
     <div id="progress">
-        <span id="progressText"><span data-i18n-key="progress_step">Step</span> 1 <span data-i18n-key="progress_of">of</span> 5</span>
+        <span id="progressText"><span data-i18n-key="progress_step">Step</span> 1 <span data-i18n-key="progress_of">of</span> 1</span>
         <div class="progress-bar-container">
             <div class="progress-bar-fill" id="progressBarFill"></div>
         </div>
     </div>
-    <div id="step1" class="step">
-        <h2 data-i18n-key="step1_title">Basic Information</h2>
-        <div id="step1_questions_container" class="questions-container">
-            <!-- Questions will be dynamically inserted here by JavaScript -->
-        </div>
-        <div class="button-group">
-            <button onclick="nextStep()" data-i18n-key="next_button">Next</button>
-        </div>
-    </div>
-    <div id="step2" class="step" style="display:none;">
-        <h2 data-i18n-key="step2_title">Work Environment</h2>
-        <div id="step2_questions_container" class="questions-container">
-            <!-- Questions will be dynamically inserted here by JavaScript -->
-        </div>
-        <div class="button-group">
-            <button onclick="prevStep()" class="btn-secondary" data-i18n-key="back_button">Back</button>
-            <button onclick="nextStep()" data-i18n-key="next_button">Next</button>
-        </div>
-    </div>
-    <div id="step3" class="step" style="display:none;">
-        <h2 data-i18n-key="step3_title">Sleep and Diet</h2>
-        <div id="step3_questions_container" class="questions-container">
-            <!-- Questions will be dynamically inserted here by JavaScript -->
-        </div>
-        <div class="button-group">
-            <button onclick="prevStep()" class="btn-secondary" data-i18n-key="back_button">Back</button>
-            <button onclick="nextStep()" data-i18n-key="next_button">Next</button>
-        </div>
-    </div>
-    <div id="step4" class="step" style="display:none;">
-        <h2 data-i18n-key="step4_title">Lifestyle and Goals</h2>
-        <div id="step4_questions_container" class="questions-container">
-            <!-- Questions will be dynamically inserted here by JavaScript -->
-        </div>
-        <div class="button-group">
-            <button onclick="prevStep()" class="btn-secondary" data-i18n-key="back_button">Back</button>
-            <button onclick="nextStep()" data-i18n-key="next_button">Next</button>
-        </div>
-    </div>
-    <div id="step5" class="step" style="display:none;">
-        <h2 data-i18n-key="step5_title">Symptoms</h2>
-        <div id="step5_questions_container" class="questions-container">
-            <!-- Questions will be dynamically inserted here by JavaScript -->
-        </div>
-        <div class="button-group">
-            <button onclick="prevStep()" class="btn-secondary" data-i18n-key="back_button">Back</button>
-            <button onclick="submitAnswers()" data-i18n-key="submit_button">Submit</button>
-        </div>
-    </div>
+    <div id="stepsContainer"></div>
 </section>
 </div>
 <script src="/static/script.js"></script>
