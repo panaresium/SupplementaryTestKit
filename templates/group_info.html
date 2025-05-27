@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Group Information Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Group Information</h1>
+    <form method="post">
+        {% for gid, info in group_info.items() %}
+        <h3>{{ gid }}</h3>
+        <div class="form-group">
+            <label>Message</label>
+            <textarea name="{{ gid }}_message" rows="2" cols="50">{{ info.message }}</textarea>
+        </div>
+        <div class="form-group">
+            <label>Image URL</label>
+            <input type="text" name="{{ gid }}_image" value="{{ info.image }}">
+        </div>
+        {% endfor %}
+        <button type="submit">Save</button>
+    </form>
+</div>
+</body>
+</html>
