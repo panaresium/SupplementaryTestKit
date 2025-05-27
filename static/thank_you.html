@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Received - Supplementary Test Kit</title>
+    <link rel="stylesheet" href="/static/style.css"> <!-- Link to existing stylesheet -->
+    <style>
+        /* Additional styles specific to the thank you page, if needed */
+        .thank-you-container {
+            padding: 2rem;
+            text-align: center;
+        }
+        .results-display {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: left;
+        }
+        .results-display h3 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .results-display pre { /* Using <pre> for easy display of formatted JSON for now */
+            white-space: pre-wrap;       /* CSS3 */
+            white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="thank-you-container">
+            <h1>Thank You!</h1>
+            <p>Your submission has been received. We appreciate you taking the time to complete the questionnaire.</p>
+            
+            <div class="results-display">
+                <h3>Your Submitted Answers:</h3>
+                <div id="submittedAnswers">
+                    <!-- JavaScript will populate this area -->
+                    <p>Loading your answers...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const submittedAnswersDiv = document.getElementById('submittedAnswers');
+        const urlParams = new URLSearchParams(window.location.search);
+        const dataParam = urlParams.get('data');
+
+        if (dataParam) {
+            try {
+                const decodedData = decodeURIComponent(dataParam);
+                const answers = JSON.parse(decodedData);
+
+                // For now, display as formatted JSON in a <pre> tag for simplicity
+                // A more user-friendly display can be implemented later.
+                const pre = document.createElement('pre');
+                pre.textContent = JSON.stringify(answers, null, 2); // Pretty print JSON
+                submittedAnswersDiv.innerHTML = ''; // Clear "Loading..." message
+                submittedAnswersDiv.appendChild(pre);
+
+            } catch (error) {
+                console.error('Error parsing submitted answers:', error);
+                submittedAnswersDiv.textContent = 'Could not display your answers due to an error.';
+            }
+        } else {
+            submittedAnswersDiv.textContent = 'No submission data found.';
+        }
+    });
+    </script>
+</body>
+</html>
