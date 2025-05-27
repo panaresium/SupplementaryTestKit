@@ -5,3 +5,5 @@ uploads/*
 venv/
 /backend/__pycache__
 data/
+
+.env

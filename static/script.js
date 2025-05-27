@@ -1,7 +1,58 @@
 let currentStep = 1;
 let questionnaireDef = null;
 let currentLang = 'en';
-let uiTranslations = {}; // Store UI translations (buttons, titles)
+// Basic translations embedded to avoid extra network requests
+const uiTranslations = {
+    en: {
+        lang_en: "English",
+        lang_fr: "Français",
+        lang_th: "Thai",
+        main_title: "Supplementary Test Kit",
+        progress_step: "Step",
+        progress_of: "of",
+        step1_title: "Basic Information",
+        step2_title: "Work Environment",
+        step3_title: "Sleep and Diet",
+        step4_title: "Lifestyle and Goals",
+        step5_title: "Symptoms",
+        next_button: "Next",
+        back_button: "Back",
+        submit_button: "Submit"
+    },
+    fr: {
+        lang_en: "Anglais",
+        lang_fr: "Français",
+        lang_th: "Thaï",
+        main_title: "Kit de Test Supplémentaire",
+        progress_step: "Étape",
+        progress_of: "de",
+        step1_title: "Informations de Base",
+        step2_title: "Environnement de Travail",
+        step3_title: "Sommeil et Alimentation",
+        step4_title: "Style de Vie et Objectifs",
+        step5_title: "Symptômes",
+        next_button: "Suivant",
+        back_button: "Retour",
+        submit_button: "Soumettre"
+    },
+    th: {
+        lang_en: "\u0e40\u0e2d\u0e07\u0e01\u0e25\u0e34\u0e0a",
+        lang_fr: "\u0e1d\u0e31\u0e07\u0e01\u0e24\u0e49\u0e07\u0e20\u0e32\u0e29\u0e32\u0e1d",
+        lang_th: "\u0e44\u0e17\u0e22",
+        main_title: "\u0e0a\u0e38\u0e14\u0e17\u0e14\u0e2a\u0e2d\u0e1a\u0e2d\u0e32\u0e2b\u0e32\u0e23\u0e40\u0e2a\u0e23\u0e34\u0e21",
+        progress_step: "\u0e02\u0e31\u0e49\u0e19\u0e15\u0e2d\u0e19",
+        progress_of: "\u0e08\u0e32\u0e01",
+        step1_title: "\u0e02\u0e49\u0e2d\u0e21\u0e1e\u0e37\u0e49\u0e19\u0e10\u0e32\u0e19",
+        step2_title: "\u0e2a\u0e34\u0e48\u0e07\u0e41\u0e27\u0e14\u0e25\u0e49\u0e2d\u0e21\u0e43\u0e19\u0e17\u0e35\u0e48\u0e17\u0e33\u0e07\u0e32\u0e19",
+        step3_title: "\u0e01\u0e32\u0e23\u0e19\u0e2d\u0e19\u0e2b\u0e25\u0e31\u0e1a\u0e41\u0e25\u0e30\u0e01\u0e32\u0e23\u0e01\u0e34\u0e19",
+        step4_title: "\u0e27\u0e34\u0e16\u0e35\u0e0a\u0e35\u0e27\u0e34\u0e15\u0e41\u0e25\u0e30\u0e40\u0e1b\u0e49\u0e32\u0e2b\u0e21\u0e32\u0e22",
+        step5_title: "\u0e2d\u0e32\u0e01\u0e32\u0e23\u0e15\u0e48\u0e32\u0e07\u0e46",
+        next_button: "\u0e15\u0e48\u0e2d\u0e44\u0e1b",
+        back_button: "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
+        submit_button: "\u0e2a\u0e48\u0e07\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25"
+    }
+};
+let totalSteps = 5; // Default, will be updated
 let totalSteps = 5; // Default, will be updated
 
 // --- 1. Global Variables (already defined above) ---
@@ -39,13 +90,10 @@ async function loadLanguage(lang) {
     }
 
     try {
-        const response = await fetch(`/static/i18n/${currentLang}.json`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status} for ${currentLang}.json`);
+        if (!uiTranslations[currentLang]) {
+            throw new Error(`Translations for ${currentLang} not available`);
         }
-        const data = await response.json();
-        uiTranslations[currentLang] = data; // Store all translations for the current language
-        console.log(`Translations for ${currentLang} loaded:`, uiTranslations[currentLang]);
+        console.log(`Using embedded translations for ${currentLang}`);
         
         if (questionnaireDef) { // Ensure questionnaireDef is loaded before rendering
              renderQuestionnaire();
@@ -58,13 +106,11 @@ async function loadLanguage(lang) {
     } catch (error) {
         console.error(`Error loading language ${currentLang}:`, error);
         if (currentLang !== 'en') {
-            console.warn("Falling back to English language.");
-            await loadLanguage('en');
-        } else {
-            const mainContainer = document.querySelector('.container');
-            if (mainContainer) {
-                mainContainer.innerHTML = '<p style="color:red; text-align:center;">Error loading essential language files. Please try refreshing the page.</p>';
-            }
+            console.warn('Falling back to English language.');
+            currentLang = 'en';
+        }
+        if (questionnaireDef && uiTranslations[currentLang]) {
+            renderQuestionnaire();
         }
     }
 }
@@ -272,6 +318,8 @@ function showStep(n) {
         const progressPercentage = totalSteps > 0 ? (n / totalSteps) * 100 : 0;
         progressBarFillElement.style.width = `${progressPercentage}%`;
     }
+    // Scroll to top whenever we change steps for better UX
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     currentStep = n;
 }
 
@@ -342,7 +390,8 @@ async function submitAnswers() {
                 // Pass the collected answersData to thank_you.html
                 const answersJson = JSON.stringify(answersData);
                 const encodedAnswers = encodeURIComponent(answersJson);
-                window.location.href = `thank_you.html?data=${encodedAnswers}`;
+                const encodedLang = encodeURIComponent(currentLang);
+                window.location.href = `thank_you.html?data=${encodedAnswers}&lang=${encodedLang}`;
             } else {
                 alert(`Submission was not successful. Server responded with: ${responseData.message || 'Unknown error'}`);
             }
