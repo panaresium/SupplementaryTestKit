@@ -32,6 +32,7 @@ GROUP_INFO_FILE = os.path.join(os.path.dirname(__file__), 'group_info.json')
 
 def _load_group_info() -> dict:
     if os.path.exists(GROUP_INFO_FILE):
+
         with open(GROUP_INFO_FILE, 'r', encoding='utf-8') as f:
             try:
                 return json.load(f)
@@ -50,6 +51,7 @@ def _load_group_info() -> dict:
 
 def _save_group_info(data: dict):
     with open(GROUP_INFO_FILE, 'w', encoding='utf-8') as f:
+
         json.dump(data, f, indent=2)
 
 
