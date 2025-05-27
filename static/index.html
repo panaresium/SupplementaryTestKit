@@ -27,9 +27,17 @@
         <h2>Basic Information</h2>
         <label>Age</label>
         <input id="q_age" type="number" required>
+        <label>Sex/Gender (Optional)</label>
+        <select id="q_gender">
+            <option value="">Select...</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="prefer_not_to_say">Prefer not to say</option>
+            <option value="other">Other</option>
+        </select>
         <label>Occupation</label>
         <input id="q_job" required>
-        <label>Work location / Province</label>
+        <label>Work Location (City, Province, Country)</label>
         <input id="q_location" required>
         <label>Hours you work per day</label>
         <input id="q_hours" type="number" required>
@@ -56,10 +64,15 @@
             <option value="">Select...</option>
             <option value="public">Public transport</option>
             <option value="taxi">Taxi</option>
+            <option value="rideshare">Rideshare (e.g., Uber, Lyft)</option>
             <option value="car">Private car</option>
             <option value="motorbike">Motorbike</option>
+            <option value="bicycle">Bicycle</option>
+            <option value="walking">Walking</option>
             <option value="other">Other</option>
         </select>
+        <label>Average commute time per day (in minutes)</label>
+        <input id="q_commute_time" type="number">
         <label>How physically demanding is your work?</label>
         <select id="q_work" required>
             <option value="">Select...</option>
@@ -72,23 +85,30 @@
         <select id="q_exercise" required>
             <option value="">Select...</option>
             <option value="daily">Daily</option>
-            <option value="few_week">Few times per week</option>
+            <option value="weekly">Weekly</option>
             <option value="rarely">Rarely</option>
+            <option value="never">Never</option>
         </select>
+        <label>Typical exercise duration per session (in minutes)</label>
+        <input id="q_exercise_duration" type="number">
+        <label>Preferred exercise type (e.g., cardio, strength, flexibility)</label>
+        <input id="q_exercise_type" type="text">
         <button onclick="prevStep()">Back</button>
         <button onclick="nextStep()">Next</button>
     </div>
     <div id="step3" class="step" style="display:none;">
         <h2>Sleep and Diet</h2>
-        <label>Time you usually sleep</label>
+        <label>Typical bedtime</label>
         <input id="q_sleep" type="time" required>
-        <label>Time you wake up</label>
+        <label>Typical wake-up time</label>
         <input id="q_wake" type="time" required>
-        <label>Food that you like</label>
+        <label>Average hours of sleep per night</label>
+        <input id="q_avg_sleep" type="number" required>
+        <label>Foods you enjoy</label>
         <input id="q_food_like" required>
-        <label>Food that you dislike</label>
+        <label>Foods you dislike</label>
         <input id="q_food_dislike" required>
-        <label>What best describes your diet?</label>
+        <label>What best describes your dietary preference?</label>
         <select id="q_diet" required>
             <option value="">Select...</option>
             <option value="omnivore">Omnivore</option>
@@ -96,6 +116,12 @@
             <option value="vegan">Vegan</option>
             <option value="other">Other</option>
         </select>
+        <label>Dietary restrictions or allergies (e.g., gluten-free, lactose intolerant)</label>
+        <input id="q_diet_restrictions" type="text">
+        <label>Average number of meals per day</label>
+        <input id="q_meals_per_day" type="number" required>
+        <label>Typical beverage choices (e.g., water, soda, coffee, tea)</label>
+        <input id="q_beverages" type="text" required>
         <button onclick="prevStep()">Back</button>
         <button onclick="nextStep()">Next</button>
     </div>
@@ -107,25 +133,37 @@
         <label>Do you drink alcohol?</label>
         <label><input type="radio" name="alcohol" value="yes">Yes</label>
         <label><input type="radio" name="alcohol" value="no">No</label>
-        <label>Health goals</label>
-        <label><input type="checkbox" name="goal" value="weight_loss">Weight loss</label>
-        <label><input type="checkbox" name="goal" value="muscle_gain">Muscle gain</label>
-        <label><input type="checkbox" name="goal" value="energy">Boost energy</label>
-        <label><input type="checkbox" name="goal" value="wellness">General wellness</label>
-        <label>Do you currently use supplements?</label>
+        <label>Health goals related to supplements</label>
+        <label><input type="checkbox" name="goal" value="weight_management">Weight management</label>
+        <label><input type="checkbox" name="goal" value="more_energy">More energy</label>
+        <label><input type="checkbox" name="goal" value="general_health">General health</label>
+        <label><input type="checkbox" name="goal" value="improved_sleep">Improved sleep</label>
+        <label><input type="checkbox" name="goal" value="stress_reduction">Stress reduction</label>
+        <label>Do you currently use dietary supplements?</label>
         <label><input type="radio" name="supplement_use" value="yes">Yes</label>
         <label><input type="radio" name="supplement_use" value="no">No</label>
-        <label>If yes, list them</label>
+        <label>If yes, which supplements?</label>
         <input id="supplements" placeholder="e.g. Vitamin C, Protein">
+        <label>Known medical conditions (optional)</label>
+        <input id="q_medical_conditions" type="text">
         <button onclick="prevStep()">Back</button>
         <button onclick="nextStep()">Next</button>
     </div>
     <div id="step5" class="step" style="display:none;">
         <h2>Symptoms</h2>
-        <label><input type="checkbox" id="sym_tired">Tiredness</label>
-        <label><input type="checkbox" id="sym_pain">Muscle pain</label>
+        <label><input type="checkbox" id="sym_tired">Tiredness/Fatigue</label>
+        <label><input type="checkbox" id="sym_pain">Muscle/Joint pain</label>
         <label><input type="checkbox" id="sym_digestive">Digestive issues</label>
-        <label><input type="checkbox" id="sym_sleep">Poor sleep quality</label>
+        <label><input type="checkbox" id="sym_sleep">Poor sleep quality/Sleep problems</label>
+        <label>Other specific health concerns (optional)</label>
+        <input id="q_health_concerns_text" type="text">
+        <label>General stress level</label>
+        <select id="q_stress_level" required>
+            <option value="">Select...</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
         <button onclick="prevStep()">Back</button>
         <button onclick="submitAnswers()">Submit</button>
     </div>
