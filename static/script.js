@@ -1,4 +1,3 @@
-let currentUser = null;
 let currentStep = 1;
 const totalSteps = 5;
 
@@ -6,7 +5,20 @@ function showStep(n) {
   document.querySelectorAll('.step').forEach((div, i) => {
     div.style.display = i === n - 1 ? 'block' : 'none';
   });
-  document.getElementById('progress').innerText = `Step ${n} of ${totalSteps}`;
+
+  // Update progress text
+  const progressTextElement = document.getElementById('progressText');
+  if (progressTextElement) {
+    progressTextElement.innerText = `Step ${n} of ${totalSteps}`;
+  }
+
+  // Update progress bar
+  const progressBarFillElement = document.getElementById('progressBarFill');
+  if (progressBarFillElement) {
+    const progressPercentage = (n / totalSteps) * 100;
+    progressBarFillElement.style.width = `${progressPercentage}%`;
+  }
+
   currentStep = n;
 }
 
@@ -68,37 +80,7 @@ function validateStep(step) {
   return true;
 }
 
-async function register() {
-  const res = await fetch('/register', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      username: document.getElementById('reg-user').value,
-      password: document.getElementById('reg-pass').value
-    })
-  });
-  alert(await res.text());
-}
-
-async function login() {
-  const res = await fetch('/login', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      username: document.getElementById('log-user').value,
-      password: document.getElementById('log-pass').value
-    })
-  });
-  const text = await res.text();
-  alert(text);
-  const data = JSON.parse(text);
-  if (data.status === 'ok') {
-    currentUser = document.getElementById('log-user').value;
-    document.getElementById('auth').style.display = 'none';
-    document.getElementById('questionnaire').style.display = 'block';
-    showStep(1);
-  }
-}
+// login() function removed
 
 async function submitAnswers() {
   if (!validateStep(currentStep)) return;
@@ -157,3 +139,6 @@ async function submitAnswers() {
   });
   alert(await res.text());
 }
+
+// Initialize the first step of the questionnaire on load
+showStep(1);
