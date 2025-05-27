@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS questionnaires (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     data TEXT NOT NULL,
+    language_code TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
@@ -59,7 +60,7 @@ def authenticate_user(username: str, password: str) -> bool:
     return stored == hash_password(password)
 
 
-def save_questionnaire(username: str, data: str) -> bool:
+def save_questionnaire(username: str, data: str, language_code: str) -> bool:
     conn = sqlite3.connect(DB_PATH)
     cur = conn.execute('SELECT id FROM users WHERE username=?', (username,))
     row = cur.fetchone()
@@ -67,8 +68,8 @@ def save_questionnaire(username: str, data: str) -> bool:
         conn.close()
         return False
     user_id = row[0]
-    conn.execute('INSERT INTO questionnaires (user_id, data) VALUES (?, ?)',
-                 (user_id, data))
+    conn.execute('INSERT INTO questionnaires (user_id, data, language_code) VALUES (?, ?, ?)',
+                 (user_id, data, language_code))
     conn.commit()
     conn.close()
     return True
