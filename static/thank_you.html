@@ -233,7 +233,7 @@
                             // No scoring for 'freetext' or other types
                         }
                     }
-                }
+                
                 submittedAnswersDiv.appendChild(dl); // Display individual answers
 
                 // Display Group Scores
@@ -364,8 +364,6 @@
                     groupRecommendationContainerDiv.style.display = 'block';
                 }
 
-                // Close the outer try block before handling overall errors
-                }
             } catch (error) {
                 console.error('Error processing answers or calculating scores:', error);
                 submittedAnswersDiv.innerHTML = '<p>Could not process your answers or calculate scores due to an error.</p>';
