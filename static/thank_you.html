@@ -65,15 +65,82 @@
                 const decodedData = decodeURIComponent(dataParam);
                 const answers = JSON.parse(decodedData);
 
-                // For now, display as formatted JSON in a <pre> tag for simplicity
-                // A more user-friendly display can be implemented later.
-                const pre = document.createElement('pre');
-                pre.textContent = JSON.stringify(answers, null, 2); // Pretty print JSON
                 submittedAnswersDiv.innerHTML = ''; // Clear "Loading..." message
-                submittedAnswersDiv.appendChild(pre);
+
+                function formatKey(key) {
+                    return key
+                        .replace(/_/g, ' ')
+                        .replace(/\b\w/g, char => char.toUpperCase());
+                }
+
+                function displayValue(value) {
+                    if (Array.isArray(value)) {
+                        return value.length > 0 ? value.map(item => formatKey(item)).join(', ') : 'N/A';
+                    } else if (value === null || value === '' || (typeof value === 'object' && value !== null && Object.keys(value).length === 0) || (Array.isArray(value) && value.length === 0) ) {
+                        return 'N/A';
+                    } else {
+                        // For non-array simple values, attempt to format if they seem like keys (e.g. "prefer_not_to_say")
+                        if (typeof value === 'string' && value.includes('_')) {
+                             // return formatKey(value); // This might be too aggressive for free text. Let's keep original for now
+                        }
+                        return String(value);
+                    }
+                }
+
+                const dl = document.createElement('dl');
+
+                for (const key in answers) {
+                    if (answers.hasOwnProperty(key)) {
+                        const value = answers[key];
+
+                        const dt = document.createElement('dt');
+                        dt.textContent = formatKey(key);
+                        dl.appendChild(dt);
+
+                        const dd = document.createElement('dd');
+
+                        if (key === 'symptoms' && typeof value === 'object' && value !== null) {
+                            let symptomsContent = '';
+                            if (value.checklist && value.checklist.length > 0) {
+                                symptomsContent += `Items: ${value.checklist.map(item => formatKey(item)).join(', ')}. `;
+                            } else {
+                                symptomsContent += 'Items: N/A. ';
+                            }
+                            symptomsContent += `Other concerns: ${value.other_concerns || 'N/A'}. `;
+                            symptomsContent += `Stress level: ${value.stress_level ? formatKey(value.stress_level) : 'N/A'}.`;
+                            dd.textContent = symptomsContent;
+                        } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+                            // Generic nested object handling (if any other than symptoms)
+                            const nestedDl = document.createElement('dl');
+                            for (const nestedKey in value) {
+                                if (value.hasOwnProperty(nestedKey)) {
+                                    const nestedDt = document.createElement('dt');
+                                    nestedDt.style.marginLeft = '20px'; // Indent nested
+                                    nestedDt.style.fontWeight = 'normal';
+                                    nestedDt.textContent = formatKey(nestedKey);
+                                    nestedDl.appendChild(nestedDt);
+
+                                    const nestedDd = document.createElement('dd');
+                                    nestedDd.style.marginLeft = '40px'; // Further indent value
+                                    nestedDd.textContent = displayValue(value[nestedKey]);
+                                    nestedDl.appendChild(nestedDd);
+                                }
+                            }
+                            if(nestedDl.hasChildNodes()) {
+                                dd.appendChild(nestedDl);
+                            } else {
+                                dd.textContent = 'N/A';
+                            }
+                        } else {
+                            dd.textContent = displayValue(value);
+                        }
+                        dl.appendChild(dd);
+                    }
+                }
+                submittedAnswersDiv.appendChild(dl);
 
             } catch (error) {
-                console.error('Error parsing submitted answers:', error);
+                console.error('Error parsing or displaying submitted answers:', error);
                 submittedAnswersDiv.textContent = 'Could not display your answers due to an error.';
             }
         } else {
