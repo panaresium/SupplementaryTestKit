@@ -92,13 +92,21 @@ class RequestHandler(BaseHTTPRequestHandler):
         elif self.path == '/questionnaire':
             username = data.get('username')
             answers = data.get('answers')
+            language = data.get('language') # Get language from request
             if not isinstance(answers, dict):
                 self._send_json({'error': 'answers must be object'}, 400)
                 return
-            if save_questionnaire(username, json.dumps(answers)):
+            if not username: # Basic validation for username
+                self._send_json({'error': 'username is required'}, 400)
+                return
+            if not language: # Basic validation for language
+                self._send_json({'error': 'language is required'}, 400)
+                return
+            if save_questionnaire(username, json.dumps(answers), language):
                 self._send_json({'status': 'saved'}, 201)
             else:
-                self._send_json({'error': 'unknown user'}, 400)
+                # More specific error if user not found vs other save errors could be useful
+                self._send_json({'error': 'failed to save questionnaire, user may not exist or other issue'}, 400)
         else:
             self._send_json({'error': 'not found'}, 404)
 

@@ -9,7 +9,10 @@ function showStep(n) {
   // Update progress text
   const progressTextElement = document.getElementById('progressText');
   if (progressTextElement) {
-    progressTextElement.innerText = `Step ${n} of ${totalSteps}`;
+    const currentLang = localStorage.getItem('language') || 'en';
+    const stepText = translations[currentLang]?.progress_step || "Step";
+    const ofText = translations[currentLang]?.progress_of || "of";
+    progressTextElement.innerHTML = `<span data-i18n-key="progress_step">${stepText}</span> ${n} <span data-i18n-key="progress_of">${ofText}</span> ${totalSteps}`;
   }
 
   // Update progress bar
@@ -131,11 +134,17 @@ async function submitAnswers() {
   if (document.getElementById('sym_digestive').checked) answers.symptoms.checklist.push('digestive_issues');
   if (document.getElementById('sym_sleep').checked) answers.symptoms.checklist.push('poor_sleep_quality');
 
-  const res = await fetch('/api/submit', { // Updated endpoint
+  const currentLang = localStorage.getItem('language') || 'en'; // Get current language
+  const payload = {
+      username: "testuser", // Using a placeholder username
+      answers: answers, // The existing answers object
+      language: currentLang
+  };
+
+  const res = await fetch('/questionnaire', { // Corrected endpoint
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    // Updated payload structure
-    body: JSON.stringify({ features: JSON.stringify(answers), products: "" })
+    body: JSON.stringify(payload) // Updated payload
   });
 
   if (res.ok) {
@@ -157,5 +166,78 @@ async function submitAnswers() {
   }
 }
 
-// Initialize the first step of the questionnaire on load
-showStep(1);
+// Internationalization
+const translations = {};
+
+async function loadLanguage(lang) {
+    try {
+        const response = await fetch(`/static/i18n/${lang}.json`);
+        const data = await response.json();
+        translations[lang] = data;
+        applyTranslations(translations[lang]);
+        localStorage.setItem('language', lang);
+        // Update language selector to reflect the loaded language
+        const languageSelector = document.getElementById('languageSelector');
+        if (languageSelector) {
+            languageSelector.value = lang;
+        }
+    } catch (error) {
+        console.error(`Error loading language ${lang}:`, error);
+        // Fallback to English if loading fails
+        if (lang !== 'en') {
+            loadLanguage('en');
+        }
+    }
+}
+
+function applyTranslations(translationData) {
+    if (!translationData) {
+        console.warn('No translation data to apply.');
+        return;
+    }
+    document.querySelectorAll('[data-i18n-key]').forEach(element => {
+        const key = element.getAttribute('data-i18n-key');
+        if (translationData[key]) {
+            if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
+                // Specifically target placeholders for INPUT elements
+                if (key === element.dataset.i18nKey) { // Check if the key is for placeholder
+                    element.placeholder = translationData[key];
+                }
+            } else if (element.tagName === 'BUTTON' || element.tagName === 'LABEL' || element.tagName === 'H2' || element.tagName === 'OPTION' || element.tagName === 'SPAN' || element.tagName === 'H1') {
+                element.textContent = translationData[key];
+            } else if (element.id !== 'progressText') { // Avoid affecting progress text structure
+                element.innerText = translationData[key];
+            }
+        } else {
+             // Don't warn for progress_step and progress_of as they are handled in showStep
+            if (key !== 'progress_step' && key !== 'progress_of') {
+                console.warn(`No translation found for key: ${key}`);
+            }
+        }
+    });
+
+    // Update dynamic progress text separately to ensure it always reflects the current step and language
+    const progressTextElement = document.getElementById('progressText');
+    if (progressTextElement) {
+        const currentLang = localStorage.getItem('language') || 'en';
+        const stepText = translations[currentLang]?.progress_step || "Step";
+        const ofText = translations[currentLang]?.progress_of || "of";
+        // Ensure currentStep is defined and correctly used. It's a global variable.
+        progressTextElement.innerHTML = `<span data-i18n-key="progress_step">${stepText}</span> ${currentStep} <span data-i18n-key="progress_of">${ofText}</span> ${totalSteps}`;
+    }
+}
+
+// Initialize the first step of the questionnaire on load & load language
+(async () => {
+    const savedLang = localStorage.getItem('language') || 'en';
+    await loadLanguage(savedLang); // Ensure translations are loaded
+    showStep(1); // Then show the first step, which also updates progress text
+})();
+
+// Add event listener for language selector
+const languageSelector = document.getElementById('languageSelector');
+if (languageSelector) {
+    languageSelector.addEventListener('change', (event) => {
+        loadLanguage(event.target.value);
+    });
+}
