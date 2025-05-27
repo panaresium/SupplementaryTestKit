@@ -109,6 +109,14 @@
         {% else %}
             <p>No survey results found.</p>
         {% endif %}
+
+        <div style="margin-top:40px;">
+            <canvas id="categoryChart" height="150"></canvas>
+        </div>
+        <div style="margin-top:40px;">
+            <canvas id="questionChart" height="150"></canvas>
+        </div>
+        <div id="freeTextContainer" style="margin-top:40px;"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -138,6 +146,7 @@
 
     const categoryData = {{ totals | tojson }};
     const ctxCat = document.getElementById('categoryChart').getContext('2d');
+
     const catColors = Object.keys(categoryData).map((_, i) =>
         `hsl(${i * 60},70%,60%)`);
     new Chart(ctxCat, {
@@ -147,18 +156,22 @@
             datasets: [{
                 data: Object.values(categoryData),
                 backgroundColor: catColors
+
             }]
         },
         options: {responsive: true}
     });
 
     const questionCounts = {{ question_counts | tojson }};
+
     const labels = Object.keys(questionCounts).map(k => 'Q' + k);
+
     const qTotals = labels.map((_, idx) => {
         const counts = Object.values(questionCounts[Object.keys(questionCounts)[idx]] || {});
         return counts.reduce((a, b) => a + b, 0);
     });
     const ctxQ = document.getElementById('questionChart').getContext('2d');
+
     const qColors = labels.map((_, i) => `hsl(${i * 30},65%,65%)`);
     new Chart(ctxQ, {
         type: 'pie',
