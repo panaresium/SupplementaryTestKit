@@ -62,6 +62,8 @@
 
         if (dataParam) {
             try {
+                console.log("Raw dataParam from URL:", dataParam); // ADDED
+                console.log("Length of dataParam:", dataParam.length); // ADDED
                 const decodedData = decodeURIComponent(dataParam);
                 const answers = JSON.parse(decodedData);
 
