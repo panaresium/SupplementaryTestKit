@@ -75,9 +75,17 @@
             G4 {{ totals['G4'] }} | G5 {{ totals['G5'] }} | G6 {{ totals['G6'] }}
         </div>
         {% endif %}
+        <div style="margin-top:40px;">
+            <canvas id="categoryChart" height="150"></canvas>
+        </div>
+        <div style="margin-top:40px;">
+            <canvas id="questionChart" height="150"></canvas>
+        </div>
+        <div id="freeTextContainer" style="margin-top:40px;"></div>
+
         <input type="text" id="filterInput" placeholder="Filter results" style="margin-top:10px;">
         {% if results %}
-        <div class="table-container" style="overflow-x:auto;">
+        <div class="table-container" style="overflow-x:auto; margin-top:20px;">
 
             <table id="resultsTable">
                 <thead>
@@ -138,38 +146,40 @@
 
     const categoryData = {{ totals | tojson }};
     const ctxCat = document.getElementById('categoryChart').getContext('2d');
+
+    const catColors = Object.keys(categoryData).map((_, i) =>
+        `hsl(${i * 60},70%,60%)`);
     new Chart(ctxCat, {
-        type: 'line',
+        type: 'pie',
         data: {
             labels: Object.keys(categoryData),
             datasets: [{
-                label: 'Category Scores',
                 data: Object.values(categoryData),
-                fill: true,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgb(75, 192, 192)'
+                backgroundColor: catColors
+
             }]
         },
         options: {responsive: true}
     });
 
     const questionCounts = {{ question_counts | tojson }};
-    const labels = Object.keys(questionCounts).map(k => 'Q'+k);
+
+    const labels = Object.keys(questionCounts).map(k => 'Q' + k);
+
     const qTotals = labels.map((_, idx) => {
         const counts = Object.values(questionCounts[Object.keys(questionCounts)[idx]] || {});
         return counts.reduce((a, b) => a + b, 0);
     });
     const ctxQ = document.getElementById('questionChart').getContext('2d');
+
+    const qColors = labels.map((_, i) => `hsl(${i * 30},65%,65%)`);
     new Chart(ctxQ, {
-        type: 'line',
+        type: 'pie',
         data: {
             labels: labels,
             datasets: [{
-                label: 'Responses per Question',
                 data: qTotals,
-                fill: true,
-                backgroundColor: 'rgba(153,102,255,0.2)',
-                borderColor: 'rgb(153,102,255)'
+                backgroundColor: qColors
             }]
         },
         options: {responsive: true}
