@@ -1,36 +1,194 @@
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Supplementary Test Kit</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Supplementary Test Kit</h1>
-    <section id="register">
-        <h2>Register</h2>
-        <input id="reg-user" placeholder="Username">
-        <input id="reg-pass" type="password" placeholder="Password">
-        <button onclick="register()">Register</button>
-    </section>
-    <section id="login">
-        <h2>Login</h2>
-        <input id="log-user" placeholder="Username">
-        <input id="log-pass" type="password" placeholder="Password">
-        <button onclick="login()">Login</button>
-    </section>
-    <section id="questionnaire">
-        <h2>Questionnaire</h2>
-        <textarea id="answers" placeholder="JSON answers"></textarea>
-        <button onclick="submitAnswers()">Submit</button>
-    </section>
-    <section id="upload">
-        <h2>Upload Image</h2>
-        <input id="file" type="file">
-        <button onclick="uploadFile()">Upload</button>
-        <div id="preview"></div>
-    </section>
+<div class="container">
+<h1>Supplementary Test Kit</h1>
+<section id="questionnaire" style="display:block;">
+    <div id="progress">
+        <span id="progressText">Step 1 of 5</span>
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+    </div>
+    <div id="step1" class="step">
+        <h2>Basic Information</h2>
+        <label>Age</label>
+        <input id="q_age" type="number" required>
+        <label>Sex/Gender (Optional)</label>
+        <select id="q_gender">
+            <option value="">Select...</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="prefer_not_to_say">Prefer not to say</option>
+            <option value="other">Other</option>
+        </select>
+        <label>Occupation</label>
+        <input id="q_job" required>
+        <label>Work Location (City, Province, Country)</label>
+        <input id="q_location" required>
+        <label>Hours you work per day</label>
+        <input id="q_hours" type="number" required>
+        <div class="button-group">
+            <button onclick="nextStep()">Next</button>
+        </div>
+    </div>
+    <div id="step2" class="step" style="display:none;">
+        <h2>Work Environment</h2>
+        <label>Work environment</label>
+        <select id="q_environment" required>
+            <option value="">Select...</option>
+            <option value="indoor">Indoor</option>
+            <option value="outdoor">Outdoor</option>
+            <option value="both">Both</option>
+        </select>
+        <label>Main posture</label>
+        <select id="q_posture" required>
+            <option value="">Select...</option>
+            <option value="standing">Mostly standing</option>
+            <option value="sitting">Mostly sitting</option>
+            <option value="mixed">Mixed</option>
+        </select>
+        <label>Transportation you usually use</label>
+        <select id="q_transport" required>
+            <option value="">Select...</option>
+            <option value="public">Public transport</option>
+            <option value="taxi">Taxi</option>
+            <option value="rideshare">Rideshare (e.g., Uber, Lyft)</option>
+            <option value="car">Private car</option>
+            <option value="motorbike">Motorbike</option>
+            <option value="bicycle">Bicycle</option>
+            <option value="walking">Walking</option>
+            <option value="other">Other</option>
+        </select>
+        <label>Average commute time per day (in minutes)</label>
+        <input id="q_commute_time" type="number">
+        <label>How physically demanding is your work?</label>
+        <select id="q_work" required>
+            <option value="">Select...</option>
+            <option value="hard">Hard labour</option>
+            <option value="medium">Moderate</option>
+            <option value="desk">Desk job</option>
+            <option value="outdoor">Outdoor</option>
+        </select>
+        <label>How often do you exercise?</label>
+        <select id="q_exercise" required>
+            <option value="">Select...</option>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="rarely">Rarely</option>
+            <option value="never">Never</option>
+        </select>
+        <label>Typical exercise duration per session (in minutes)</label>
+        <input id="q_exercise_duration" type="number">
+        <label>Preferred exercise type (e.g., cardio, strength, flexibility)</label>
+        <input id="q_exercise_type" type="text">
+        <div class="button-group">
+            <button onclick="prevStep()" class="btn-secondary">Back</button>
+            <button onclick="nextStep()">Next</button>
+        </div>
+    </div>
+    <div id="step3" class="step" style="display:none;">
+        <h2>Sleep and Diet</h2>
+        <label>Typical bedtime</label>
+        <input id="q_sleep" type="time" required>
+        <label>Typical wake-up time</label>
+        <input id="q_wake" type="time" required>
+        <label>Average hours of sleep per night</label>
+        <input id="q_avg_sleep" type="number" required>
+        <label>Foods you enjoy</label>
+        <input id="q_food_like" required>
+        <label>Foods you dislike</label>
+        <input id="q_food_dislike" required>
+        <label>What best describes your dietary preference?</label>
+        <select id="q_diet" required>
+            <option value="">Select...</option>
+            <option value="omnivore">Omnivore</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="other">Other</option>
+        </select>
+        <label>Dietary restrictions or allergies (e.g., gluten-free, lactose intolerant)</label>
+        <input id="q_diet_restrictions" type="text">
+        <label>Average number of meals per day</label>
+        <input id="q_meals_per_day" type="number" required>
+        <label>Typical beverage choices (e.g., water, soda, coffee, tea)</label>
+        <input id="q_beverages" type="text" required>
+        <div class="button-group">
+            <button onclick="prevStep()" class="btn-secondary">Back</button>
+            <button onclick="nextStep()">Next</button>
+        </div>
+    </div>
+    <div id="step4" class="step" style="display:none;">
+        <h2>Lifestyle and Goals</h2>
+        <div class="input-group-radio">
+            <label>Do you smoke?</label>
+            <label><input type="radio" name="smoke" value="yes">Yes</label>
+            <label><input type="radio" name="smoke" value="no">No</label>
+        </div>
+        <div class="input-group-radio">
+            <label>Do you drink alcohol?</label>
+            <label><input type="radio" name="alcohol" value="yes">Yes</label>
+            <label><input type="radio" name="alcohol" value="no">No</label>
+        </div>
+        <div class="input-group-checkbox">
+            <label>Health goals related to supplements</label>
+            <label><input type="checkbox" name="goal" value="weight_management">Weight management</label>
+            <label><input type="checkbox" name="goal" value="more_energy">More energy</label>
+            <label><input type="checkbox" name="goal" value="general_health">General health</label>
+            <label><input type="checkbox" name="goal" value="improved_sleep">Improved sleep</label>
+            <label><input type="checkbox" name="goal" value="stress_reduction">Stress reduction</label>
+        </div>
+        <div class="input-group-radio">
+            <label>Do you currently use dietary supplements?</label>
+            <label><input type="radio" name="supplement_use" value="yes">Yes</label>
+            <label><input type="radio" name="supplement_use" value="no">No</label>
+        </div>
+        <label>If yes, which supplements?</label>
+        <input id="supplements" placeholder="e.g. Vitamin C, Protein">
+        <label>Known medical conditions (optional)</label>
+        <input id="q_medical_conditions" type="text">
+        <div class="button-group">
+            <button onclick="prevStep()" class="btn-secondary">Back</button>
+            <button onclick="nextStep()">Next</button>
+        </div>
+    </div>
+    <div id="step5" class="step" style="display:none;">
+        <h2>Symptoms</h2>
+        <div class="input-group-checkbox">
+            <label><input type="checkbox" id="sym_tired">Tiredness/Fatigue</label>
+        </div>
+        <div class="input-group-checkbox">
+            <label><input type="checkbox" id="sym_pain">Muscle/Joint pain</label>
+        </div>
+        <div class="input-group-checkbox">
+            <label><input type="checkbox" id="sym_digestive">Digestive issues</label>
+        </div>
+        <div class="input-group-checkbox">
+            <label><input type="checkbox" id="sym_sleep">Poor sleep quality/Sleep problems</label>
+        </div>
+        <label>Other specific health concerns (optional)</label>
+        <input id="q_health_concerns_text" type="text">
+        <label>General stress level</label>
+        <select id="q_stress_level" required>
+            <option value="">Select...</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+        <div class="button-group">
+            <button onclick="prevStep()" class="btn-secondary">Back</button>
+            <button onclick="submitAnswers()">Submit</button>
+        </div>
+    </div>
+</section>
+</div>
 <script src="/static/script.js"></script>
 
 </body>

@@ -74,7 +74,6 @@ class RequestHandler(BaseHTTPRequestHandler):
             username = data.get('username')
             password = data.get('password')
             if not username or not password:
-
                 self._send_json({'error': 'username and password required'}, 400)
                 return
             if register_user(username, password):
@@ -148,4 +147,3 @@ class RequestHandler(BaseHTTPRequestHandler):
 
 if __name__ == '__main__':
     HTTPServer(('', 8000), RequestHandler).serve_forever()
-

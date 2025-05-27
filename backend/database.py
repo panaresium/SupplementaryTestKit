@@ -30,8 +30,10 @@ def init_db():
     conn.commit()
     conn.close()
 
+
 def hash_password(password: str) -> str:
     return sha256(password.encode('utf-8')).hexdigest()
+
 
 def register_user(username: str, password: str) -> bool:
     conn = sqlite3.connect(DB_PATH)
@@ -45,6 +47,7 @@ def register_user(username: str, password: str) -> bool:
     finally:
         conn.close()
 
+
 def authenticate_user(username: str, password: str) -> bool:
     conn = sqlite3.connect(DB_PATH)
     cur = conn.execute('SELECT password_hash FROM users WHERE username=?', (username,))
@@ -54,6 +57,7 @@ def authenticate_user(username: str, password: str) -> bool:
         return False
     stored = row[0]
     return stored == hash_password(password)
+
 
 def save_questionnaire(username: str, data: str) -> bool:
     conn = sqlite3.connect(DB_PATH)
@@ -68,6 +72,7 @@ def save_questionnaire(username: str, data: str) -> bool:
     conn.commit()
     conn.close()
     return True
+
 
 def get_questionnaires(username: str) -> List[str]:
     conn = sqlite3.connect(DB_PATH)

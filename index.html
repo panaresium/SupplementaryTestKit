@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Supplementary Test Kit</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+<h1>Supplementary Test Kit</h1>
+<section id="auth">
+    <h2>Register</h2>
+    <input id="reg-user" placeholder="Username">
+    <input id="reg-pass" type="password" placeholder="Password">
+    <button onclick="register()">Register</button>
+    <h2>Login</h2>
+    <input id="log-user" placeholder="Username">
+    <input id="log-pass" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+</section>
+
+<section id="questionnaire" style="display:none;">
+    <div id="progress"></div>
+    <div id="step1" class="step">
+        <h2>Basic Information</h2>
+        <label>Age</label>
+        <input id="q_age" type="number" required>
+        <label>Occupation</label>
+        <input id="q_job" required>
+        <label>Work location / Province</label>
+        <input id="q_location" required>
+        <label>Hours you work per day</label>
+        <input id="q_hours" type="number" required>
+        <button onclick="nextStep()">Next</button>
+    </div>
+    <div id="step2" class="step" style="display:none;">
+        <h2>Work Environment</h2>
+        <label>Work environment</label>
+        <select id="q_environment" required>
+            <option value="">Select...</option>
+            <option value="indoor">Indoor</option>
+            <option value="outdoor">Outdoor</option>
+            <option value="both">Both</option>
+        </select>
+        <label>Main posture</label>
+        <select id="q_posture" required>
+            <option value="">Select...</option>
+            <option value="standing">Mostly standing</option>
+            <option value="sitting">Mostly sitting</option>
+            <option value="mixed">Mixed</option>
+        </select>
+        <label>Transportation you usually use</label>
+        <select id="q_transport" required>
+            <option value="">Select...</option>
+            <option value="public">Public transport</option>
+            <option value="taxi">Taxi</option>
+            <option value="car">Private car</option>
+            <option value="motorbike">Motorbike</option>
+            <option value="other">Other</option>
+        </select>
+        <label>How physically demanding is your work?</label>
+        <select id="q_work" required>
+            <option value="">Select...</option>
+            <option value="hard">Hard labour</option>
+            <option value="medium">Moderate</option>
+            <option value="desk">Desk job</option>
+            <option value="outdoor">Outdoor</option>
+        </select>
+        <label>How often do you exercise?</label>
+        <select id="q_exercise" required>
+            <option value="">Select...</option>
+            <option value="daily">Daily</option>
+            <option value="few_week">Few times per week</option>
+            <option value="rarely">Rarely</option>
+        </select>
+        <button onclick="prevStep()">Back</button>
+        <button onclick="nextStep()">Next</button>
+    </div>
+    <div id="step3" class="step" style="display:none;">
+        <h2>Sleep and Diet</h2>
+        <label>Time you usually sleep</label>
+        <input id="q_sleep" type="time" required>
+        <label>Time you wake up</label>
+        <input id="q_wake" type="time" required>
+        <label>Food that you like</label>
+        <input id="q_food_like" required>
+        <label>Food that you dislike</label>
+        <input id="q_food_dislike" required>
+        <label>What best describes your diet?</label>
+        <select id="q_diet" required>
+            <option value="">Select...</option>
+            <option value="omnivore">Omnivore</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="other">Other</option>
+        </select>
+        <button onclick="prevStep()">Back</button>
+        <button onclick="nextStep()">Next</button>
+    </div>
+    <div id="step4" class="step" style="display:none;">
+        <h2>Lifestyle and Goals</h2>
+        <label>Do you smoke?</label>
+        <label><input type="radio" name="smoke" value="yes">Yes</label>
+        <label><input type="radio" name="smoke" value="no">No</label>
+        <label>Do you drink alcohol?</label>
+        <label><input type="radio" name="alcohol" value="yes">Yes</label>
+        <label><input type="radio" name="alcohol" value="no">No</label>
+        <label>Health goals</label>
+        <label><input type="checkbox" name="goal" value="weight_loss">Weight loss</label>
+        <label><input type="checkbox" name="goal" value="muscle_gain">Muscle gain</label>
+        <label><input type="checkbox" name="goal" value="energy">Boost energy</label>
+        <label><input type="checkbox" name="goal" value="wellness">General wellness</label>
+        <label>Do you currently use supplements?</label>
+        <label><input type="radio" name="supplement_use" value="yes">Yes</label>
+        <label><input type="radio" name="supplement_use" value="no">No</label>
+        <label>If yes, list them</label>
+        <input id="supplements" placeholder="e.g. Vitamin C, Protein">
+        <button onclick="prevStep()">Back</button>
+        <button onclick="nextStep()">Next</button>
+    </div>
+    <div id="step5" class="step" style="display:none;">
+        <h2>Symptoms</h2>
+        <label><input type="checkbox" id="sym_tired">Tiredness</label>
+        <label><input type="checkbox" id="sym_pain">Muscle pain</label>
+        <label><input type="checkbox" id="sym_digestive">Digestive issues</label>
+        <label><input type="checkbox" id="sym_sleep">Poor sleep quality</label>
+        <button onclick="prevStep()">Back</button>
+        <button onclick="submitAnswers()">Submit</button>
+    </div>
+</section>
+</div>
+<script src="/static/script.js"></script>
+
+</body>
+</html>

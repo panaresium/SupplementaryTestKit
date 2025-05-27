@@ -3,3 +3,5 @@ uploads/*
 !uploads/.gitkeep
 *.db
 venv/
+/backend/__pycache__
+data/
