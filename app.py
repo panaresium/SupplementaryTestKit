@@ -323,6 +323,7 @@ def admin_results():
     conn.close()
     
     structure = _load_questionnaire_structure()
+
     q_map = {str(q["id"]): q.get("questionText", {}).get("en", f"Q{q['id']}")
              for q in structure.get("questions", [])}
     aggregate_scores = {"G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0}
@@ -353,7 +354,6 @@ def admin_results():
         headers=headers,
         q_map=q_map
     )
-
 
 @app.route('/admin/group_info', methods=['GET', 'POST'])
 @admin_required
