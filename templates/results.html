@@ -29,6 +29,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            min-width: 800px;
         }
         th, td {
             border: 1px solid #ddd;
@@ -71,90 +72,28 @@
         </div>
         {% endif %}
         <input type="text" id="filterInput" placeholder="Filter results" style="margin-top:10px;">
-
         {% if results %}
+        <div class="table-container" style="overflow-x:auto;">
+
             <table id="resultsTable">
                 <thead>
                     <tr>
-                        <!-- Dynamically generate headers from the first result's keys, if all results have same keys -->
-                        <!-- Or, list them manually if keys can vary or specific order is needed -->
-                        <th class="timestamp-col">Timestamp</th>
-                        <th class="id-col">ID</th>
-                        <th>Age</th>
-                        <th>Gender</th>
-                        <th>Occupation</th>
-                        <th>Location</th>
-                        <th>Work Hours</th>
-                        <th>Work Env.</th>
-                        <th>Posture</th>
-                        <th>Transport</th>
-                        <th>Commute Time</th>
-                        <th>Physical Demand</th>
-                        <th>Exercise Freq.</th>
-                        <th>Exercise Duration</th>
-                        <th>Exercise Type</th>
-                        <th>Sleep Time</th>
-                        <th>Wake Time</th>
-                        <th>Avg. Sleep</th>
-                        <th>Food Like</th>
-                        <th>Food Dislike</th>
-                        <th>Diet Pref.</th>
-                        <th>Diet Restr.</th>
-                        <th>Meals/Day</th>
-                        <th>Beverages</th>
-                        <th>Smoke</th>
-                        <th>Alcohol</th>
-                        <th class="json-data">Health Goals</th>
-                        <th>Supplement Use</th>
-                        <th>Current Supp.</th>
-                        <th>Medical Cond.</th>
-                        <th class="json-data">Symptoms Checklist</th>
-                        <th>Symptoms Other</th>
-                        <th>Symptoms Stress</th>
-                        <th>Products</th>
+                        {% for h in headers %}
+                        <th>{{ q_map.get(h, h) }}</th>
+                        {% endfor %}
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in results %}
+                {% for row in results %}
                     <tr>
-                        <td>{{ row['timestamp'] }}</td>
-                        <td>{{ row['id'] }}</td>
-                        <td>{{ row['age'] }}</td>
-                        <td>{{ row['gender'] }}</td>
-                        <td>{{ row['occupation'] }}</td>
-                        <td>{{ row['location'] }}</td>
-                        <td>{{ row['work_hours'] }}</td>
-                        <td>{{ row['work_env'] }}</td>
-                        <td>{{ row['posture'] }}</td>
-                        <td>{{ row['transport'] }}</td>
-                        <td>{{ row['commute_time'] }}</td>
-                        <td>{{ row['physical_demand'] }}</td>
-                        <td>{{ row['exercise_freq'] }}</td>
-                        <td>{{ row['exercise_duration'] }}</td>
-                        <td>{{ row['exercise_type'] }}</td>
-                        <td>{{ row['sleep_time'] }}</td>
-                        <td>{{ row['wake_time'] }}</td>
-                        <td>{{ row['avg_sleep'] }}</td>
-                        <td>{{ row['food_like'] }}</td>
-                        <td>{{ row['food_dislike'] }}</td>
-                        <td>{{ row['diet_preference'] }}</td>
-                        <td>{{ row['diet_restrictions'] }}</td>
-                        <td>{{ row['meals_per_day'] }}</td>
-                        <td>{{ row['beverages'] }}</td>
-                        <td>{{ row['smoke'] }}</td>
-                        <td>{{ row['alcohol'] }}</td>
-                        <td class="json-data">{{ row['health_goals'] }}</td>
-                        <td>{{ row['supplement_use'] }}</td>
-                        <td>{{ row['current_supplements'] }}</td>
-                        <td>{{ row['medical_conditions'] }}</td>
-                        <td class="json-data">{{ row['symptoms_checklist'] }}</td>
-                        <td>{{ row['symptoms_other_concerns'] }}</td>
-                        <td>{{ row['symptoms_stress_level'] }}</td>
-                        <td>{{ row['products'] }}</td>
+                        {% for h in headers %}
+                        <td>{{ row[h] }}</td>
+                        {% endfor %}
                     </tr>
-                    {% endfor %}
+                {% endfor %}
                 </tbody>
             </table>
+        </div>
         {% else %}
             <p>No survey results found.</p>
         {% endif %}

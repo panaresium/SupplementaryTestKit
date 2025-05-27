@@ -323,6 +323,9 @@ def admin_results():
     conn.close()
     
     structure = _load_questionnaire_structure()
+
+    q_map = {str(q["id"]): q.get("questionText", {}).get("en", f"Q{q['id']}")
+             for q in structure.get("questions", [])}
     aggregate_scores = {"G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0}
     processed_results = []
     for row in results:
@@ -333,15 +336,24 @@ def admin_results():
                 answers = json.loads(row_dict['answers_json'])
             except json.JSONDecodeError:
                 answers = {}
-        row_dict.update(answers)
+        for qid in q_map.keys():
+            row_dict[f"Q{qid}"] = answers.get(str(qid), '')
+        row_dict.pop('answers_json', None)
+        row_dict.pop('products', None)
         scores, _ = _calculate_scores(answers, structure)
         row_dict.update(scores)
         for g in aggregate_scores:
             aggregate_scores[g] += scores[g]
         processed_results.append(row_dict)
 
-    return render_template('results.html', results=processed_results, totals=aggregate_scores)
-
+    headers = ["timestamp", "id"] + [f"Q{qid}" for qid in q_map.keys()] + list(aggregate_scores.keys())
+    return render_template(
+        'results.html',
+        results=processed_results,
+        totals=aggregate_scores,
+        headers=headers,
+        q_map=q_map
+    )
 
 @app.route('/admin/group_info', methods=['GET', 'POST'])
 @admin_required
