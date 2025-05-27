@@ -63,9 +63,17 @@
 <body>
     <div class="container">
         <h1>Survey Submissions</h1>
+        {% if totals %}
+        <div>
+            <strong>Aggregate Scores:</strong>
+            G1 {{ totals['G1'] }} | G2 {{ totals['G2'] }} | G3 {{ totals['G3'] }} |
+            G4 {{ totals['G4'] }} | G5 {{ totals['G5'] }} | G6 {{ totals['G6'] }}
+        </div>
+        {% endif %}
+        <input type="text" id="filterInput" placeholder="Filter results" style="margin-top:10px;">
 
         {% if results %}
-            <table>
+            <table id="resultsTable">
                 <thead>
                     <tr>
                         <!-- Dynamically generate headers from the first result's keys, if all results have same keys -->
@@ -151,5 +159,30 @@
             <p>No survey results found.</p>
         {% endif %}
     </div>
+    <script>
+    const filterInput = document.getElementById('filterInput');
+    const table = document.getElementById('resultsTable');
+
+    function filterRows() {
+        const query = filterInput.value.toLowerCase();
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(r => {
+            const text = r.textContent.toLowerCase();
+            r.style.display = text.includes(query) ? '' : 'none';
+        });
+    }
+
+    filterInput.addEventListener('input', filterRows);
+
+    table.querySelectorAll('th').forEach((th, idx) => {
+        th.addEventListener('click', () => {
+            const rows = Array.from(table.querySelectorAll('tbody tr'));
+            const sorted = rows.sort((a, b) => a.children[idx].textContent.localeCompare(b.children[idx].textContent));
+            const tbody = table.querySelector('tbody');
+            tbody.innerHTML = '';
+            sorted.forEach(r => tbody.appendChild(r));
+        });
+    });
+    </script>
 </body>
 </html>

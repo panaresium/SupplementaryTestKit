@@ -30,6 +30,7 @@ def test_submit_and_admin_results(client):
     data = res.get_json()
     assert data.get("status") == "success"
     assert "id" in data
+    client.post('/login', data={'username': 'admin', 'password': 'admin'})
     res_admin = client.get('/admin/results')
     assert res_admin.status_code == 200
     assert b'Survey Submissions' in res_admin.data

@@ -1,7 +1,7 @@
 import os
 import sqlite3
 import json # Added json import
-from flask import Flask, request, jsonify, send_from_directory, render_template # Added render_template
+from flask import Flask, request, jsonify, send_from_directory, render_template, session, redirect, url_for
 import openai
 
 try:
@@ -15,6 +15,7 @@ from uuid import uuid4
 from datetime import datetime, timezone # Updated import
 
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY", "dev-secret")
 CORS(app)
 
 load_dotenv()
@@ -25,11 +26,59 @@ DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 
 langcode = ""
 
+ADMIN_CREDENTIALS = {"username": "admin", "password": "admin"}
+
+from functools import wraps
+
+def admin_required(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        if not session.get("logged_in"):
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+    return wrapper
+
 
 # Serve the survey front-end
 @app.route('/')
 def index():
     return send_from_directory('static', 'index.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if username == ADMIN_CREDENTIALS['username'] and password == ADMIN_CREDENTIALS['password']:
+            session['logged_in'] = True
+            session['username'] = username
+            return redirect(url_for('admin_dashboard'))
+        error = 'Invalid credentials'
+    return render_template('login.html', error=error)
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+
+@app.route('/auth/google')
+def google_auth():
+    """Placeholder route for Google OAuth integration."""
+    # In a full implementation, this would start the OAuth flow and upon
+    # success mark the admin as authenticated via Google.
+    session['logged_in'] = True
+    session['username'] = ADMIN_CREDENTIALS['username']
+    return redirect(url_for('admin_dashboard'))
+
+
+@app.route('/admin')
+@admin_required
+def admin_dashboard():
+    return render_template('admin_dashboard.html')
 
 from urllib.parse import unquote
 
@@ -208,12 +257,11 @@ def thank_you():
     )
 
 def init_db():
+    """Create the responses table if it does not already exist."""
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
-    cur.execute("DROP TABLE IF EXISTS responses")
-    conn.commit() 
-    
-    create_table_sql = """CREATE TABLE IF NOT EXISTS responses (
+    create_table_sql = """
+    CREATE TABLE IF NOT EXISTS responses (
         id TEXT PRIMARY KEY,
         timestamp TEXT NOT NULL,
         language_code TEXT,
@@ -265,6 +313,7 @@ def submit():
     return jsonify({'status': 'success', 'id': response_id, 'timestamp': timestamp})
 
 @app.route('/admin/results')
+@admin_required
 def admin_results():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row 
@@ -273,21 +322,29 @@ def admin_results():
     results = cur.fetchall()
     conn.close()
     
+    structure = _load_questionnaire_structure()
+    aggregate_scores = {"G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0}
     processed_results = []
     for row in results:
-        row_dict = dict(row) 
+        row_dict = dict(row)
+        answers = {}
         if row_dict.get('answers_json'):
             try:
-                row_dict['answers_json'] = json.loads(row_dict['answers_json'])
+                answers = json.loads(row_dict['answers_json'])
             except json.JSONDecodeError:
-                # Keep as original string if parsing fails, or set to an error indicator
-                row_dict['answers_json'] = {"error": "Failed to parse answers JSON"}
+                answers = {}
+        row_dict.update(answers)
+        scores, _ = _calculate_scores(answers, structure)
+        row_dict.update(scores)
+        for g in aggregate_scores:
+            aggregate_scores[g] += scores[g]
         processed_results.append(row_dict)
-    
-    return render_template('results.html', results=processed_results)
+
+    return render_template('results.html', results=processed_results, totals=aggregate_scores)
 
 
 @app.route('/admin/group_info', methods=['GET', 'POST'])
+@admin_required
 def admin_group_info():
     group_info = _load_group_info()
     if request.method == 'POST':
@@ -298,5 +355,6 @@ def admin_group_info():
     return render_template('group_info.html', group_info=group_info)
 
 if __name__ == '__main__':
-    init_db()
+    if not os.path.exists(DB_PATH):
+        init_db()
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
