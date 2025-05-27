@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Received - Supplementary Test Kit</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .thank-you-container {
+            padding: 2rem;
+            text-align: center;
+        }
+        .results-display {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: left;
+        }
+        .results-display h3 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="thank-you-container">
+        <h1>Thank You!</h1>
+        <p>Your submission has been received. We appreciate you taking the time to complete the questionnaire.</p>
+
+        {% if submitted_answers %}
+        <div class="results-display">
+            <h3>Your Submitted Answers:</h3>
+            <dl>
+                {% for q, a in submitted_answers %}
+                <dt>{{ q }}</dt>
+                <dd>{{ a }}</dd>
+                {% endfor %}
+            </dl>
+        </div>
+
+        <div class="results-display" id="groupScoresDisplay">
+            <h3>Group Scores:</h3>
+            <dl>
+                <dt>Office/Digital (G1):</dt><dd>{{ group_scores['G1'] }}</dd>
+                <dt>Medical/Caregiving (G2):</dt><dd>{{ group_scores['G2'] }}</dd>
+                <dt>Industrial/Factory (G3):</dt><dd>{{ group_scores['G3'] }}</dd>
+                <dt>Heavy Labor/Construction (G4):</dt><dd>{{ group_scores['G4'] }}</dd>
+                <dt>Service Sector (G5):</dt><dd>{{ group_scores['G5'] }}</dd>
+                <dt>Agriculture/Fishery (G6):</dt><dd>{{ group_scores['G6'] }}</dd>
+            </dl>
+        </div>
+
+        <div class="results-display" id="radarChartContainer" style="margin-top:2rem;">
+            <h3>Your Profile Analysis:</h3>
+            <canvas id="profileRadarChart"></canvas>
+        </div>
+
+        <div class="results-display" id="groupRecommendationContainer" style="margin-top:2rem;">
+            <h3>Recommended Profile Focus:</h3>
+            <p id="recommendedGroupsText">{{ recommendation_text }}</p>
+        </div>
+        {% else %}
+        <p>No submission data found.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% if submitted_answers %}
+<script>
+const groupScores = {{ group_scores | tojson }};
+const ctx = document.getElementById('profileRadarChart').getContext('2d');
+new Chart(ctx, {
+    type: 'radar',
+    data: {
+        labels: ['Office/Digital (G1)', 'Medical/Caregiving (G2)', 'Industrial/Factory (G3)', 'Heavy Labor/Construction (G4)', 'Service Sector (G5)', 'Agriculture/Fishery (G6)'],
+        datasets: [{
+            label: 'Group Scores',
+            data: [groupScores.G1, groupScores.G2, groupScores.G3, groupScores.G4, groupScores.G5, groupScores.G6],
+            fill: true,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgb(54, 162, 235)',
+            pointBackgroundColor: 'rgb(54, 162, 235)'
+        }]
+    },
+    options: {
+        scales: { r: { angleLines: { display: true }, suggestedMin: 0 } },
+        plugins: { legend: { position: 'top' } }
+    }
+});
+</script>
+{% endif %}
+</body>
+</html>
