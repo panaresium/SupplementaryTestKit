@@ -75,6 +75,7 @@
             G4 {{ totals['G4'] }} | G5 {{ totals['G5'] }} | G6 {{ totals['G6'] }}
         </div>
         {% endif %}
+
         {% if averages %}
         <div style="margin-top:5px;">
             <strong>Average Scores:</strong>
@@ -83,9 +84,10 @@
             G5 {{ '%.2f'|format(averages['G5']) }} | G6 {{ '%.2f'|format(averages['G6']) }}
         </div>
         {% endif %}
+
         <input type="text" id="filterInput" placeholder="Filter results" style="margin-top:10px;">
         {% if results %}
-        <div class="table-container" style="overflow-x:auto;">
+        <div class="table-container" style="overflow-x:auto; margin-top:20px;">
 
             <table id="resultsTable">
                 <thead>
@@ -110,6 +112,7 @@
             <p>No survey results found.</p>
         {% endif %}
 
+
         <h3>Category Totals</h3>
         <div class="chart-container" style="margin-top:20px;">
             <canvas id="categoryChart" height="150"></canvas>
@@ -120,6 +123,7 @@
         </div>
         <div id="freeTextContainer" style="margin-top:40px;"></div>
         <div id="analysisSuggestions" style="margin-top:40px;"></div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -149,6 +153,7 @@
 
     const categoryData = {{ totals | tojson }};
     const ctxCat = document.getElementById('categoryChart').getContext('2d');
+
     new Chart(ctxCat, {
         type: 'line',
         data: {
@@ -193,6 +198,7 @@
             plugins: { title: { display: true, text: 'Answer Counts Per Question' } },
             scales: { x: { stacked: false }, y: { beginAtZero: true } }
         }
+
     });
 
     const freeTexts = {{ free_texts | tojson }};
@@ -208,6 +214,7 @@
         container.appendChild(list);
     }
 
+
     const suggestions = document.getElementById('analysisSuggestions');
     suggestions.innerHTML = '<h3>Further Analysis Ideas</h3>' +
         '<ul>' +
@@ -215,6 +222,7 @@
         '<li>Compare averages across different user groups.</li>' +
         '<li>Look for correlations between questions.</li>' +
         '</ul>';
+
     </script>
 </body>
 </html>
