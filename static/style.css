@@ -119,6 +119,20 @@ button.btn-secondary {
     color: #333;
 }
 
+a.btn-secondary {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #bdc3c7;
+    color: #333;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+a.btn-secondary:hover {
+    background-color: #95a5a6;
+    color: #333;
+}
+
 button.btn-secondary:hover {
     background-color: #95a5a6; /* Darker gray on hover */
 }
@@ -148,6 +162,14 @@ button.btn-secondary:hover {
     background-color: #3498db; /* Primary color */
     border-radius: 4px;
     transition: width 0.4s ease;
+}
+
+/* Chart container for admin results */
+.chart-container {
+    width: 50%;
+    margin: 0 auto;
+    resize: both;
+    overflow: auto;
 }
 
 
