@@ -10,19 +10,13 @@
 <body>
 <div class="container">
 <h1>Supplementary Test Kit</h1>
-<section id="auth">
-    <h2>Register</h2>
-    <input id="reg-user" placeholder="Username">
-    <input id="reg-pass" type="password" placeholder="Password">
-    <button onclick="register()">Register</button>
-    <h2>Login</h2>
-    <input id="log-user" placeholder="Username">
-    <input id="log-pass" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-</section>
-
-<section id="questionnaire" style="display:none;">
-    <div id="progress"></div>
+<section id="questionnaire" style="display:block;">
+    <div id="progress">
+        <span id="progressText">Step 1 of 5</span>
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+    </div>
     <div id="step1" class="step">
         <h2>Basic Information</h2>
         <label>Age</label>
@@ -41,7 +35,9 @@
         <input id="q_location" required>
         <label>Hours you work per day</label>
         <input id="q_hours" type="number" required>
-        <button onclick="nextStep()">Next</button>
+        <div class="button-group">
+            <button onclick="nextStep()">Next</button>
+        </div>
     </div>
     <div id="step2" class="step" style="display:none;">
         <h2>Work Environment</h2>
@@ -93,8 +89,10 @@
         <input id="q_exercise_duration" type="number">
         <label>Preferred exercise type (e.g., cardio, strength, flexibility)</label>
         <input id="q_exercise_type" type="text">
-        <button onclick="prevStep()">Back</button>
-        <button onclick="nextStep()">Next</button>
+        <div class="button-group">
+            <button onclick="prevStep()" class="btn-secondary">Back</button>
+            <button onclick="nextStep()">Next</button>
+        </div>
     </div>
     <div id="step3" class="step" style="display:none;">
         <h2>Sleep and Diet</h2>
@@ -122,39 +120,59 @@
         <input id="q_meals_per_day" type="number" required>
         <label>Typical beverage choices (e.g., water, soda, coffee, tea)</label>
         <input id="q_beverages" type="text" required>
-        <button onclick="prevStep()">Back</button>
-        <button onclick="nextStep()">Next</button>
+        <div class="button-group">
+            <button onclick="prevStep()" class="btn-secondary">Back</button>
+            <button onclick="nextStep()">Next</button>
+        </div>
     </div>
     <div id="step4" class="step" style="display:none;">
         <h2>Lifestyle and Goals</h2>
-        <label>Do you smoke?</label>
-        <label><input type="radio" name="smoke" value="yes">Yes</label>
-        <label><input type="radio" name="smoke" value="no">No</label>
-        <label>Do you drink alcohol?</label>
-        <label><input type="radio" name="alcohol" value="yes">Yes</label>
-        <label><input type="radio" name="alcohol" value="no">No</label>
-        <label>Health goals related to supplements</label>
-        <label><input type="checkbox" name="goal" value="weight_management">Weight management</label>
-        <label><input type="checkbox" name="goal" value="more_energy">More energy</label>
-        <label><input type="checkbox" name="goal" value="general_health">General health</label>
-        <label><input type="checkbox" name="goal" value="improved_sleep">Improved sleep</label>
-        <label><input type="checkbox" name="goal" value="stress_reduction">Stress reduction</label>
-        <label>Do you currently use dietary supplements?</label>
-        <label><input type="radio" name="supplement_use" value="yes">Yes</label>
-        <label><input type="radio" name="supplement_use" value="no">No</label>
+        <div class="input-group-radio">
+            <label>Do you smoke?</label>
+            <label><input type="radio" name="smoke" value="yes">Yes</label>
+            <label><input type="radio" name="smoke" value="no">No</label>
+        </div>
+        <div class="input-group-radio">
+            <label>Do you drink alcohol?</label>
+            <label><input type="radio" name="alcohol" value="yes">Yes</label>
+            <label><input type="radio" name="alcohol" value="no">No</label>
+        </div>
+        <div class="input-group-checkbox">
+            <label>Health goals related to supplements</label>
+            <label><input type="checkbox" name="goal" value="weight_management">Weight management</label>
+            <label><input type="checkbox" name="goal" value="more_energy">More energy</label>
+            <label><input type="checkbox" name="goal" value="general_health">General health</label>
+            <label><input type="checkbox" name="goal" value="improved_sleep">Improved sleep</label>
+            <label><input type="checkbox" name="goal" value="stress_reduction">Stress reduction</label>
+        </div>
+        <div class="input-group-radio">
+            <label>Do you currently use dietary supplements?</label>
+            <label><input type="radio" name="supplement_use" value="yes">Yes</label>
+            <label><input type="radio" name="supplement_use" value="no">No</label>
+        </div>
         <label>If yes, which supplements?</label>
         <input id="supplements" placeholder="e.g. Vitamin C, Protein">
         <label>Known medical conditions (optional)</label>
         <input id="q_medical_conditions" type="text">
-        <button onclick="prevStep()">Back</button>
-        <button onclick="nextStep()">Next</button>
+        <div class="button-group">
+            <button onclick="prevStep()" class="btn-secondary">Back</button>
+            <button onclick="nextStep()">Next</button>
+        </div>
     </div>
     <div id="step5" class="step" style="display:none;">
         <h2>Symptoms</h2>
-        <label><input type="checkbox" id="sym_tired">Tiredness/Fatigue</label>
-        <label><input type="checkbox" id="sym_pain">Muscle/Joint pain</label>
-        <label><input type="checkbox" id="sym_digestive">Digestive issues</label>
-        <label><input type="checkbox" id="sym_sleep">Poor sleep quality/Sleep problems</label>
+        <div class="input-group-checkbox">
+            <label><input type="checkbox" id="sym_tired">Tiredness/Fatigue</label>
+        </div>
+        <div class="input-group-checkbox">
+            <label><input type="checkbox" id="sym_pain">Muscle/Joint pain</label>
+        </div>
+        <div class="input-group-checkbox">
+            <label><input type="checkbox" id="sym_digestive">Digestive issues</label>
+        </div>
+        <div class="input-group-checkbox">
+            <label><input type="checkbox" id="sym_sleep">Poor sleep quality/Sleep problems</label>
+        </div>
         <label>Other specific health concerns (optional)</label>
         <input id="q_health_concerns_text" type="text">
         <label>General stress level</label>
@@ -164,8 +182,10 @@
             <option value="medium">Medium</option>
             <option value="high">High</option>
         </select>
-        <button onclick="prevStep()">Back</button>
-        <button onclick="submitAnswers()">Submit</button>
+        <div class="button-group">
+            <button onclick="prevStep()" class="btn-secondary">Back</button>
+            <button onclick="submitAnswers()">Submit</button>
+        </div>
     </div>
 </section>
 </div>
