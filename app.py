@@ -4,7 +4,7 @@ import json # Added json import
 from flask import Flask, request, jsonify, send_from_directory, render_template # Added render_template
 from flask_cors import CORS
 from uuid import uuid4
-from datetime import datetime
+from datetime import datetime, timezone # Updated import
 
 app = Flask(__name__)
 CORS(app)
@@ -16,61 +16,72 @@ DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 def index():
     return send_from_directory('static', 'index.html')
 
+@app.route('/thank_you.html')
+def thank_you():
+    return send_from_directory('static', 'thank_you.html')
+
 def init_db():
+    print("DEBUG INIT_DB: Attempting to initialize database...") # New
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
-    # Drop the old table if it exists
+    print(f"DEBUG INIT_DB: Database path is {DB_PATH}") # New
+    print("DEBUG INIT_DB: Dropping old responses table if it exists...") # New
     cur.execute("DROP TABLE IF EXISTS responses")
-    # Create the new table with the detailed schema
-    cur.execute(
-        """CREATE TABLE IF NOT EXISTS responses (
-            id TEXT PRIMARY KEY,
-            timestamp TEXT NOT NULL,
-            age TEXT,
-            gender TEXT,
-            occupation TEXT,
-            location TEXT,
-            work_hours TEXT,
-            work_env TEXT,
-            posture TEXT,
-            transport TEXT,
-            commute_time TEXT,
-            physical_demand TEXT,
-            exercise_freq TEXT,
-            exercise_duration TEXT,
-            exercise_types TEXT, -- RENAMED from exercise_type
-            exercise_type_other TEXT, -- ADDED
-            sleep_time TEXT,
-            wake_time TEXT,
-            avg_sleep TEXT,
-            food_like TEXT,
-            food_dislike TEXT,
-            diet_preference TEXT,
-            diet_restrictions TEXT,
-            meals_per_day TEXT,
-            beverage_choices TEXT, -- RENAMED from beverages
-            beverages_other TEXT, -- ADDED
-            smoke TEXT,
-            alcohol TEXT,
-            health_goals TEXT,
-            supplement_use TEXT,
-            current_supplements TEXT,
-            medical_conditions TEXT,
-            symptoms_checklist TEXT,
-            symptoms_other_concerns TEXT,
-            symptoms_stress_level TEXT,
-            products TEXT
-        )"""
-    )
-    conn.commit()
+    conn.commit() # Commit the drop
+    print("DEBUG INIT_DB: Creating new responses table with current schema...") # New
+    
+    # Ensure this schema string is exactly the one that includes language_code and other recent changes
+    create_table_sql = """CREATE TABLE IF NOT EXISTS responses (
+        id TEXT PRIMARY KEY,
+        timestamp TEXT NOT NULL,
+        language_code TEXT, -- ADDED
+        age TEXT,
+        gender TEXT,
+        occupation TEXT,
+        location TEXT,
+        work_hours TEXT,
+        work_env TEXT,
+        posture TEXT,
+        transport TEXT,
+        commute_time TEXT,
+        physical_demand TEXT,
+        exercise_freq TEXT,
+        exercise_duration TEXT,
+        exercise_types TEXT, -- RENAMED from exercise_type
+        exercise_type_other TEXT, -- ADDED
+        sleep_time TEXT,
+        wake_time TEXT,
+        avg_sleep TEXT,
+        food_like TEXT,
+        food_dislike TEXT,
+        diet_preference TEXT,
+        diet_restrictions TEXT,
+        meals_per_day TEXT,
+        beverage_choices TEXT, -- RENAMED from beverages
+        beverages_other TEXT, -- ADDED
+        smoke TEXT,
+        alcohol TEXT,
+        health_goals TEXT,
+        supplement_use TEXT,
+        current_supplements TEXT,
+        medical_conditions TEXT,
+        symptoms_checklist TEXT,
+        symptoms_other_concerns TEXT,
+        symptoms_stress_level TEXT,
+        products TEXT
+    )"""
+    print(f"DEBUG INIT_DB: Executing SQL: {create_table_sql}") # New: print the SQL
+    cur.execute(create_table_sql)
+    conn.commit() # Commit the create
     conn.close()
+    print("DEBUG INIT_DB: Database initialization complete.") # New
 
 @app.route('/api/submit', methods=['POST'])
 def submit():
     data = request.get_json(force=True)
     language_code = data.get('language') # Extract language_code
     response_id = str(uuid4())
-    timestamp = datetime.utcnow().isoformat()
+    timestamp = datetime.now(timezone.utc).isoformat() # Updated timestamp generation
 
     features_json_string = data.get('features')
     survey_answers = {}
