@@ -23,7 +23,7 @@ from urllib.parse import unquote
 
 def _load_questionnaire_structure() -> dict:
     path = os.path.join(app.root_path, 'static', 'questionnaire_structure.json')
-    with open(path, 'r') as f:
+    with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 
@@ -32,7 +32,8 @@ GROUP_INFO_FILE = os.path.join(os.path.dirname(__file__), 'group_info.json')
 
 def _load_group_info() -> dict:
     if os.path.exists(GROUP_INFO_FILE):
-        with open(GROUP_INFO_FILE, 'r') as f:
+
+        with open(GROUP_INFO_FILE, 'r', encoding='utf-8') as f:
             try:
                 return json.load(f)
             except json.JSONDecodeError:
@@ -49,7 +50,8 @@ def _load_group_info() -> dict:
 
 
 def _save_group_info(data: dict):
-    with open(GROUP_INFO_FILE, 'w') as f:
+    with open(GROUP_INFO_FILE, 'w', encoding='utf-8') as f:
+
         json.dump(data, f, indent=2)
 
 
