@@ -24,106 +24,18 @@
     </div>
     <div id="step1" class="step">
         <h2 data-i18n-key="step1_title">Basic Information</h2>
-        <label data-i18n-key="age_label">Age</label>
-        <select id="q_age">
-            <option value="" data-i18n-key="select_placeholder">Select...</option>
-            <option value="under_18" data-i18n-key="age_under_18">Under 18</option>
-            <option value="18-24" data-i18n-key="age_18_24">18-24</option>
-            <option value="25-34" data-i18n-key="age_25_34">25-34</option>
-            <option value="35-44" data-i18n-key="age_35_44">35-44</option>
-            <option value="45-54" data-i18n-key="age_45_54">45-54</option>
-            <option value="55-64" data-i18n-key="age_55_64">55-64</option>
-            <option value="65_plus" data-i18n-key="age_65_plus">65+</option>
-        </select>
-        <label data-i18n-key="q_gender_label">Sex/Gender (Optional)</label>
-        <select id="q_gender">
-            <option value="" data-i18n-key="select_option_default">Select...</option>
-            <option value="male" data-i18n-key="gender_option_male">Male</option>
-            <option value="female" data-i18n-key="gender_option_female">Female</option>
-            <option value="prefer_not_to_say" data-i18n-key="gender_option_prefer_not_to_say">Prefer not to say</option>
-            <option value="other" data-i18n-key="gender_option_other">Other</option>
-        </select>
-        <label data-i18n-key="occupation_label">Occupation</label>
-        <input id="q_job">
-        <label data-i18n-key="q_location_label">Work Location (City, Province, Country)</label>
-        <input id="q_location">
-        <label data-i18n-key="q_hours_label">Hours you work per day</label>
-        <select id="q_hours">
-            <option value="" data-i18n-key="select_placeholder">Select...</option>
-            <option value="lt_4" data-i18n-key="hours_lt_4">Less than 4</option>
-            <option value="4-6" data-i18n-key="hours_4_6">4-6</option>
-            <option value="6-8" data-i18n-key="hours_6_8">6-8</option>
-            <option value="8-10" data-i18n-key="hours_8_10">8-10</option>
-            <option value="gt_10" data-i18n-key="hours_gt_10">More than 10</option>
-        </select>
+        <div id="step1_questions_container" class="questions-container">
+            <!-- Questions will be dynamically inserted here by JavaScript -->
+        </div>
         <div class="button-group">
             <button onclick="nextStep()" data-i18n-key="next_button">Next</button>
         </div>
     </div>
     <div id="step2" class="step" style="display:none;">
         <h2 data-i18n-key="step2_title">Work Environment</h2>
-        <label data-i18n-key="q_environment_label">Work environment</label>
-        <select id="q_environment">
-            <option value="" data-i18n-key="select_option_default">Select...</option>
-            <option value="indoor" data-i18n-key="work_env_option_indoor">Indoor</option>
-            <option value="outdoor" data-i18n-key="work_env_option_outdoor">Outdoor</option>
-            <option value="both" data-i18n-key="work_env_option_both">Both</option>
-        </select>
-        <label data-i18n-key="q_posture_label">Main posture</label>
-        <select id="q_posture">
-            <option value="" data-i18n-key="select_option_default">Select...</option>
-            <option value="standing" data-i18n-key="posture_option_standing">Mostly standing</option>
-            <option value="sitting" data-i18n-key="posture_option_sitting">Mostly sitting</option>
-            <option value="mixed" data-i18n-key="posture_option_mixed">Mixed</option>
-        </select>
-        <label data-i18n-key="q_transport_label">Transportation you usually use</label>
-        <select id="q_transport">
-            <option value="" data-i18n-key="select_option_default">Select...</option>
-            <option value="public" data-i18n-key="transport_option_public">Public transport</option>
-            <option value="taxi" data-i18n-key="transport_option_taxi">Taxi</option>
-            <option value="rideshare" data-i18n-key="transport_option_rideshare">Rideshare (e.g., Uber, Lyft)</option>
-            <option value="car" data-i18n-key="transport_option_car">Private car</option>
-            <option value="motorbike" data-i18n-key="transport_option_motorbike">Motorbike</option>
-            <option value="bicycle" data-i18n-key="transport_option_bicycle">Bicycle</option>
-            <option value="walking" data-i18n-key="transport_option_walking">Walking</option>
-            <option value="other" data-i18n-key="transport_option_other">Other</option>
-        </select>
-        <label data-i18n-key="q_commute_time_label">Average commute time per day (in minutes)</label>
-        <select id="q_commute_time">
-            <option value="" data-i18n-key="select_placeholder">Select...</option>
-            <option value="lt_15_min" data-i18n-key="commute_lt_15">Less than 15 min</option>
-            <option value="15-30_min" data-i18n-key="commute_15_30">15-30 min</option>
-            <option value="30-60_min" data-i18n-key="commute_30_60">30-60 min</option>
-            <option value="60-90_min" data-i18n-key="commute_60_90">60-90 min</option>
-            <option value="gt_90_min" data-i18n-key="commute_gt_90">More than 90 min</option>
-        </select>
-        <label data-i18n-key="q_work_demand_label">How physically demanding is your work?</label>
-        <select id="q_work">
-            <option value="" data-i18n-key="select_option_default">Select...</option>
-            <option value="hard" data-i18n-key="work_demand_option_hard">Hard labour</option>
-            <option value="medium" data-i18n-key="work_demand_option_medium">Moderate</option>
-            <option value="desk" data-i18n-key="work_demand_option_desk">Desk job</option>
-            <option value="outdoor" data-i18n-key="work_demand_option_outdoor">Outdoor</option>
-        </select>
-        <label data-i18n-key="q_exercise_freq_label">How often do you exercise?</label>
-        <select id="q_exercise">
-            <option value="" data-i18n-key="select_option_default">Select...</option>
-            <option value="daily" data-i18n-key="exercise_freq_option_daily">Daily</option>
-            <option value="weekly" data-i18n-key="exercise_freq_option_weekly">Weekly</option>
-            <option value="rarely" data-i18n-key="exercise_freq_option_rarely">Rarely</option>
-            <option value="never" data-i18n-key="exercise_freq_option_never">Never</option>
-        </select>
-        <label data-i18n-key="q_exercise_duration_label">Typical exercise duration per session (in minutes)</label>
-        <input id="q_exercise_duration" type="number">
-        <label data-i18n-key="q_exercise_type_label">Preferred exercise type (e.g., cardio, strength, flexibility)</label>
-        <div class="input-group-checkbox">
-            <label><input type="checkbox" id="ex_type_cardio" name="exercise_type" value="cardio"><span data-i18n-key="ex_type_cardio_label">Cardio (running, cycling)</span></label>
-            <label><input type="checkbox" id="ex_type_strength" name="exercise_type" value="strength"><span data-i18n-key="ex_type_strength_label">Strength training</span></label>
-            <label><input type="checkbox" id="ex_type_flexibility" name="exercise_type" value="flexibility"><span data-i18n-key="ex_type_flexibility_label">Flexibility (yoga, stretching)</span></label>
-            <label><input type="checkbox" id="ex_type_team_sports" name="exercise_type" value="team_sports"><span data-i18n-key="ex_type_team_sports_label">Team sports</span></label>
+        <div id="step2_questions_container" class="questions-container">
+            <!-- Questions will be dynamically inserted here by JavaScript -->
         </div>
-        <label for="q_exercise_type_other" data-i18n-key="ex_type_other_label">Other:</label>
-        <input type="text" id="q_exercise_type_other" name="exercise_type_other" data-i18n-key="ex_type_other_placeholder" placeholder="Specify other exercise type">
         <div class="button-group">
             <button onclick="prevStep()" class="btn-secondary" data-i18n-key="back_button">Back</button>
             <button onclick="nextStep()" data-i18n-key="next_button">Next</button>
@@ -131,53 +43,9 @@
     </div>
     <div id="step3" class="step" style="display:none;">
         <h2 data-i18n-key="step3_title">Sleep and Diet</h2>
-        <label data-i18n-key="q_sleep_time_label">Typical bedtime</label>
-        <input id="q_sleep" type="time">
-        <label data-i18n-key="q_wake_time_label">Typical wake-up time</label>
-        <input id="q_wake" type="time">
-        <label data-i18n-key="q_avg_sleep_label">Average hours of sleep per night</label>
-        <select id="q_avg_sleep">
-            <option value="" data-i18n-key="select_placeholder">Select...</option>
-            <option value="lt_5_hours" data-i18n-key="sleep_lt_5">Less than 5 hours</option>
-            <option value="5-6_hours" data-i18n-key="sleep_5_6">5-6 hours</option>
-            <option value="6-7_hours" data-i18n-key="sleep_6_7">6-7 hours</option>
-            <option value="7-8_hours" data-i18n-key="sleep_7_8">7-8 hours</option>
-            <option value="gt_8_hours" data-i18n-key="sleep_gt_8">More than 8 hours</option>
-        </select>
-        <label data-i18n-key="q_food_like_label">Foods you enjoy</label>
-        <input id="q_food_like">
-        <label data-i18n-key="q_food_dislike_label">Foods you dislike</label>
-        <input id="q_food_dislike">
-        <label data-i18n-key="q_diet_pref_label">What best describes your dietary preference?</label>
-        <select id="q_diet">
-            <option value="" data-i18n-key="select_option_default">Select...</option>
-            <option value="omnivore" data-i18n-key="diet_pref_option_omnivore">Omnivore</option>
-            <option value="vegetarian" data-i18n-key="diet_pref_option_vegetarian">Vegetarian</option>
-            <option value="vegan" data-i18n-key="diet_pref_option_vegan">Vegan</option>
-            <option value="other" data-i18n-key="diet_pref_option_other">Other</option>
-        </select>
-        <label data-i18n-key="q_diet_restrictions_label">Dietary restrictions or allergies (e.g., gluten-free, lactose intolerant)</label>
-        <input id="q_diet_restrictions" type="text">
-        <label data-i18n-key="q_meals_per_day_label">Average number of meals per day</label>
-        <select id="q_meals_per_day">
-            <option value="" data-i18n-key="select_placeholder">Select...</option>
-            <option value="1" data-i18n-key="meals_1">1</option>
-            <option value="2" data-i18n-key="meals_2">2</option>
-            <option value="3" data-i18n-key="meals_3">3</option>
-            <option value="4" data-i18n-key="meals_4">4</option>
-            <option value="5_plus" data-i18n-key="meals_5_plus">5+</option>
-            <option value="varies" data-i18n-key="meals_varies">Varies</option>
-        </select>
-        <label data-i18n-key="q_beverages_label">Typical beverage choices (e.g., water, soda, coffee, tea)</label>
-        <div class="input-group-checkbox">
-            <label><input type="checkbox" id="bev_water" name="beverages" value="water"><span data-i18n-key="bev_water_label">Water</span></label>
-            <label><input type="checkbox" id="bev_coffee" name="beverages" value="coffee"><span data-i18n-key="bev_coffee_label">Coffee</span></label>
-            <label><input type="checkbox" id="bev_tea" name="beverages" value="tea"><span data-i18n-key="bev_tea_label">Tea</span></label>
-            <label><input type="checkbox" id="bev_juice" name="beverages" value="juice"><span data-i18n-key="bev_juice_label">Juice</span></label>
-            <label><input type="checkbox" id="bev_soda" name="beverages" value="soda"><span data-i18n-key="bev_soda_label">Soda</span></label>
+        <div id="step3_questions_container" class="questions-container">
+            <!-- Questions will be dynamically inserted here by JavaScript -->
         </div>
-        <label for="q_beverages_other" data-i18n-key="bev_other_label">Other:</label>
-        <input type="text" id="q_beverages_other" name="beverages_other" data-i18n-key="bev_other_placeholder" placeholder="Specify other beverages">
         <div class="button-group">
             <button onclick="prevStep()" class="btn-secondary" data-i18n-key="back_button">Back</button>
             <button onclick="nextStep()" data-i18n-key="next_button">Next</button>
@@ -185,33 +53,9 @@
     </div>
     <div id="step4" class="step" style="display:none;">
         <h2 data-i18n-key="step4_title">Lifestyle and Goals</h2>
-        <div class="input-group-radio">
-            <label data-i18n-key="q_smoke_label">Do you smoke?</label>
-            <label><input type="radio" name="smoke" value="yes"><span data-i18n-key="yes_option">Yes</span></label>
-            <label><input type="radio" name="smoke" value="no"><span data-i18n-key="no_option">No</span></label>
+        <div id="step4_questions_container" class="questions-container">
+            <!-- Questions will be dynamically inserted here by JavaScript -->
         </div>
-        <div class="input-group-radio">
-            <label data-i18n-key="q_alcohol_label">Do you drink alcohol?</label>
-            <label><input type="radio" name="alcohol" value="yes"><span data-i18n-key="yes_option">Yes</span></label>
-            <label><input type="radio" name="alcohol" value="no"><span data-i18n-key="no_option">No</span></label>
-        </div>
-        <div class="input-group-checkbox">
-            <label data-i18n-key="q_health_goals_label">Health goals related to supplements</label>
-            <label><input type="checkbox" name="goal" value="weight_management"><span data-i18n-key="goal_option_weight_management">Weight management</span></label>
-            <label><input type="checkbox" name="goal" value="more_energy"><span data-i18n-key="goal_option_more_energy">More energy</span></label>
-            <label><input type="checkbox" name="goal" value="general_health"><span data-i18n-key="goal_option_general_health">General health</span></label>
-            <label><input type="checkbox" name="goal" value="improved_sleep"><span data-i18n-key="goal_option_improved_sleep">Improved sleep</span></label>
-            <label><input type="checkbox" name="goal" value="stress_reduction"><span data-i18n-key="goal_option_stress_reduction">Stress reduction</span></label>
-        </div>
-        <div class="input-group-radio">
-            <label data-i18n-key="q_supplement_use_label">Do you currently use dietary supplements?</label>
-            <label><input type="radio" name="supplement_use" value="yes"><span data-i18n-key="yes_option">Yes</span></label>
-            <label><input type="radio" name="supplement_use" value="no"><span data-i18n-key="no_option">No</span></label>
-        </div>
-        <label data-i18n-key="q_supplements_which_label">If yes, which supplements?</label>
-        <input id="supplements" data-i18n-key="supplements_placeholder" placeholder="e.g. Vitamin C, Protein">
-        <label data-i18n-key="q_medical_conditions_label">Known medical conditions (optional)</label>
-        <input id="q_medical_conditions" type="text">
         <div class="button-group">
             <button onclick="prevStep()" class="btn-secondary" data-i18n-key="back_button">Back</button>
             <button onclick="nextStep()" data-i18n-key="next_button">Next</button>
@@ -219,27 +63,9 @@
     </div>
     <div id="step5" class="step" style="display:none;">
         <h2 data-i18n-key="step5_title">Symptoms</h2>
-        <div class="input-group-checkbox">
-            <label><input type="checkbox" id="sym_tired"><span data-i18n-key="symptom_tiredness">Tiredness/Fatigue</span></label>
+        <div id="step5_questions_container" class="questions-container">
+            <!-- Questions will be dynamically inserted here by JavaScript -->
         </div>
-        <div class="input-group-checkbox">
-            <label><input type="checkbox" id="sym_pain"><span data-i18n-key="symptom_muscle_pain">Muscle/Joint pain</span></label>
-        </div>
-        <div class="input-group-checkbox">
-            <label><input type="checkbox" id="sym_digestive"><span data-i18n-key="symptom_digestive_issues">Digestive issues</span></label>
-        </div>
-        <div class="input-group-checkbox">
-            <label><input type="checkbox" id="sym_sleep"><span data-i18n-key="symptom_sleep_problems">Poor sleep quality/Sleep problems</span></label>
-        </div>
-        <label data-i18n-key="q_health_concerns_label">Other specific health concerns (optional)</label>
-        <input id="q_health_concerns_text" type="text">
-        <label data-i18n-key="q_stress_level_label">General stress level</label>
-        <select id="q_stress_level">
-            <option value="" data-i18n-key="select_option_default">Select...</option>
-            <option value="low" data-i18n-key="stress_level_option_low">Low</option>
-            <option value="medium" data-i18n-key="stress_level_option_medium">Medium</option>
-            <option value="high" data-i18n-key="stress_level_option_high">High</option>
-        </select>
         <div class="button-group">
             <button onclick="prevStep()" class="btn-secondary" data-i18n-key="back_button">Back</button>
             <button onclick="submitAnswers()" data-i18n-key="submit_button">Submit</button>

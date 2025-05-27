@@ -1,0 +1,63 @@
+{
+  "questionnaireTitleKey": "main_title",
+  "totalSteps": 5,
+  "questions": [
+    {
+      "id": "age",
+      "step": 1,
+      "type": "select",
+      "label_key": "age_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "under_18", "label_key": "age_under_18", "weight": 0 },
+        { "value": "18-24", "label_key": "age_18_24", "weight": 0 },
+        { "value": "25-34", "label_key": "age_25_34", "weight": 0 },
+        { "value": "35-44", "label_key": "age_35_44", "weight": 0 },
+        { "value": "45-54", "label_key": "age_45_54", "weight": 0 },
+        { "value": "55-64", "label_key": "age_55_64", "weight": 0 },
+        { "value": "65_plus", "label_key": "age_65_plus", "weight": 0 }
+      ]
+    },
+    {
+      "id": "gender",
+      "step": 1,
+      "type": "select",
+      "label_key": "q_gender_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "male", "label_key": "gender_option_male", "weight": 0 },
+        { "value": "female", "label_key": "gender_option_female", "weight": 0 },
+        { "value": "prefer_not_to_say", "label_key": "gender_option_prefer_not_to_say", "weight": 0 },
+        { "value": "other", "label_key": "gender_option_other", "weight": 0 }
+      ]
+    },
+    {
+      "id": "occupation",
+      "step": 1,
+      "type": "text",
+      "label_key": "occupation_label",
+      "placeholder_key": "occupation_placeholder" 
+    },
+    {
+      "id": "location",
+      "step": 1,
+      "type": "text",
+      "label_key": "q_location_label",
+      "placeholder_key": "location_placeholder"
+    },
+    {
+      "id": "work_hours", 
+      "step": 1,
+      "type": "select",
+      "label_key": "q_hours_label",
+      "options": [
+        { "value": "", "label_key": "select_placeholder", "weight": 0 },
+        { "value": "lt_4", "label_key": "hours_lt_4", "weight": 0 },
+        { "value": "4-6", "label_key": "hours_4_6", "weight": 0 },
+        { "value": "6-8", "label_key": "hours_6_8", "weight": 0 },
+        { "value": "8-10", "label_key": "hours_8_10", "weight": 0 },
+        { "value": "gt_10", "label_key": "hours_gt_10", "weight": 0 }
+      ]
+    }
+  ]
+}
