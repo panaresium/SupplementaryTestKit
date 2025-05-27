@@ -1,7 +1,8 @@
 import os
 import sqlite3
+import csv
 import json # Added json import
-from flask import Flask, request, jsonify, send_from_directory, render_template, session, redirect, url_for
+from flask import Flask, request, jsonify, send_from_directory, render_template, session, redirect, url_for, Response
 import openai
 
 try:
@@ -327,6 +328,8 @@ def admin_results():
     q_map = {str(q["id"]): q.get("questionText", {}).get("en", f"Q{q['id']}")
              for q in structure.get("questions", [])}
     aggregate_scores = {"G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0}
+    question_counts = {str(q["id"]): {} for q in structure.get("questions", [])}
+    free_texts = []
     processed_results = []
     for row in results:
         row_dict = dict(row)
@@ -344,6 +347,19 @@ def admin_results():
         row_dict.update(scores)
         for g in aggregate_scores:
             aggregate_scores[g] += scores[g]
+        for q in structure.get("questions", []):
+            qid = str(q.get("id"))
+            val = answers.get(qid)
+            if q.get("type") == "freetext":
+                if val:
+                    free_texts.append(val)
+            elif q.get("type") == "checkbox_group":
+                if isinstance(val, list):
+                    for choice in val:
+                        question_counts[qid][choice] = question_counts[qid].get(choice, 0) + 1
+            else:
+                if val is not None:
+                    question_counts[qid][val] = question_counts[qid].get(val, 0) + 1
         processed_results.append(row_dict)
 
     headers = ["timestamp", "id"] + [f"Q{qid}" for qid in q_map.keys()] + list(aggregate_scores.keys())
@@ -352,7 +368,54 @@ def admin_results():
         results=processed_results,
         totals=aggregate_scores,
         headers=headers,
-        q_map=q_map
+        q_map=q_map,
+        question_counts=question_counts,
+        free_texts=free_texts
+    )
+
+
+@app.route('/admin/export_csv')
+@admin_required
+def admin_export_csv():
+    """Export all survey results as a CSV file."""
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM responses ORDER BY timestamp DESC")
+    results = cur.fetchall()
+    conn.close()
+
+    structure = _load_questionnaire_structure()
+    q_map = {str(q["id"]): q.get("questionText", {}).get("en", f"Q{q['id']}")
+             for q in structure.get("questions", [])}
+    headers = ["timestamp", "id"] + [f"Q{qid}" for qid in q_map.keys()]
+    headers += ["G1", "G2", "G3", "G4", "G5", "G6"]
+
+    from io import StringIO
+    output_io = StringIO()
+    writer = csv.writer(output_io)
+
+    writer.writerow(headers)
+    for row in results:
+        row_dict = dict(row)
+        answers = {}
+        if row_dict.get("answers_json"):
+            try:
+                answers = json.loads(row_dict["answers_json"])
+            except json.JSONDecodeError:
+                answers = {}
+        scores, _ = _calculate_scores(answers, structure)
+        values = [row_dict["timestamp"], row_dict["id"]]
+        for qid in q_map.keys():
+            values.append(answers.get(str(qid), ""))
+        values.extend([scores[g] for g in ["G1", "G2", "G3", "G4", "G5", "G6"]])
+        writer.writerow(values)
+
+    csv_data = output_io.getvalue()
+    return Response(
+        csv_data,
+        mimetype="text/csv",
+        headers={"Content-Disposition": "attachment; filename=results.csv"}
     )
 
 @app.route('/admin/group_info', methods=['GET', 'POST'])

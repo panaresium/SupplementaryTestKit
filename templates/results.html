@@ -64,6 +64,10 @@
 <body>
     <div class="container">
         <h1>Survey Submissions</h1>
+        <div style="text-align:right; margin-bottom:10px;">
+            <a href="{{ url_for('logout') }}" class="btn-secondary">Logout</a>
+            <a href="{{ url_for('admin_export_csv') }}" class="btn-secondary">Export CSV</a>
+        </div>
         {% if totals %}
         <div>
             <strong>Aggregate Scores:</strong>
@@ -97,7 +101,16 @@
         {% else %}
             <p>No survey results found.</p>
         {% endif %}
+
+        <div style="margin-top:40px;">
+            <canvas id="categoryChart" height="150"></canvas>
+        </div>
+        <div style="margin-top:40px;">
+            <canvas id="questionChart" height="150"></canvas>
+        </div>
+        <div id="freeTextContainer" style="margin-top:40px;"></div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     const filterInput = document.getElementById('filterInput');
     const table = document.getElementById('resultsTable');
@@ -122,6 +135,58 @@
             sorted.forEach(r => tbody.appendChild(r));
         });
     });
+
+    const categoryData = {{ totals | tojson }};
+    const ctxCat = document.getElementById('categoryChart').getContext('2d');
+    new Chart(ctxCat, {
+        type: 'line',
+        data: {
+            labels: Object.keys(categoryData),
+            datasets: [{
+                label: 'Category Scores',
+                data: Object.values(categoryData),
+                fill: true,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgb(75, 192, 192)'
+            }]
+        },
+        options: {responsive: true}
+    });
+
+    const questionCounts = {{ question_counts | tojson }};
+    const labels = Object.keys(questionCounts).map(k => 'Q'+k);
+    const qTotals = labels.map((_, idx) => {
+        const counts = Object.values(questionCounts[Object.keys(questionCounts)[idx]] || {});
+        return counts.reduce((a, b) => a + b, 0);
+    });
+    const ctxQ = document.getElementById('questionChart').getContext('2d');
+    new Chart(ctxQ, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Responses per Question',
+                data: qTotals,
+                fill: true,
+                backgroundColor: 'rgba(153,102,255,0.2)',
+                borderColor: 'rgb(153,102,255)'
+            }]
+        },
+        options: {responsive: true}
+    });
+
+    const freeTexts = {{ free_texts | tojson }};
+    if (freeTexts.length) {
+        const container = document.getElementById('freeTextContainer');
+        const list = document.createElement('ul');
+        freeTexts.forEach(t => {
+            const li = document.createElement('li');
+            li.textContent = t;
+            list.appendChild(li);
+        });
+        container.innerHTML = '<h3>Free Text Responses</h3>';
+        container.appendChild(list);
+    }
     </script>
 </body>
 </html>
