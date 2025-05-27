@@ -13,6 +13,9 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 
+langcode = ""
+
+
 # Serve the survey front-end
 @app.route('/')
 def index():
@@ -141,9 +144,9 @@ def _ai_suggestion(text: str) -> str:
     try:
         messages = [
             {"role": "system", "content": "You are a helpful assistant providing supplement advice."},
-            {"role": "user", "content": text},
+            {"role": "user", "content": "Please return the suggestion in " +langcode+" language code where the symptom is follow: " + text +". You will return what should I do to have better health including how to exercise, relax, and use supplements."},
         ]
-        resp = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
+        resp = openai.ChatCompletion.create(model="gpt-4.1", messages=messages)
         return resp.choices[0].message["content"].strip()
     except Exception as exc:
         return f"AI suggestion unavailable: {exc}"
@@ -211,6 +214,7 @@ def init_db():
 def submit():
     data = request.get_json(force=True)
     language_code = data.get('language')
+    langcode = language_code
     answers_dict = data.get('answers')
     products_data = "" # Default to empty string
 
