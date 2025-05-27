@@ -14,7 +14,7 @@ DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 # Serve the survey front-end
 @app.route('/')
 def index():
-    return send_from_directory('.', 'index.html')
+    return send_from_directory('static', 'index.html')
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
