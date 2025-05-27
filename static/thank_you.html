@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submission Received - Supplementary Test Kit</title>
     <link rel="stylesheet" href="/static/style.css"> <!-- Link to existing stylesheet -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js CDN -->
     <style>
         /* Additional styles specific to the thank you page, if needed */
         .thank-you-container {
@@ -51,102 +52,337 @@
                     <p>Loading your answers...</p>
                 </div>
             </div>
+
+            <div class="results-display" id="groupScoresDisplay" style="display: none;"> <!-- Initially hidden -->
+                <h3>Group Scores:</h3>
+                <dl>
+                    <dt>Office/Digital (G1):</dt>
+                    <dd><span id="scoreG1">0</span></dd>
+                    <dt>Medical/Caregiving (G2):</dt>
+                    <dd><span id="scoreG2">0</span></dd>
+                    <dt>Industrial/Factory (G3):</dt>
+                    <dd><span id="scoreG3">0</span></dd>
+                    <dt>Heavy Labor/Construction (G4):</dt>
+                    <dd><span id="scoreG4">0</span></dd>
+                    <dt>Service Sector (G5):</dt>
+                    <dd><span id="scoreG5">0</span></dd>
+                    <dt>Agriculture/Fishery (G6):</dt>
+                    <dd><span id="scoreG6">0</span></dd>
+                </dl>
+            </div>
+
+            <div class="results-display" id="radarChartContainer" style="display: none; margin-top: 2rem;">
+                <h3>Your Profile Analysis:</h3>
+                <canvas id="profileRadarChart"></canvas>
+            </div>
+
+            <div class="results-display" id="groupRecommendationContainer" style="display: none; margin-top: 2rem;">
+                <h3>Recommended Profile Focus:</h3>
+                <p id="recommendedGroupsText">Calculating recommendation...</p>
+            </div>
         </div>
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', async function() { // Made async
         const submittedAnswersDiv = document.getElementById('submittedAnswers');
+        const groupScoresDisplayDiv = document.getElementById('groupScoresDisplay');
+        const radarChartContainerDiv = document.getElementById('radarChartContainer'); // Get chart container
+        const groupRecommendationContainerDiv = document.getElementById('groupRecommendationContainer'); // Get recommendation container
+        const recommendedGroupsTextP = document.getElementById('recommendedGroupsText'); // Get recommendation text p
         const urlParams = new URLSearchParams(window.location.search);
         const dataParam = urlParams.get('data');
+        let questionnaireStructure = null;
 
-        if (dataParam) {
+        try {
+            const response = await fetch('/static/questionnaire_structure.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            questionnaireStructure = await response.json();
+        } catch (error) {
+            console.error('Error fetching questionnaire_structure.json:', error);
+            submittedAnswersDiv.innerHTML = '<p>Error loading questionnaire structure. Cannot calculate scores.</p>';
+            // Optionally, display this error elsewhere or more prominently
+            return; // Stop further processing if structure isn't loaded
+        }
+
+        if (dataParam && questionnaireStructure) { // Ensure both dataParam and questionnaireStructure are available
             try {
-                console.log("Raw dataParam from URL:", dataParam); // ADDED
-                console.log("Length of dataParam:", dataParam.length); // ADDED
+                console.log("Raw dataParam from URL:", dataParam);
+                console.log("Length of dataParam:", dataParam.length);
                 const decodedData = decodeURIComponent(dataParam);
-                const answers = JSON.parse(decodedData);
+                const userAnswers = JSON.parse(decodedData); // Renamed to userAnswers for clarity
 
                 submittedAnswersDiv.innerHTML = ''; // Clear "Loading..." message
 
+                // Initialize Group Scores
+                let groupScores = { G1: 0, G2: 0, G3: 0, G4: 0, G5: 0, G6: 0 };
+
+                // Helper function to safely get localized text, defaulting to 'en'
+                function getLocalizedText(textObj, lang = 'en') {
+                    if (textObj && typeof textObj === 'object') {
+                        return textObj[lang] || textObj['en'] || '';
+                    }
+                    return String(textObj || ''); // Fallback for non-object text or if 'en' is missing
+                }
+                
+                // This function is kept for potential future use with non-question data,
+                // but question/answer text display will use more specific logic.
                 function formatKey(key) {
                     return key
                         .replace(/_/g, ' ')
                         .replace(/\b\w/g, char => char.toUpperCase());
                 }
 
-                function displayValue(value) {
-                    if (Array.isArray(value)) {
-                        return value.length > 0 ? value.map(item => formatKey(item)).join(', ') : 'N/A';
-                    } else if (value === null || value === '' || (typeof value === 'object' && value !== null && Object.keys(value).length === 0) || (Array.isArray(value) && value.length === 0) ) {
-                        return 'N/A';
-                    } else {
-                        // For non-array simple values, attempt to format if they seem like keys (e.g. "prefer_not_to_say")
-                        if (typeof value === 'string' && value.includes('_')) {
-                             // return formatKey(value); // This might be too aggressive for free text. Let's keep original for now
+
+                const dl = document.createElement('dl'); // For displaying individual answers
+
+                // Calculate Scores and Display Individual Answers
+                for (const questionIdStr in userAnswers) {
+                    if (userAnswers.hasOwnProperty(questionIdStr)) {
+                        const userSelectedValue = userAnswers[questionIdStr];
+                        const questionId = parseInt(questionIdStr); // userAnswers keys are question IDs as strings
+
+                        const question = questionnaireStructure.questions.find(q => q.id === questionId);
+
+                        if (!question) {
+                            console.warn(`Question with ID ${questionIdStr} not found in questionnaire_structure.json. Skipping display and score calculation.`);
+                            // Optionally display something for this orphaned answer:
+                            // const dt = document.createElement('dt');
+                            // dt.textContent = `Unknown Question (${formatKey(questionIdStr)})`;
+                            // dl.appendChild(dt);
+                            // const dd = document.createElement('dd');
+                            // dd.textContent = JSON.stringify(userSelectedValue); // Raw value
+                            // dl.appendChild(dd);
+                            continue; // Skip to next answer if question definition is missing
                         }
-                        return String(value);
-                    }
-                }
-
-                const dl = document.createElement('dl');
-
-                for (const key in answers) {
-                    if (answers.hasOwnProperty(key)) {
-                        const value = answers[key];
 
                         const dt = document.createElement('dt');
-                        dt.textContent = formatKey(key);
+                        // Use question text from questionnaire_structure.json, default to 'en'
+                        dt.textContent = getLocalizedText(question.questionText, 'en').replace(/\s*\*\s*$/, '');
                         dl.appendChild(dt);
-
+                        
                         const dd = document.createElement('dd');
+                        let displayedAnswerText = 'N/A';
 
-                        if (key === 'symptoms' && typeof value === 'object' && value !== null) {
-                            let symptomsContent = '';
-                            if (value.checklist && value.checklist.length > 0) {
-                                symptomsContent += `Items: ${value.checklist.map(item => formatKey(item)).join(', ')}. `;
-                            } else {
-                                symptomsContent += 'Items: N/A. ';
-                            }
-                            symptomsContent += `Other concerns: ${value.other_concerns || 'N/A'}. `;
-                            symptomsContent += `Stress level: ${value.stress_level ? formatKey(value.stress_level) : 'N/A'}.`;
-                            dd.textContent = symptomsContent;
-                        } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-                            // Generic nested object handling (if any other than symptoms)
-                            const nestedDl = document.createElement('dl');
-                            for (const nestedKey in value) {
-                                if (value.hasOwnProperty(nestedKey)) {
-                                    const nestedDt = document.createElement('dt');
-                                    nestedDt.style.marginLeft = '20px'; // Indent nested
-                                    nestedDt.style.fontWeight = 'normal';
-                                    nestedDt.textContent = formatKey(nestedKey);
-                                    nestedDl.appendChild(nestedDt);
-
-                                    const nestedDd = document.createElement('dd');
-                                    nestedDd.style.marginLeft = '40px'; // Further indent value
-                                    nestedDd.textContent = displayValue(value[nestedKey]);
-                                    nestedDl.appendChild(nestedDd);
+                        if (question.type === 'radio') {
+                            if (userSelectedValue !== null && userSelectedValue !== '') {
+                                const answerOption = question.answers.find(opt => opt.value === userSelectedValue);
+                                if (answerOption) {
+                                    displayedAnswerText = getLocalizedText(answerOption.text, 'en');
+                                } else {
+                                    displayedAnswerText = `Selected value not found: ${userSelectedValue}`;
                                 }
                             }
-                            if(nestedDl.hasChildNodes()) {
-                                dd.appendChild(nestedDl);
-                            } else {
-                                dd.textContent = 'N/A';
+                        } else if (question.type === 'checkbox_group') {
+                            if (Array.isArray(userSelectedValue) && userSelectedValue.length > 0) {
+                                const selectedTexts = userSelectedValue.map(val => {
+                                    const answerOption = question.answers.find(opt => opt.value === val);
+                                    return answerOption ? getLocalizedText(answerOption.text, 'en') : `Value not found: ${val}`;
+                                });
+                                displayedAnswerText = selectedTexts.join(', ');
+                            }
+                        } else if (question.type === 'freetext') {
+                            if (userSelectedValue !== null && userSelectedValue !== '') {
+                                displayedAnswerText = String(userSelectedValue);
                             }
                         } else {
-                            dd.textContent = displayValue(value);
+                             // Fallback for unknown question types or if userSelectedValue is an object (e.g. old 'symptoms' format)
+                            if (userSelectedValue === null || userSelectedValue === '' || (Array.isArray(userSelectedValue) && userSelectedValue.length === 0)) {
+                                displayedAnswerText = 'N/A';
+                            } else if (typeof userSelectedValue === 'object' && !Array.isArray(userSelectedValue)) {
+                                // Handle generic objects, like the old 'symptoms' if it somehow still appears
+                                // and isn't caught by a specific question ID check.
+                                let content = '';
+                                for(const key in userSelectedValue) {
+                                    if (userSelectedValue.hasOwnProperty(key)) {
+                                        content += `${formatKey(key)}: ${userSelectedValue[key]}; `;
+                                    }
+                                }
+                                displayedAnswerText = content.trim() || 'N/A';
+                            } else {
+                                displayedAnswerText = String(userSelectedValue);
+                            }
                         }
+                        dd.textContent = displayedAnswerText;
                         dl.appendChild(dd);
+
+                        // Score Calculation Logic (remains the same)
+                        if (question.type === 'radio' && userSelectedValue) { // Check userSelectedValue is not null/empty
+                            const selectedAnswerOption = question.answers.find(opt => opt.value === userSelectedValue);
+                                if (selectedAnswerOption && selectedAnswerOption.weights) {
+                                    for (const groupKey in selectedAnswerOption.weights) {
+                                        if (groupScores.hasOwnProperty(groupKey) && typeof selectedAnswerOption.weights[groupKey] === 'number') {
+                                            groupScores[groupKey] += selectedAnswerOption.weights[groupKey];
+                                        }
+                                    }
+                                }
+                            } else if (question.type === 'checkbox_group' && Array.isArray(userSelectedValue)) {
+                                userSelectedValue.forEach(selectedValue => {
+                                    const selectedAnswerOption = question.answers.find(opt => opt.value === selectedValue);
+                                    if (selectedAnswerOption && selectedAnswerOption.weights) {
+                                        for (const groupKey in selectedAnswerOption.weights) {
+                                            if (groupScores.hasOwnProperty(groupKey) && typeof selectedAnswerOption.weights[groupKey] === 'number') {
+                                                groupScores[groupKey] += selectedAnswerOption.weights[groupKey];
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                            // No scoring for 'freetext' or other types
+                        }
                     }
                 }
-                submittedAnswersDiv.appendChild(dl);
+                submittedAnswersDiv.appendChild(dl); // Display individual answers
+
+                // Display Group Scores
+                document.getElementById('scoreG1').textContent = groupScores.G1;
+                document.getElementById('scoreG2').textContent = groupScores.G2;
+                document.getElementById('scoreG3').textContent = groupScores.G3;
+                document.getElementById('scoreG4').textContent = groupScores.G4;
+                document.getElementById('scoreG5').textContent = groupScores.G5;
+                document.getElementById('scoreG6').textContent = groupScores.G6;
+                groupScoresDisplayDiv.style.display = 'block'; // Show the scores div
+
+                // Render Radar Chart
+                try {
+                    const ctx = document.getElementById('profileRadarChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: [
+                                'Office/Digital (G1)', 
+                                'Medical/Caregiving (G2)', 
+                                'Industrial/Factory (G3)',
+                                'Heavy Labor/Construction (G4)',
+                                'Service Sector (G5)',
+                                'Agriculture/Fishery (G6)'
+                            ],
+                            datasets: [{
+                                label: 'Group Scores',
+                                data: [
+                                    groupScores.G1, 
+                                    groupScores.G2, 
+                                    groupScores.G3, 
+                                    groupScores.G4, 
+                                    groupScores.G5, 
+                                    groupScores.G6
+                                ],
+                                fill: true,
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgb(54, 162, 235)',
+                                pointBackgroundColor: 'rgb(54, 162, 235)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgb(54, 162, 235)'
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                r: {
+                                    angleLines: { display: true },
+                                    suggestedMin: 0,
+                                    // Consider setting a suggestedMax if there's a known maximum possible score for a group
+                                    // For example, if max score for any group is 30: suggestedMax: 30,
+                                    ticks: {
+                                        // stepSize: 5 // Adjust step size as needed
+                                    }
+                                }
+                            },
+                            elements: {
+                                line: {
+                                    borderWidth: 3
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            let label = context.dataset.label || '';
+                                            if (label) {
+                                                label += ': ';
+                                            }
+                                            if (context.parsed.r !== null) {
+                                                label += context.parsed.r;
+                                            }
+                                            return label;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    radarChartContainerDiv.style.display = 'block'; // Show the chart container
+                } catch(chartError) {
+                    console.error('Error rendering radar chart:', chartError);
+                    radarChartContainerDiv.innerHTML = '<p>Could not display the profile analysis chart due to an error.</p>';
+                    radarChartContainerDiv.style.display = 'block'; // Show error in the container
+                }
+
+                // Display Recommendation
+                try {
+                    const groupNames = {
+                        G1: "Office/Digital",
+                        G2: "Medical/Caregiving",
+                        G3: "Industrial/Factory",
+                        G4: "Heavy Labor/Construction",
+                        G5: "Service Sector",
+                        G6: "Agriculture/Fishery"
+                    };
+
+                    const scoresArray = Object.entries(groupScores).map(([key, score]) => ({ key, score }));
+                    scoresArray.sort((a, b) => b.score - a.score); // Sort descending
+
+                    let recommendations = [];
+                    if (scoresArray.length > 0) {
+                        recommendations.push(scoresArray[0]); // Add the top group
+                        // Check if a second group is close (within 5 points)
+                        if (scoresArray.length > 1 && (scoresArray[0].score - scoresArray[1].score <= 5)) {
+                            recommendations.push(scoresArray[1]);
+                        }
+                    }
+
+                    let recommendationText = "No specific profile alignment found based on current scores.";
+                    if (recommendations.length === 1) {
+                        const topGroup = recommendations[0];
+                        recommendationText = `Your profile suggests you align with: ${groupNames[topGroup.key]} (${topGroup.key}).`;
+                    } else if (recommendations.length > 1) {
+                        const groupTexts = recommendations.map(rec => `${groupNames[rec.key]} (${rec.key})`);
+                        recommendationText = `Your profile suggests you align with: ${groupTexts.join(' and ')}.`;
+                    }
+                    
+                    recommendedGroupsTextP.textContent = recommendationText;
+                    groupRecommendationContainerDiv.style.display = 'block';
+
+                } catch (recommendationError) {
+                    console.error('Error generating recommendation:', recommendationError);
+                    recommendedGroupsTextP.textContent = 'Could not generate recommendation due to an error.';
+                    groupRecommendationContainerDiv.style.display = 'block';
+                }
+
 
             } catch (error) {
-                console.error('Error parsing or displaying submitted answers:', error);
-                submittedAnswersDiv.textContent = 'Could not display your answers due to an error.';
+                console.error('Error processing answers or calculating scores:', error);
+                submittedAnswersDiv.innerHTML = '<p>Could not process your answers or calculate scores due to an error.</p>';
+                groupScoresDisplayDiv.style.display = 'none';
+                radarChartContainerDiv.style.display = 'none'; // Ensure chart is hidden on error too
+                groupRecommendationContainerDiv.style.display = 'none'; // Ensure recommendation is hidden on error too
             }
-        } else {
+        } else if (!dataParam) {
             submittedAnswersDiv.textContent = 'No submission data found.';
+            groupScoresDisplayDiv.style.display = 'none';
+            radarChartContainerDiv.style.display = 'none';
+            groupRecommendationContainerDiv.style.display = 'none';
+        } else if (!questionnaireStructure) {
+            // This case is already handled by the fetch error handling, but as a fallback:
+            submittedAnswersDiv.innerHTML = '<p>Questionnaire structure is missing. Cannot display answers or scores.</p>';
+            groupScoresDisplayDiv.style.display = 'none';
+            radarChartContainerDiv.style.display = 'none';
+            groupRecommendationContainerDiv.style.display = 'none';
         }
     });
     </script>
