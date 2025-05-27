@@ -169,6 +169,66 @@ function applyStaticTranslations() {
     showStep(currentStep); 
 }
 
+// Helper to create step containers dynamically based on totalSteps
+function ensureStepContainers() {
+    const stepsWrapper = document.getElementById('stepsContainer');
+    if (!stepsWrapper) return;
+
+    if (stepsWrapper.childElementCount === totalSteps) {
+        return; // Already generated
+    }
+
+    stepsWrapper.innerHTML = '';
+
+    for (let i = 1; i <= totalSteps; i++) {
+        const stepDiv = document.createElement('div');
+        stepDiv.id = `step${i}`;
+        stepDiv.className = 'step';
+        if (i !== 1) {
+            stepDiv.style.display = 'none';
+        }
+
+        const title = document.createElement('h2');
+        title.setAttribute('data-i18n-key', `step${i}_title`);
+        title.textContent = `Step ${i}`;
+        stepDiv.appendChild(title);
+
+        const qContainer = document.createElement('div');
+        qContainer.id = `step${i}_questions_container`;
+        qContainer.className = 'questions-container';
+        stepDiv.appendChild(qContainer);
+
+        const btnGroup = document.createElement('div');
+        btnGroup.className = 'button-group';
+
+        if (i > 1) {
+            const backBtn = document.createElement('button');
+            backBtn.className = 'btn-secondary';
+            backBtn.setAttribute('data-i18n-key', 'back_button');
+            backBtn.textContent = 'Back';
+            backBtn.onclick = prevStep;
+            btnGroup.appendChild(backBtn);
+        }
+
+        if (i < totalSteps) {
+            const nextBtn = document.createElement('button');
+            nextBtn.setAttribute('data-i18n-key', 'next_button');
+            nextBtn.textContent = 'Next';
+            nextBtn.onclick = nextStep;
+            btnGroup.appendChild(nextBtn);
+        } else {
+            const submitBtn = document.createElement('button');
+            submitBtn.setAttribute('data-i18n-key', 'submit_button');
+            submitBtn.textContent = 'Submit';
+            submitBtn.onclick = submitAnswers;
+            btnGroup.appendChild(submitBtn);
+        }
+
+        stepDiv.appendChild(btnGroup);
+        stepsWrapper.appendChild(stepDiv);
+    }
+}
+
 
 // --- 4. renderQuestionnaire() ---
 function renderQuestionnaire() {
@@ -176,8 +236,9 @@ function renderQuestionnaire() {
         console.error('Questionnaire definition or UI translations not loaded. Cannot render.');
         return;
     }
-    
+
     applyStaticTranslations(); // Apply translations to static parts of the UI
+    ensureStepContainers();
 
     // Clear previous questions from all step containers
     for (let i = 1; i <= totalSteps; i++) {
