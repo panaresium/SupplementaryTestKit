@@ -38,55 +38,16 @@ function prevStep() {
 }
 
 function validateStep(step) {
-  if (step === 1) {
-    if (!document.getElementById('q_age').value ||
-        !document.getElementById('q_job').value ||
-        !document.getElementById('q_location').value ||
-        !document.getElementById('q_hours').value) {
-      alert('Please answer all questions on this step');
-      return false;
-    }
-  } else if (step === 2) {
-    if (!document.getElementById('q_environment').value ||
-        !document.getElementById('q_posture').value ||
-        !document.getElementById('q_transport').value ||
-        !document.getElementById('q_work').value ||
-        !document.getElementById('q_exercise').value) {
-      alert('Please answer all questions on this step');
-      return false;
-    }
-  } else if (step === 3) {
-    if (!document.getElementById('q_sleep').value ||
-        !document.getElementById('q_wake').value ||
-        !document.getElementById('q_food_like').value ||
-        !document.getElementById('q_food_dislike').value ||
-        !document.getElementById('q_diet').value ||
-        !document.getElementById('q_avg_sleep').value ||
-        !document.getElementById('q_meals_per_day').value ||
-        !document.getElementById('q_beverages').value) {
-      alert('Please answer all questions on this step');
-      return false;
-    }
-  } else if (step === 4) {
-    if (!document.querySelector('input[name="smoke"]:checked') ||
-        !document.querySelector('input[name="alcohol"]:checked') ||
-        !document.querySelector('input[name="supplement_use"]:checked')) {
-      alert('Please answer all questions on this step');
-      return false;
-    }
-  } else if (step === 5) { // New validation for step 5
-    if (!document.getElementById('q_stress_level').value) {
-      alert('Please answer all questions on this step');
-      return false;
-    }
-  }
+  // All fields are now optional, so no validation is needed.
   return true;
 }
 
 // login() function removed
 
 async function submitAnswers() {
-  if (!validateStep(currentStep)) return;
+  // Since validateStep always returns true, this check is technically not needed
+  // but can be kept for structural consistency or future validation re-introduction.
+  if (!validateStep(currentStep)) return; 
   const answers = {
     age: document.getElementById('q_age').value,
     occupation: document.getElementById('q_job').value,
@@ -97,10 +58,9 @@ async function submitAnswers() {
     transport: document.getElementById('q_transport').value,
     physical_demand: document.getElementById('q_work').value,
     exercise_freq: document.getElementById('q_exercise').value,
-    // New exercise fields
     exercise_duration: document.getElementById('q_exercise_duration').value,
-    exercise_type: document.getElementById('q_exercise_type').value,
-    // New commute field
+    exercise_types: Array.from(document.querySelectorAll('input[name="exercise_type"]:checked')).map(el => el.value),
+    exercise_type_other: document.getElementById('q_exercise_type_other').value,
     commute_time: document.getElementById('q_commute_time').value,
     // Sleep fields
     sleep_time: document.getElementById('q_sleep').value,
@@ -112,12 +72,14 @@ async function submitAnswers() {
     diet_preference: document.getElementById('q_diet').value, // Renamed q_diet to diet_preference for clarity
     diet_restrictions: document.getElementById('q_diet_restrictions').value, // New
     meals_per_day: document.getElementById('q_meals_per_day').value, // New
-    beverages: document.getElementById('q_beverages').value, // New
+    beverage_choices: Array.from(document.querySelectorAll('input[name="beverages"]:checked')).map(el => el.value),
+    beverages_other: document.getElementById('q_beverages_other').value,
     // Lifestyle fields
-    smoke: document.querySelector('input[name="smoke"]:checked').value,
-    alcohol: document.querySelector('input[name="alcohol"]:checked').value,
+    // For radio buttons, ensure a value is selected or provide a default/null
+    smoke: document.querySelector('input[name="smoke"]:checked') ? document.querySelector('input[name="smoke"]:checked').value : null,
+    alcohol: document.querySelector('input[name="alcohol"]:checked') ? document.querySelector('input[name="alcohol"]:checked').value : null,
     health_goals: Array.from(document.querySelectorAll('input[name="goal"]:checked')).map(el => el.value), // Renamed goals to health_goals
-    supplement_use: document.querySelector('input[name="supplement_use"]:checked').value,
+    supplement_use: document.querySelector('input[name="supplement_use"]:checked') ? document.querySelector('input[name="supplement_use"]:checked').value : null,
     current_supplements: document.getElementById('supplements').value, // Renamed supplements to current_supplements
     medical_conditions: document.getElementById('q_medical_conditions').value, // New
     // New demographic field
