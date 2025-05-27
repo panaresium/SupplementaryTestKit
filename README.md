@@ -1,30 +1,22 @@
 
 # SupplementaryTestKit
 
-This project provides a small demo application for a health questionnaire. It uses Python's standard library and SQLite for storage. A web UI is served from the `static/` directory and the backend exposes JSON endpoints.
+This project provides a small demo application for a health questionnaire. A Flask backend serves the web UI from the `static/` directory and stores responses in SQLite. Translations for questions and UI strings are loaded from the JSON files in `static/`.
 
 ## Requirements
 
-Python 3.8+ is required (no external packages).
+Python 3.8+ is required.
 
 ## Running the server
 
 ```bash
-python3 backend/server.py
+pip install -r requirements.txt
+python app.py
 ```
 
-The server listens on port `8000`. Open `http://localhost:8000/` in your browser to use the web interface.
+The server listens on port `5000`. Open `http://localhost:5000/` in your browser to use the questionnaire.
 
-### Endpoints
-
-- `POST /register` – Register a new user. Body: `{"username": "name", "password": "secret"}`
-- `POST /login` – Validate credentials. Body: `{"username": "name", "password": "secret"}`
-- `POST /questionnaire` – Store questionnaire answers. Body: `{"username": "name", "answers": { ... }}`
-- `GET /questionnaire/<username>` – Retrieve questionnaire entries for a user
-- `POST /upload` – Upload an image using `multipart/form-data`. Field name `image`
-- `GET /uploads/<file>` – Retrieve previously uploaded images
-
-Questionnaire answers are stored as JSON strings in the SQLite database. Uploaded images are saved to the `uploads/` directory.
+Questionnaire answers are stored as JSON strings in the SQLite database.
 
 # Supplementary Test Kit
 
@@ -39,14 +31,7 @@ This repository provides a minimal example of handling user submissions while re
 
 ## Running
 
-Install the dependencies (Flask) and run the server:
-
-```bash
-pip install Flask
-python server.py
-```
-
-Then open `https://localhost:5000/` in your browser. You may need to accept a self-signed certificate.
+Install the dependencies and run the server as shown above. Then open `http://localhost:5000/` in your browser.
 
 ## Privacy Policy
 
