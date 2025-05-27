@@ -363,10 +363,12 @@ def admin_results():
         processed_results.append(row_dict)
 
     headers = ["timestamp", "id"] + [f"Q{qid}" for qid in q_map.keys()] + list(aggregate_scores.keys())
+    averages = {g: (aggregate_scores[g]/len(results) if results else 0) for g in aggregate_scores}
     return render_template(
         'results.html',
         results=processed_results,
         totals=aggregate_scores,
+        averages=averages,
         headers=headers,
         q_map=q_map,
         question_counts=question_counts,

@@ -75,13 +75,15 @@
             G4 {{ totals['G4'] }} | G5 {{ totals['G5'] }} | G6 {{ totals['G6'] }}
         </div>
         {% endif %}
-        <div style="margin-top:40px;">
-            <canvas id="categoryChart" height="150"></canvas>
+
+        {% if averages %}
+        <div style="margin-top:5px;">
+            <strong>Average Scores:</strong>
+            G1 {{ '%.2f'|format(averages['G1']) }} | G2 {{ '%.2f'|format(averages['G2']) }} |
+            G3 {{ '%.2f'|format(averages['G3']) }} | G4 {{ '%.2f'|format(averages['G4']) }} |
+            G5 {{ '%.2f'|format(averages['G5']) }} | G6 {{ '%.2f'|format(averages['G6']) }}
         </div>
-        <div style="margin-top:40px;">
-            <canvas id="questionChart" height="150"></canvas>
-        </div>
-        <div id="freeTextContainer" style="margin-top:40px;"></div>
+        {% endif %}
 
         <input type="text" id="filterInput" placeholder="Filter results" style="margin-top:10px;">
         {% if results %}
@@ -110,13 +112,18 @@
             <p>No survey results found.</p>
         {% endif %}
 
-        <div style="margin-top:40px;">
+
+        <h3>Category Totals</h3>
+        <div class="chart-container" style="margin-top:20px;">
             <canvas id="categoryChart" height="150"></canvas>
         </div>
-        <div style="margin-top:40px;">
+        <h3 style="margin-top:40px;">Responses per Question</h3>
+        <div class="chart-container" style="margin-top:20px;">
             <canvas id="questionChart" height="150"></canvas>
         </div>
         <div id="freeTextContainer" style="margin-top:40px;"></div>
+        <div id="analysisSuggestions" style="margin-top:40px;"></div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -147,42 +154,51 @@
     const categoryData = {{ totals | tojson }};
     const ctxCat = document.getElementById('categoryChart').getContext('2d');
 
-    const catColors = Object.keys(categoryData).map((_, i) =>
-        `hsl(${i * 60},70%,60%)`);
     new Chart(ctxCat, {
-        type: 'pie',
+        type: 'line',
         data: {
             labels: Object.keys(categoryData),
             datasets: [{
+                label: 'Category Scores',
                 data: Object.values(categoryData),
-                backgroundColor: catColors
-
+                fill: true,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgb(75, 192, 192)'
             }]
         },
-        options: {responsive: true}
+        options: {
+            responsive: true,
+            plugins: { title: { display: true, text: 'Category Totals' } }
+        }
     });
 
     const questionCounts = {{ question_counts | tojson }};
-
-    const labels = Object.keys(questionCounts).map(k => 'Q' + k);
-
-    const qTotals = labels.map((_, idx) => {
-        const counts = Object.values(questionCounts[Object.keys(questionCounts)[idx]] || {});
-        return counts.reduce((a, b) => a + b, 0);
+    const qLabels = Object.keys(questionCounts).map(k => 'Q' + k);
+    const allAnswers = new Set();
+    Object.values(questionCounts).forEach(obj => {
+        Object.keys(obj).forEach(k => allAnswers.add(k));
     });
+    const answerList = Array.from(allAnswers);
+    const colors = ['#e74c3c','#3498db','#f1c40f','#2ecc71','#9b59b6','#e67e22','#1abc9c'];
+    function pickColor(i){ return colors[i % colors.length]; }
+    const datasets = answerList.map((ans, idx) => ({
+        label: ans,
+        data: qLabels.map((_, qidx) => {
+            const qid = Object.keys(questionCounts)[qidx];
+            return questionCounts[qid][ans] || 0;
+        }),
+        backgroundColor: pickColor(idx)
+    }));
     const ctxQ = document.getElementById('questionChart').getContext('2d');
-
-    const qColors = labels.map((_, i) => `hsl(${i * 30},65%,65%)`);
     new Chart(ctxQ, {
-        type: 'pie',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: qTotals,
-                backgroundColor: qColors
-            }]
-        },
-        options: {responsive: true}
+        type: 'bar',
+        data: { labels: qLabels, datasets: datasets },
+        options: {
+            responsive: true,
+            plugins: { title: { display: true, text: 'Answer Counts Per Question' } },
+            scales: { x: { stacked: false }, y: { beginAtZero: true } }
+        }
+
     });
 
     const freeTexts = {{ free_texts | tojson }};
@@ -197,6 +213,16 @@
         container.innerHTML = '<h3>Free Text Responses</h3>';
         container.appendChild(list);
     }
+
+
+    const suggestions = document.getElementById('analysisSuggestions');
+    suggestions.innerHTML = '<h3>Further Analysis Ideas</h3>' +
+        '<ul>' +
+        '<li>Track changes in category scores over time.</li>' +
+        '<li>Compare averages across different user groups.</li>' +
+        '<li>Look for correlations between questions.</li>' +
+        '</ul>';
+
     </script>
 </body>
 </html>
