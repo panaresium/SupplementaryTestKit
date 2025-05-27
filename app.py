@@ -16,9 +16,112 @@ DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 def index():
     return send_from_directory('static', 'index.html')
 
+from urllib.parse import unquote
+
+
+def _load_questionnaire_structure() -> dict:
+    path = os.path.join(app.root_path, 'static', 'questionnaire_structure.json')
+    with open(path, 'r') as f:
+        return json.load(f)
+
+
+def _calculate_scores(user_answers: dict, structure: dict):
+    group_scores = {"G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0}
+    submitted = []
+
+    for q in structure.get('questions', []):
+        qid = str(q.get('id'))
+        if qid not in user_answers:
+            continue
+        val = user_answers[qid]
+        text = q.get('questionText', {}).get('en', '')
+        display = 'N/A'
+
+        if q.get('type') == 'radio':
+            if val not in (None, ''):
+                opt = next((o for o in q.get('answers', []) if o.get('value') == val), None)
+                if opt:
+                    display = opt.get('text', {}).get('en', val)
+                    for g, w in opt.get('weights', {}).items():
+                        if g in group_scores and isinstance(w, (int, float)):
+                            group_scores[g] += w
+                else:
+                    display = f"Selected value not found: {val}"
+        elif q.get('type') == 'checkbox_group':
+            if isinstance(val, list) and val:
+                texts = []
+                for choice in val:
+                    opt = next((o for o in q.get('answers', []) if o.get('value') == choice), None)
+                    if opt:
+                        texts.append(opt.get('text', {}).get('en', choice))
+                        for g, w in opt.get('weights', {}).items():
+                            if g in group_scores and isinstance(w, (int, float)):
+                                group_scores[g] += w
+                    else:
+                        texts.append(f"Value not found: {choice}")
+                display = ", ".join(texts)
+        elif q.get('type') == 'freetext':
+            if val not in (None, ''):
+                display = str(val)
+        else:
+            if isinstance(val, dict):
+                display = "; ".join(f"{k}: {v}" for k, v in val.items())
+            elif isinstance(val, list):
+                display = ", ".join(map(str, val))
+            elif val not in (None, ''):
+                display = str(val)
+
+        submitted.append((text, display))
+
+    return group_scores, submitted
+
+
+def _generate_recommendation(group_scores: dict) -> str:
+    group_names = {
+        "G1": "Office/Digital",
+        "G2": "Medical/Caregiving",
+        "G3": "Industrial/Factory",
+        "G4": "Heavy Labor/Construction",
+        "G5": "Service Sector",
+        "G6": "Agriculture/Fishery",
+    }
+
+    scores = sorted(group_scores.items(), key=lambda kv: kv[1], reverse=True)
+    recs = []
+    if scores:
+        recs.append(scores[0])
+        if len(scores) > 1 and (scores[0][1] - scores[1][1] <= 5):
+            recs.append(scores[1])
+
+    if not recs:
+        return "No specific profile alignment found based on current scores."
+
+    if len(recs) == 1:
+        key, _ = recs[0]
+        return f"Your profile suggests you align with: {group_names.get(key, key)} ({key})."
+
+    group_texts = [f"{group_names.get(k, k)} ({k})" for k, _ in recs]
+    return f"Your profile suggests you align with: {' and '.join(group_texts)}."
+
+
 @app.route('/thank_you.html')
 def thank_you():
-    return send_from_directory('static', 'thank_you.html')
+    data_param = request.args.get('data')
+    if not data_param:
+        return render_template('thank_you.html', submitted_answers=None, group_scores=None,
+                               recommendation_text=None)
+
+    try:
+        decoded = unquote(data_param)
+        answers = json.loads(decoded)
+    except Exception as exc:
+        return f"Invalid data parameter: {exc}", 400
+
+    structure = _load_questionnaire_structure()
+    scores, submitted = _calculate_scores(answers, structure)
+    recommendation = _generate_recommendation(scores)
+    return render_template('thank_you.html', submitted_answers=submitted,
+                           group_scores=scores, recommendation_text=recommendation)
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
