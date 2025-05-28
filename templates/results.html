@@ -166,6 +166,14 @@
                 </tbody>
             </table>
         </div>
+        <div id="paginationControls" style="text-align:center; margin-top:10px;">
+            <button id="prevPage">Prev</button>
+            <span id="pageInfo" style="margin:0 8px;"></span>
+            <button id="nextPage">Next</button>
+            <label style="margin-left:10px;">Rows per page:
+                <input type="number" id="rowsPerPage" value="100" min="1" style="width:60px;">
+            </label>
+        </div>
         {% else %}
             <p>No survey results found.</p>
         {% endif %}
@@ -175,27 +183,72 @@
     <script>
     const filterInput = document.getElementById('filterInput');
     const table = document.getElementById('resultsTable');
+    const tbody = table.querySelector('tbody');
+    const rowsPerPageInput = document.getElementById('rowsPerPage');
+    const prevPageBtn = document.getElementById('prevPage');
+    const nextPageBtn = document.getElementById('nextPage');
+    const pageInfo = document.getElementById('pageInfo');
+
+    let allRows = Array.from(tbody.querySelectorAll('tr'));
+    let filteredRows = allRows.slice();
+    let currentPage = 1;
+    let rowsPerPage = parseInt(rowsPerPageInput.value, 10) || 1;
+
+    function applyFilter() {
+        const query = filterInput.value.toLowerCase();
+        filteredRows = allRows.filter(r => r.textContent.toLowerCase().includes(query));
+    }
+
+    function renderTable() {
+        const totalPages = Math.max(Math.ceil(filteredRows.length / rowsPerPage), 1);
+        if (currentPage > totalPages) currentPage = totalPages;
+        const start = (currentPage - 1) * rowsPerPage;
+        const pageRows = filteredRows.slice(start, start + rowsPerPage);
+        tbody.innerHTML = '';
+        pageRows.forEach(r => tbody.appendChild(r));
+        pageInfo.textContent = `${currentPage}/${totalPages}`;
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage >= totalPages;
+    }
 
     function filterRows() {
-        const query = filterInput.value.toLowerCase();
-        const rows = table.querySelectorAll('tbody tr');
-        rows.forEach(r => {
-            const text = r.textContent.toLowerCase();
-            r.style.display = text.includes(query) ? '' : 'none';
-        });
+        applyFilter();
+        currentPage = 1;
+        renderTable();
     }
 
     filterInput.addEventListener('input', filterRows);
 
     table.querySelectorAll('th').forEach((th, idx) => {
         th.addEventListener('click', () => {
-            const rows = Array.from(table.querySelectorAll('tbody tr'));
-            const sorted = rows.sort((a, b) => a.children[idx].textContent.localeCompare(b.children[idx].textContent));
-            const tbody = table.querySelector('tbody');
-            tbody.innerHTML = '';
-            sorted.forEach(r => tbody.appendChild(r));
+            allRows.sort((a, b) => a.children[idx].textContent.localeCompare(b.children[idx].textContent));
+            filterRows();
         });
     });
+
+    prevPageBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    });
+
+    nextPageBtn.addEventListener('click', () => {
+        const totalPages = Math.max(Math.ceil(filteredRows.length / rowsPerPage), 1);
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderTable();
+        }
+    });
+
+    rowsPerPageInput.addEventListener('change', () => {
+        rowsPerPage = Math.max(parseInt(rowsPerPageInput.value, 10) || 1, 1);
+        currentPage = 1;
+        renderTable();
+    });
+
+    // initial render
+    filterRows();
 
     const colors = ['#e74c3c','#3498db','#f1c40f','#2ecc71','#9b59b6','#e67e22','#1abc9c'];
     function pickColor(i){ return colors[i % colors.length]; }
@@ -270,7 +323,7 @@
     });
 
     const scoreHistory = {{ score_history | tojson }};
-    const timeLabels = scoreHistory.timestamps.map(t => new Date(t).toLocaleDateString());
+    const timeLabels = scoreHistory.dates;
     const groups = ['G1','G2','G3','G4','G5','G6'];
     const timeDatasets = groups.map((g, idx) => ({
         label: g,
@@ -320,16 +373,16 @@
         avgChart.update();
     });
 
-    const freeTexts = {{ free_texts | tojson }};
-    if (freeTexts.length) {
+    const keywordCounts = {{ keyword_counts | tojson }};
+    if (Object.keys(keywordCounts).length) {
         const container = document.getElementById('freeTextContainer');
         const list = document.createElement('ul');
-        freeTexts.forEach(t => {
+        Object.entries(keywordCounts).sort((a,b)=>b[1]-a[1]).forEach(([word,count]) => {
             const li = document.createElement('li');
-            li.textContent = t;
+            li.textContent = `${word}: ${count}`;
             list.appendChild(li);
         });
-        container.innerHTML = '<h3>Free Text Responses</h3>';
+        container.innerHTML = '<h3>Free Text Keywords</h3>';
         container.appendChild(list);
     }
 
