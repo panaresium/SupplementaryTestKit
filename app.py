@@ -46,6 +46,27 @@ GROUP_NAMES = {
     "G6": "Agriculture/Fishery",
 }
 
+# Localized versions of group names for the supported languages
+GROUP_NAMES_LOCALIZED = {
+    "en": GROUP_NAMES,
+    "fr": {
+        "G1": "Bureau/Numérique",
+        "G2": "Médical/Soins",
+        "G3": "Industrie/Usine",
+        "G4": "Travaux physiques/Construction",
+        "G5": "Secteur de service",
+        "G6": "Agriculture/Pêche",
+    },
+    "th": {
+        "G1": "งานออฟฟิศ/ดิจิทัล",
+        "G2": "การแพทย์/ดูแล",
+        "G3": "งานอุตสาหกรรม/โรงงาน",
+        "G4": "งานใช้แรงหนัก/ก่อสร้าง",
+        "G5": "ภาคบริการ",
+        "G6": "เกษตรกรรม/ประมง",
+    },
+}
+
 # Mapping of language codes to human-readable names
 LANGUAGE_NAMES = {
     "en": "English",
@@ -236,7 +257,7 @@ def _calculate_scores(
     return group_scores, submitted
 
 
-def _generate_recommendation(group_scores: dict) -> str:
+def _generate_recommendation(group_scores: dict, lang_code: str = "en") -> str:
 
     scores = sorted(group_scores.items(), key=lambda kv: kv[1], reverse=True)
     recs = []
@@ -246,14 +267,38 @@ def _generate_recommendation(group_scores: dict) -> str:
             recs.append(scores[1])
 
     if not recs:
-        return "No specific profile alignment found based on current scores."
+        no_data = {
+            "en": "No specific profile alignment found based on current scores.",
+            "fr": "Aucun profil spécifique détecté selon les scores actuels.",
+            "th": "ไม่พบความสอดคล้องของโปรไฟล์จากคะแนนที่ได้",
+        }
+        return no_data.get(lang_code, no_data["en"])
 
+    names_map = GROUP_NAMES_LOCALIZED.get(lang_code, GROUP_NAMES)
     if len(recs) == 1:
         key, _ = recs[0]
-        return f"Your profile suggests you align with: {GROUP_NAMES.get(key, key)} ({key})."
+        group_str = f"{names_map.get(key, key)} ({key})"
+        templates = {
+            "en": "Your profile suggests you align with: {}.",
+            "fr": "Votre profil suggère que vous correspondez à : {}.",
+            "th": "โปรไฟล์ของคุณบ่งชี้ว่าคุณสอดคล้องกับ {}.",
+        }
+        return templates.get(lang_code, templates["en"]).format(group_str)
 
-    group_texts = [f"{GROUP_NAMES.get(k, k)} ({k})" for k, _ in recs]
-    return f"Your profile suggests you align with: {' and '.join(group_texts)}."
+    group_texts = [f"{names_map.get(k, k)} ({k})" for k, _ in recs]
+    if lang_code == "fr":
+        conj = " et "
+    elif lang_code == "th":
+        conj = " และ "
+    else:
+        conj = " and "
+    groups_str = conj.join(group_texts)
+    templates = {
+        "en": "Your profile suggests you align with: {}.",
+        "fr": "Votre profil suggère que vous correspondez à : {}.",
+        "th": "โปรไฟล์ของคุณบ่งชี้ว่าคุณสอดคล้องกับ {}.",
+    }
+    return templates.get(lang_code, templates["en"]).format(groups_str)
 
 
 def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
@@ -310,7 +355,7 @@ def thank_you():
     language = request.args.get('lang', 'th')
     structure = _load_questionnaire_structure()
     scores, submitted = _calculate_scores(answers, structure, language)
-    recommendation = _generate_recommendation(scores)
+    recommendation = _generate_recommendation(scores, language)
 
 
     # Determine the user's top groups for tailored AI advice
