@@ -330,6 +330,7 @@ def admin_results():
     aggregate_scores = {"G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0}
     question_counts = {str(q["id"]): {} for q in structure.get("questions", [])}
     free_texts = []
+    score_history = {"timestamps": [], "G1": [], "G2": [], "G3": [], "G4": [], "G5": [], "G6": []}
     processed_results = []
     for row in results:
         row_dict = dict(row)
@@ -347,6 +348,8 @@ def admin_results():
         row_dict.update(scores)
         for g in aggregate_scores:
             aggregate_scores[g] += scores[g]
+            score_history[g].append(scores[g])
+        score_history["timestamps"].append(row_dict["timestamp"])
         for q in structure.get("questions", []):
             qid = str(q.get("id"))
             val = answers.get(qid)
@@ -364,6 +367,21 @@ def admin_results():
 
     headers = ["timestamp", "id"] + [f"Q{qid}" for qid in q_map.keys()] + list(aggregate_scores.keys())
     averages = {g: (aggregate_scores[g]/len(results) if results else 0) for g in aggregate_scores}
+
+    def _corr(xs, ys):
+        n = len(xs)
+        if n == 0:
+            return 0
+        mean_x = sum(xs)/n
+        mean_y = sum(ys)/n
+        num = sum((x-mean_x)*(y-mean_y) for x, y in zip(xs, ys))
+        den_x = sum((x-mean_x)**2 for x in xs)
+        den_y = sum((y-mean_y)**2 for y in ys)
+        denom = (den_x * den_y) ** 0.5
+        return num/denom if denom else 0
+
+    groups = list(aggregate_scores.keys())
+    correlations = {g1: {g2: _corr(score_history[g1], score_history[g2]) for g2 in groups} for g1 in groups}
     return render_template(
         'results.html',
         results=processed_results,
@@ -372,7 +390,9 @@ def admin_results():
         headers=headers,
         q_map=q_map,
         question_counts=question_counts,
-        free_texts=free_texts
+        free_texts=free_texts,
+        score_history=score_history,
+        correlations=correlations
     )
 
 

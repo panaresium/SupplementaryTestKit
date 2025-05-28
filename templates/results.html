@@ -113,16 +113,54 @@
         {% endif %}
 
 
-        <h3>Category Totals</h3>
-        <div class="chart-container" style="margin-top:20px;">
-            <canvas id="categoryChart" height="150"></canvas>
+        <div class="charts-row" style="margin-top:20px;">
+            <div class="chart-container">
+                <h3>Category Totals</h3>
+                <canvas id="categoryChart" height="150"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Responses per Question</h3>
+                <canvas id="questionChart" height="150"></canvas>
+            </div>
         </div>
-        <h3 style="margin-top:40px;">Responses per Question</h3>
-        <div class="chart-container" style="margin-top:20px;">
-            <canvas id="questionChart" height="150"></canvas>
+        <div class="charts-row" style="margin-top:20px;">
+            <div class="chart-container">
+                <h3>Scores Over Time</h3>
+                <canvas id="timeChart" height="150"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Average Score by Group</h3>
+                <canvas id="avgGroupChart" height="150"></canvas>
+            </div>
         </div>
         <div id="freeTextContainer" style="margin-top:40px;"></div>
         <div id="analysisSuggestions" style="margin-top:40px;"></div>
+
+        {% if correlations %}
+        <h3 style="margin-top:40px;">Category Correlations</h3>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        {% for g in correlations.keys() %}
+                        <th>{{ g }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for g1, row in correlations.items() %}
+                    <tr>
+                        <th>{{ g1 }}</th>
+                        {% for g2 in correlations.keys() %}
+                        <td>{{ '%.2f'|format(row[g2]) }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -155,20 +193,20 @@
     const ctxCat = document.getElementById('categoryChart').getContext('2d');
 
     new Chart(ctxCat, {
-        type: 'line',
+        type: 'pie',
         data: {
             labels: Object.keys(categoryData),
             datasets: [{
-                label: 'Category Scores',
                 data: Object.values(categoryData),
-                fill: true,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgb(75, 192, 192)'
+                backgroundColor: colors.slice(0, Object.keys(categoryData).length)
             }]
         },
         options: {
             responsive: true,
-            plugins: { title: { display: true, text: 'Category Totals' } }
+            plugins: {
+                title: { display: true, text: 'Category Totals' },
+                legend: { display: false }
+            }
         }
     });
 
@@ -195,10 +233,56 @@
         data: { labels: qLabels, datasets: datasets },
         options: {
             responsive: true,
-            plugins: { title: { display: true, text: 'Answer Counts Per Question' } },
+            plugins: {
+                title: { display: true, text: 'Answer Counts Per Question' },
+                legend: { display: false }
+            },
             scales: { x: { stacked: false }, y: { beginAtZero: true } }
         }
 
+    });
+
+    const scoreHistory = {{ score_history | tojson }};
+    const timeLabels = scoreHistory.timestamps.map(t => new Date(t).toLocaleDateString());
+    const groups = ['G1','G2','G3','G4','G5','G6'];
+    const timeDatasets = groups.map((g, idx) => ({
+        label: g,
+        data: scoreHistory[g],
+        borderColor: pickColor(idx),
+        fill: false
+    }));
+    const ctxTime = document.getElementById('timeChart').getContext('2d');
+    new Chart(ctxTime, {
+        type: 'line',
+        data: { labels: timeLabels, datasets: timeDatasets },
+        options: {
+            responsive: true,
+            plugins: {
+                title: { display: true, text: 'Scores Over Time' },
+                legend: { display: false }
+            }
+        }
+    });
+
+    const averagesData = {{ averages | tojson }};
+    const ctxAvg = document.getElementById('avgGroupChart').getContext('2d');
+    new Chart(ctxAvg, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(averagesData),
+            datasets: [{
+                data: Object.values(averagesData),
+                backgroundColor: colors.slice(0, Object.keys(averagesData).length)
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: { display: true, text: 'Average Score by Group' },
+                legend: { display: false }
+            },
+            scales: { y: { beginAtZero: true } }
+        }
     });
 
     const freeTexts = {{ free_texts | tojson }};

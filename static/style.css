@@ -166,10 +166,22 @@ button.btn-secondary:hover {
 
 /* Chart container for admin results */
 .chart-container {
-    width: 50%;
-    margin: 0 auto;
+    width: 45%;
+    margin: 10px auto;
     resize: both;
     overflow: auto;
+}
+
+.charts-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+@media (max-width: 800px) {
+    .chart-container {
+        width: 100%;
+    }
 }
 
 
