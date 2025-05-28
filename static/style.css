@@ -227,3 +227,22 @@ input[type="radio"], input[type="checkbox"] {
         font-size: 0.9rem;
     }
 }
+
+/* Language selection page */
+#languageOptions {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+.language-option {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.language-option .icon {
+    font-size: 48px;
+}
+.language-option:hover {
+    transform: scale(1.1);
+}
