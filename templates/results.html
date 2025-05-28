@@ -284,36 +284,32 @@
     });
 
     const questionCounts = {{ question_counts | tojson }};
-    const qLabels = Object.keys(questionCounts).map(k => 'Q' + k);
+    const qIds = Object.keys(questionCounts).sort((a,b)=>parseInt(a)-parseInt(b));
+    const qLabels = qIds.map(k => 'Q' + k);
     const allAnswers = new Set();
-    Object.values(questionCounts).forEach(obj => {
+    qIds.forEach(id => {
+        const obj = questionCounts[id];
         Object.keys(obj).forEach(k => allAnswers.add(k));
     });
     const answerList = Array.from(allAnswers);
     const datasets = answerList.map((ans, idx) => ({
         label: ans,
-        data: qLabels.map((_, qidx) => {
-            const qid = Object.keys(questionCounts)[qidx];
-            return questionCounts[qid][ans] || 0;
-        }),
+        data: qIds.map(qid => questionCounts[qid][ans] || 0),
         backgroundColor: pickColor(idx),
-        /* Allow Chart.js to automatically size bars based on the
-           available width so that all questions remain visible */
-        maxBarThickness: 40,
-        barPercentage: 0.9,
-        categoryPercentage: 0.8
+        borderWidth: 1
     }));
     const ctxQ = document.getElementById('questionChart').getContext('2d');
     const questionChart = new Chart(ctxQ, {
         type: 'bar',
         data: { labels: qLabels, datasets: datasets },
         options: {
+            indexAxis: 'y',
             responsive: true,
             plugins: {
                 title: { display: true, text: 'Answer Counts Per Question' },
                 legend: { display: false }
             },
-            scales: { x: { stacked: false }, y: { beginAtZero: true } }
+            scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true } }
         }
 
     });
