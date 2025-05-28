@@ -24,7 +24,7 @@ def test_index_route(client):
 
 
 def test_submit_and_admin_results(client):
-    payload = {"language": "en", "answers": {"q1": "a1"}}
+    payload = {"language": "en", "answers": {"1": "a1"}}
     res = client.post('/api/submit', json=payload)
     assert res.status_code == 200
     data = res.get_json()

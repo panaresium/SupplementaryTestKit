@@ -17,9 +17,13 @@ This project provides a small Flask application that serves a multi-language hea
    ```
    OPENAI_API_KEY=your-key-here
    ```
-   The value should appear exactly as in the OpenAI dashboard with no quotes or
-   trailing spaces. Quoting the key (e.g. `OPENAI_API_KEY="sk-..."`) will cause a
-   "Malformed API key" error.
+The value should appear exactly as in the OpenAI dashboard with no quotes or
+trailing spaces. Quoting the key (e.g. `OPENAI_API_KEY="sk-..."`) will cause a
+"Malformed API key" error.
+
+You can also set the model used for AI suggestions with the `OPENAI_MODEL`
+environment variable. If not provided, the application defaults to
+`gpt-3.5-turbo`.
 
 ### Configuring your OpenAI API key
 
@@ -41,6 +45,8 @@ Start the Flask server with:
 python app.py
 ```
 The application will be available at `http://localhost:5000/`.
+You may set `OPENAI_MODEL` before running if you want to use a different
+OpenAI model.
 
 ## Development
 

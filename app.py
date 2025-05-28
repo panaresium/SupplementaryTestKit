@@ -20,8 +20,8 @@ app.secret_key = os.getenv("SECRET_KEY", "dev-secret")
 CORS(app)
 
 load_dotenv()
-openai.api_key_path = ".env"
 openai.api_key = os.getenv("OPENAI_API_KEY")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 
@@ -95,7 +95,7 @@ GROUP_INFO_FILE = os.path.join(os.path.dirname(__file__), 'group_info.json')
 def _load_group_info() -> dict:
     if os.path.exists(GROUP_INFO_FILE):
 
-        with open(GROUP_INFO_FILE, 'r') as f:
+        with open(GROUP_INFO_FILE, 'r', encoding='utf-8') as f:
 
             try:
                 return json.load(f)
@@ -114,7 +114,7 @@ def _load_group_info() -> dict:
 
 def _save_group_info(data: dict):
 
-    with open(GROUP_INFO_FILE, 'w') as f:
+    with open(GROUP_INFO_FILE, 'w', encoding='utf-8') as f:
 
         json.dump(data, f, indent=2)
 
@@ -215,7 +215,7 @@ def _ai_suggestion(text: str, lang_code: str) -> str:
                 ),
             },
         ]
-        resp = openai.ChatCompletion.create(model="gpt-4.1", messages=messages)
+        resp = openai.ChatCompletion.create(model=OPENAI_MODEL, messages=messages)
         return resp.choices[0].message["content"].strip()
     except Exception as exc:
         return f"AI suggestion unavailable: {exc}"
