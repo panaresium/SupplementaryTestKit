@@ -35,7 +35,7 @@ GROUP_NAMES = {
 }
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
-
+group_texts =""
 
 ADMIN_CREDENTIALS = {"username": "admin", "password": "admin"}
 
@@ -224,8 +224,10 @@ def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
             {
                 "role": "user",
                 "content": (
+
                     f"Please respond in {lang_code} based on the following concerns: {text}."
-                    f"{group_info} Suggest ways to exercise, relax, and take supplements for better health."
+                    f"I'm in group: {group_info} Suggest ways to exercise, relax, and take supplements for better health."
+
                 ),
             },
         ]
