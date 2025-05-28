@@ -200,7 +200,7 @@ def _generate_recommendation(group_scores: dict) -> str:
 
 def _ai_suggestion(text: str, lang_code: str) -> str:
     """Query OpenAI for a supplement suggestion based on user text."""
-    if not text:
+    if not text or not text.strip():
         return ""
     try:
         messages = [
@@ -241,8 +241,8 @@ def thank_you():
     scores, submitted = _calculate_scores(answers, structure, language)
     recommendation = _generate_recommendation(scores)
 
-    # Use the freetext from the last question (id 26) for AI suggestion
-    last_text = answers.get('26', '')
+    # Use the free-text "symptoms_other_concerns" question for AI suggestion
+    last_text = answers.get('symptoms_other_concerns', '')
     ai_suggestion = _ai_suggestion(last_text, language)
 
     group_info = _load_group_info()
