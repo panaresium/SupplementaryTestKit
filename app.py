@@ -72,6 +72,12 @@ LANGUAGE_NAMES = {
     "en": "English",
     "fr": "French",
     "th": "Thai",
+    "my": "Burmese",
+    "lo": "Lao",
+    "ja": "Japanese",
+    "zh": "Chinese",
+    "ko": "Korean",
+    "ms": "Malay",
 }
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
