@@ -365,7 +365,7 @@ def admin_results():
                     question_counts[qid][val] = question_counts[qid].get(val, 0) + 1
         processed_results.append(row_dict)
 
-    headers = ["timestamp", "id"] + [f"Q{qid}" for qid in q_map.keys()] + list(aggregate_scores.keys())
+    headers = [f"Q{qid}" for qid in q_map.keys()] + list(aggregate_scores.keys())
     averages = {g: (aggregate_scores[g]/len(results) if results else 0) for g in aggregate_scores}
 
     def _corr(xs, ys):
