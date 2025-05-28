@@ -2,8 +2,20 @@ import os
 import sqlite3
 import csv
 import io
-import json # Added json import
-from flask import Flask, request, jsonify, send_from_directory, render_template, session, redirect, url_for, Response
+import json  # Added json import
+import re
+from collections import defaultdict, Counter
+from flask import (
+    Flask,
+    request,
+    jsonify,
+    send_from_directory,
+    render_template,
+    session,
+    redirect,
+    url_for,
+    Response,
+)
 import openai
 
 try:
@@ -365,7 +377,11 @@ def admin_results():
     aggregate_scores = {"G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0}
     question_counts = {str(q["id"]): {} for q in structure.get("questions", [])}
     free_texts = []
-    score_history = {"timestamps": [], "G1": [], "G2": [], "G3": [], "G4": [], "G5": [], "G6": []}
+    # store raw history for correlation
+    score_history_raw = {"timestamps": [], "G1": [], "G2": [], "G3": [], "G4": [], "G5": [], "G6": []}
+    # daily aggregation helpers
+    daily_totals = defaultdict(lambda: {g: 0 for g in aggregate_scores})
+    daily_counts = defaultdict(int)
     processed_results = []
     for row in results:
         row_dict = dict(row)
@@ -383,8 +399,12 @@ def admin_results():
         row_dict.update(scores)
         for g in aggregate_scores:
             aggregate_scores[g] += scores[g]
-            score_history[g].append(scores[g])
-        score_history["timestamps"].append(row_dict["timestamp"])
+            score_history_raw[g].append(scores[g])
+        score_history_raw["timestamps"].append(row_dict["timestamp"])
+        day = row_dict["timestamp"][:10]
+        daily_counts[day] += 1
+        for g in aggregate_scores:
+            daily_totals[day][g] += scores[g]
         for q in structure.get("questions", []):
             qid = str(q.get("id"))
             val = answers.get(qid)
@@ -399,6 +419,18 @@ def admin_results():
                 if val is not None:
                     question_counts[qid][val] = question_counts[qid].get(val, 0) + 1
         processed_results.append(row_dict)
+
+    # build daily score history averaging scores per day
+    sorted_days = sorted(daily_totals.keys())
+    score_history = {"dates": sorted_days}
+    for g in aggregate_scores:
+        score_history[g] = [daily_totals[d][g] / daily_counts[d] for d in sorted_days]
+
+    # keyword summary for free text responses
+    keyword_counts = Counter()
+    for text in free_texts:
+        words = re.findall(r"\b\w+\b", text.lower())
+        keyword_counts.update([w for w in words if len(w) > 2])
 
     headers = [f"Q{qid}" for qid in q_map.keys()] + list(aggregate_scores.keys())
     averages = {g: (aggregate_scores[g]/len(results) if results else 0) for g in aggregate_scores}
@@ -416,7 +448,7 @@ def admin_results():
         return num/denom if denom else 0
 
     groups = list(aggregate_scores.keys())
-    correlations = {g1: {g2: _corr(score_history[g1], score_history[g2]) for g2 in groups} for g1 in groups}
+    correlations = {g1: {g2: _corr(score_history_raw[g1], score_history_raw[g2]) for g2 in groups} for g1 in groups}
     return render_template(
         'results.html',
         results=processed_results,
@@ -426,6 +458,7 @@ def admin_results():
         q_map=q_map,
         question_counts=question_counts,
         free_texts=free_texts,
+        keyword_counts=dict(keyword_counts),
         score_history=score_history,
         correlations=correlations
     )

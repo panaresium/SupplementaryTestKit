@@ -270,7 +270,7 @@
     });
 
     const scoreHistory = {{ score_history | tojson }};
-    const timeLabels = scoreHistory.timestamps.map(t => new Date(t).toLocaleDateString());
+    const timeLabels = scoreHistory.dates;
     const groups = ['G1','G2','G3','G4','G5','G6'];
     const timeDatasets = groups.map((g, idx) => ({
         label: g,
@@ -320,16 +320,16 @@
         avgChart.update();
     });
 
-    const freeTexts = {{ free_texts | tojson }};
-    if (freeTexts.length) {
+    const keywordCounts = {{ keyword_counts | tojson }};
+    if (Object.keys(keywordCounts).length) {
         const container = document.getElementById('freeTextContainer');
         const list = document.createElement('ul');
-        freeTexts.forEach(t => {
+        Object.entries(keywordCounts).sort((a,b)=>b[1]-a[1]).forEach(([word,count]) => {
             const li = document.createElement('li');
-            li.textContent = t;
+            li.textContent = `${word}: ${count}`;
             list.appendChild(li);
         });
-        container.innerHTML = '<h3>Free Text Responses</h3>';
+        container.innerHTML = '<h3>Free Text Keywords</h3>';
         container.appendChild(list);
     }
 
