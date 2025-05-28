@@ -386,7 +386,10 @@ def admin_results():
     q_map = {str(q["id"]): q.get("questionText", {}).get("en", f"Q{q['id']}")
              for q in structure.get("questions", [])}
     aggregate_scores = {"G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0}
-    question_counts = {str(q["id"]): {} for q in structure.get("questions", [])}
+    question_counts = {
+        str(q["id"]): {a.get("value"): 0 for a in q.get("answers", [])}
+        for q in structure.get("questions", []) if q.get("type") != "freetext"
+    }
     free_texts = []
     # store raw history for correlation
     score_history_raw = {"timestamps": [], "G1": [], "G2": [], "G3": [], "G4": [], "G5": [], "G6": []}
@@ -425,9 +428,21 @@ def admin_results():
                 if val:
                     free_texts.append(val)
             elif q.get("type") == "checkbox_group":
+                choices = []
                 if isinstance(val, list):
-                    for choice in val:
-                        question_counts[qid][choice] = question_counts[qid].get(choice, 0) + 1
+                    choices = val
+                elif isinstance(val, str) and val.startswith('['):
+                    try:
+                        import ast
+                        parsed = ast.literal_eval(val)
+                        if isinstance(parsed, list):
+                            choices = parsed
+                    except Exception:
+                        choices = []
+                elif val:
+                    choices = [val]
+                for choice in choices:
+                    question_counts[qid][choice] = question_counts[qid].get(choice, 0) + 1
             else:
                 if val is not None:
                     question_counts[qid][val] = question_counts[qid].get(val, 0) + 1
