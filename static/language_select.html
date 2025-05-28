@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Select Language</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        #languageOptions {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .language-option {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .language-option .icon {
+            font-size: 48px;
+        }
+        .language-option:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Select your language</h1>
+    <div id="languageOptions">
+        <div class="language-option" data-lang="en">
+            <div class="icon" role="img" aria-label="English">🇬🇧</div>
+            <div class="lang-label">English</div>
+        </div>
+        <div class="language-option" data-lang="fr">
+            <div class="icon" role="img" aria-label="Français">🇫🇷</div>
+            <div class="lang-label">Français</div>
+        </div>
+        <div class="language-option" data-lang="th">
+            <div class="icon" role="img" aria-label="ไทย">🇹🇭</div>
+            <div class="lang-label">ไทย</div>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.language-option').forEach(function(el) {
+        el.addEventListener('click', function() {
+            var lang = el.getAttribute('data-lang');
+            localStorage.setItem('language', lang);
+            window.location.href = '/questionnaire';
+        });
+    });
+</script>
+</body>
+</html>

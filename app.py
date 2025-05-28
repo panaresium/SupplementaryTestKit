@@ -93,6 +93,12 @@ def admin_required(f):
 # Serve the survey front-end
 @app.route('/')
 def index():
+    """Landing page that lets the user choose a language."""
+    return send_from_directory('static', 'language_select.html')
+
+@app.route('/questionnaire')
+def questionnaire():
+    """Serve the questionnaire after the language is chosen."""
     return send_from_directory('static', 'index.html')
 
 
