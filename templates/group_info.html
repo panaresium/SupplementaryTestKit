@@ -11,14 +11,16 @@
     <form method="post">
         {% for gid, info in group_info.items() %}
         <h3>{{ gid }}</h3>
-        <div class="form-group">
-            <label>Message</label>
-            <textarea name="{{ gid }}_message" rows="2" cols="50">{{ info.message }}</textarea>
-        </div>
-        <div class="form-group">
-            <label>Image URL</label>
-            <input type="text" name="{{ gid }}_image" value="{{ info.image }}">
-        </div>
+            {% for code, lang in languages.items() %}
+            <div class="form-group">
+                <label>Message ({{ lang }})</label>
+                <textarea name="{{ gid }}_message_{{ code }}" rows="2" cols="50">{{ info.messages[code] }}</textarea>
+            </div>
+            {% endfor %}
+            <div class="form-group">
+                <label>Image URL</label>
+                <input type="text" name="{{ gid }}_image" value="{{ info.image }}">
+            </div>
         {% endfor %}
         <button type="submit">Save</button>
     </form>

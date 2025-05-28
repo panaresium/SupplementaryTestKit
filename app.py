@@ -46,6 +46,9 @@ GROUP_NAMES = {
     "G6": "Agriculture/Fishery",
 }
 
+# Group IDs in use
+GROUP_IDS = list(GROUP_NAMES.keys())
+
 # Localized versions of group names for the supported languages
 GROUP_NAMES_LOCALIZED = {
     "en": GROUP_NAMES,
@@ -64,6 +67,54 @@ GROUP_NAMES_LOCALIZED = {
         "G4": "กลุ่มงานใช้แรงงานหนัก",
         "G5": "กลุ่มงานภาคบริการ",
         "G6": "กลุ่มงานเกษตรกรรม/ประมง",
+    },
+    "my": {
+        "G1": "ရုံး/ဒစ်ဂျစ်တယ်",
+        "G2": "ဆေးဘက်ဆိုင်ရာ/ပြုစုစောင့်ရှောက်မှု",
+        "G3": "စက်မှု/စက်ရုံ",
+        "G4": "အလုပ်ကြမ်း/ဆောက်လုပ်ရေး",
+        "G5": "ဝန်ဆောင်မှုကဏ္ဍ",
+        "G6": "စိုက်ပျိုးရေး/ငါးဖမ်းရေး",
+    },
+    "lo": {
+        "G1": "ສໍານັກງານ/ດິຈິດອອນ",
+        "G2": "ການແພດ/ການດູແລ",
+        "G3": "ອຸດສາຫະກໍາ/ໂຮງງານ",
+        "G4": "ແຮງງານຫນັກ/ກໍ່ສ້າງ",
+        "G5": "ພາກບໍລິການ",
+        "G6": "ກະສິກຳ/ປະມົງ",
+    },
+    "ja": {
+        "G1": "オフィス/デジタル",
+        "G2": "医療/介護",
+        "G3": "工業/工場",
+        "G4": "肉体労働/建設",
+        "G5": "サービス業",
+        "G6": "農業/漁業",
+    },
+    "zh": {
+        "G1": "办公室/数字化",
+        "G2": "医疗/护理",
+        "G3": "工业/工厂",
+        "G4": "重体力/建筑",
+        "G5": "服务业",
+        "G6": "农业/渔业",
+    },
+    "ko": {
+        "G1": "사무/디지털",
+        "G2": "의료/간병",
+        "G3": "산업/공장",
+        "G4": "육체 노동/건설",
+        "G5": "서비스업",
+        "G6": "농업/어업",
+    },
+    "ms": {
+        "G1": "Pejabat/Digital",
+        "G2": "Perubatan/Penjagaan",
+        "G3": "Perindustrian/Kilang",
+        "G4": "Kerja Berat/Pembinaan",
+        "G5": "Sektor Perkhidmatan",
+        "G6": "Pertanian/Perikanan",
     },
 }
 
@@ -157,30 +208,39 @@ KEYWORD_FILE = os.path.join(os.path.dirname(__file__), 'thai_keywords.json')
 
 
 def _load_group_info() -> dict:
+    """Load group info from JSON and ensure required structure."""
+    data = {}
     if os.path.exists(GROUP_INFO_FILE):
-
         with open(GROUP_INFO_FILE, 'r', encoding='utf-8') as f:
-
             try:
-                return json.load(f)
+                data = json.load(f)
             except json.JSONDecodeError:
-                pass
-    # Default structure if file does not exist or is invalid
-    return {
-        "G1": {"message": "", "image": ""},
-        "G2": {"message": "", "image": ""},
-        "G3": {"message": "", "image": ""},
-        "G4": {"message": "", "image": ""},
-        "G5": {"message": "", "image": ""},
-        "G6": {"message": "", "image": ""},
-    }
+                data = {}
+
+    # Ensure expected structure
+    for gid in GROUP_IDS:
+        info = data.get(gid, {})
+        # Migrate old single "message" field to per-language messages
+        messages = info.get('messages')
+        if messages is None:
+            msg = info.get('message', '')
+            messages = {lang: msg for lang in LANGUAGE_NAMES.keys()}
+        else:
+            for lang in LANGUAGE_NAMES.keys():
+                messages.setdefault(lang, '')
+        info['messages'] = messages
+        info.setdefault('image', '')
+        info.pop('message', None)
+        data[gid] = info
+
+    return data
 
 
 def _save_group_info(data: dict):
 
     with open(GROUP_INFO_FILE, 'w', encoding='utf-8') as f:
 
-        json.dump(data, f, indent=2)
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
 
 def _load_keywords() -> dict:
@@ -283,6 +343,12 @@ def _generate_recommendation(group_scores: dict, lang_code: str = "en") -> str:
             "en": "No specific profile alignment found based on current scores.",
             "fr": "Aucun profil spécifique détecté selon les scores actuels.",
             "th": "ไม่พบความสอดคล้องของโปรไฟล์จากคะแนนที่ได้",
+            "my": "လက်ရှိအမှတ်များအရ ကိုက်ညီမှုရှိသည့် ပရိုဖိုင် မတွေ့ရှိပါ။",
+            "lo": "ບໍ່ພົບໂປຣໄຟທີ່ສອດຄ່ອງກັບຄະແນນປະຈຸບັນ.",
+            "ja": "現在のスコアから一致するプロフィールは見つかりませんでした。",
+            "zh": "根据当前得分未找到特定的匹配档案。",
+            "ko": "현재 점수로 일치하는 프로필을 찾을 수 없습니다.",
+            "ms": "Tiada padanan profil khusus ditemui berdasarkan skor semasa.",
         }
         return no_data.get(lang_code, no_data["en"])
 
@@ -294,6 +360,12 @@ def _generate_recommendation(group_scores: dict, lang_code: str = "en") -> str:
             "en": "Your profile suggests you align with: {}.",
             "fr": "Votre profil suggère que vous correspondez à : {}.",
             "th": "โปรไฟล์ของคุณบ่งชี้ว่าคุณสอดคล้องกับ {}.",
+            "my": "သင့်ပရိုဖိုင်အရ သင်သည် {} နှင့် ကိုက်ညီပါသည်။",
+            "lo": "ໂປຣໄຟຂອງທ່ານສະຫຼຸບວ່າທ່ານສອດຄ່ອງກັບ {}.",
+            "ja": "あなたのプロフィールは{}に一致すると示唆しています。",
+            "zh": "您的个人资料表明您与 {} 相符。",
+            "ko": "귀하의 프로필에 따르면 귀하는 {}와 일치합니다.",
+            "ms": "Profil anda menunjukkan anda sepadan dengan {}.",
         }
         return templates.get(lang_code, templates["en"]).format(group_str)
 
@@ -302,6 +374,18 @@ def _generate_recommendation(group_scores: dict, lang_code: str = "en") -> str:
         conj = " et "
     elif lang_code == "th":
         conj = " และ "
+    elif lang_code == "my":
+        conj = " နှင့် "
+    elif lang_code == "lo":
+        conj = " ແລະ "
+    elif lang_code == "ja":
+        conj = " と "
+    elif lang_code == "zh":
+        conj = " 和 "
+    elif lang_code == "ko":
+        conj = " 및 "
+    elif lang_code == "ms":
+        conj = " dan "
     else:
         conj = " and "
     groups_str = conj.join(group_texts)
@@ -309,6 +393,12 @@ def _generate_recommendation(group_scores: dict, lang_code: str = "en") -> str:
         "en": "Your profile suggests you align with: {}.",
         "fr": "Votre profil suggère que vous correspondez à : {}.",
         "th": "โปรไฟล์ของคุณบ่งชี้ว่าคุณสอดคล้องกับ {}.",
+        "my": "သင့်ပရိုဖိုင်အရ သင်သည် {} နှင့် ကိုက်ညီပါသည်။",
+        "lo": "ໂປຣໄຟຂອງທ່ານສະຫຼຸບວ່າທ່ານສອດຄ່ອງກັບ {}.",
+        "ja": "あなたのプロフィールは{}に一致すると示唆しています。",
+        "zh": "您的个人资料表明您与 {} 相符。",
+        "ko": "귀하의 프로필에 따르면 귀하는 {}와 일치합니다.",
+        "ms": "Profil anda menunjukkan anda sepadan dengan {}.",
     }
     return templates.get(lang_code, templates["en"]).format(groups_str)
 
@@ -682,11 +772,13 @@ def admin_import_csv():
 def admin_group_info():
     group_info = _load_group_info()
     if request.method == 'POST':
-        for gid in group_info.keys():
-            group_info[gid]['message'] = request.form.get(f'{gid}_message', '')
+        for gid in GROUP_IDS:
+            for lang in LANGUAGE_NAMES.keys():
+                field = f'{gid}_message_{lang}'
+                group_info[gid]['messages'][lang] = request.form.get(field, '')
             group_info[gid]['image'] = request.form.get(f'{gid}_image', '')
         _save_group_info(group_info)
-    return render_template('group_info.html', group_info=group_info)
+    return render_template('group_info.html', group_info=group_info, languages=LANGUAGE_NAMES)
 
 if __name__ == '__main__':
     if not os.path.exists(DB_PATH):
