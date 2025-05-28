@@ -24,7 +24,15 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
+# Mapping of group IDs to descriptive names
+GROUP_NAMES = {
+    "G1": "Office/Digital",
+    "G2": "Medical/Caregiving",
+    "G3": "Industrial/Factory",
+    "G4": "Heavy Labor/Construction",
+    "G5": "Service Sector",
+    "G6": "Agriculture/Fishery",
+}
 
 # Mapping of group codes to descriptive names for AI prompts
 GROUP_NAMES = {
@@ -42,6 +50,8 @@ LANGUAGE_NAMES = {
     "fr": "French",
     "th": "Thai",
 }
+
+DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 
 
 ADMIN_CREDENTIALS = {"username": "admin", "password": "admin"}
@@ -209,6 +219,7 @@ def _generate_recommendation(group_scores: dict) -> str:
 
 
 def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
+
     """Query OpenAI for a supplement suggestion based on user text."""
     if not text or not text.strip():
         return ""
@@ -217,7 +228,7 @@ def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
         group_info = ""
         if groups:
             names = [GROUP_NAMES.get(g, g) for g in groups]
-            group_info = f" I'm in group: {', '.join(names)}."
+            group_info = f" The user aligns with: {', '.join(names)}."
 
         messages = [
             {
@@ -225,6 +236,7 @@ def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
                 "content": (
                     "You are a helpful assistant providing supplement advice. "
                     "You will suggest supplements based on the six groups "
+
                     "G1=Office/Digital,G2=Medical/Caregiving,G3=Industrial/Factory,"
                     "G4=Heavy Labor/Construction,G5=Service Sector,G6=Agriculture/Fishery."
                 ),
@@ -232,8 +244,10 @@ def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
             {
                 "role": "user",
                 "content": (
+
                     f"Please respond in {language} based on the following concerns: {text}."
                     f"{group_info} Suggest ways to exercise, relax, and take supplements for better health."
+
                 ),
             },
         ]
@@ -263,6 +277,7 @@ def thank_you():
 
 
     # Determine the user's top groups for tailored AI advice
+
     top_groups = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
     rec_groups = []
     if top_groups:
@@ -272,9 +287,11 @@ def thank_you():
 
     # Use the freetext from the last question for AI suggestion
     last_text = answers.get('10', '')
+
     ai_suggestion = _ai_suggestion(last_text, language, rec_groups)
 
     group_info = _load_group_info()
+
 
     return render_template(
         'thank_you.html',
