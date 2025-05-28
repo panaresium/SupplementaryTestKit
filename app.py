@@ -25,7 +25,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
-
+group_texts =""
 
 ADMIN_CREDENTIALS = {"username": "admin", "password": "admin"}
 
@@ -210,7 +210,7 @@ def _ai_suggestion(text: str, lang_code: str) -> str:
             {
                 "role": "user",
                 "content": (
-                    f"Please respond in {lang_code} based on the following concerns: {text}. "
+                    f"Please respond in {lang_code} based on the following concerns: {text}. I'm in group: {group_texts}" 
                     "Suggest ways to exercise, relax, and take supplements for better health."
 
                 ),
