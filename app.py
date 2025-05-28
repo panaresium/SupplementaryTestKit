@@ -204,20 +204,18 @@ def _ai_suggestion(text: str, lang_code: str) -> str:
         return ""
     try:
         messages = [
+
             {"role": "system", "content": "You are a helpful assistant providing supplement advice. where you will suggest supplements based on the 6 groups. G1=Office/Digital,G2=Medical/Caregiving,G3=Industrial/Factory,G4=Heavy Labor/Construction,G5=Service Sector,G6=Agriculture/Fishery"},
             {
                 "role": "user",
                 "content": (
-                    "Please return the suggestion in "
-                    + lang_code
-                    + " language code where the symptom is follow: "
-                    + text
-                    + ". You will return what should I do to have better health including how to exercise, relax, and use supplements."
+                    f"Please respond in {lang_code} based on the following concerns: {text}. "
+                    "Suggest ways to exercise, relax, and take supplements for better health."
+
                 ),
             },
         ]
         resp = openai.ChatCompletion.create(model="gpt-4.1", messages=messages)
-
         return resp.choices[0].message["content"].strip()
     except Exception as exc:
         return f"AI suggestion unavailable: {exc}"
@@ -241,8 +239,10 @@ def thank_you():
     scores, submitted = _calculate_scores(answers, structure, language)
     recommendation = _generate_recommendation(scores)
 
-    # Use the free-text "symptoms_other_concerns" question for AI suggestion
-    last_text = answers.get('symptoms_other_concerns', '')
+
+    # Use the freetext from the last question for AI suggestion
+    last_text = answers.get('10', '')
+
     ai_suggestion = _ai_suggestion(last_text, language)
 
     group_info = _load_group_info()
