@@ -1,6 +1,7 @@
 import os
 import sqlite3
 import csv
+import io
 import json # Added json import
 from flask import Flask, request, jsonify, send_from_directory, render_template, session, redirect, url_for, Response
 import openai
@@ -20,8 +21,8 @@ app.secret_key = os.getenv("SECRET_KEY", "dev-secret")
 CORS(app)
 
 load_dotenv()
-openai.api_key_path = ".env"
 openai.api_key = os.getenv("OPENAI_API_KEY")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 
@@ -95,7 +96,7 @@ GROUP_INFO_FILE = os.path.join(os.path.dirname(__file__), 'group_info.json')
 def _load_group_info() -> dict:
     if os.path.exists(GROUP_INFO_FILE):
 
-        with open(GROUP_INFO_FILE, 'r') as f:
+        with open(GROUP_INFO_FILE, 'r', encoding='utf-8') as f:
 
             try:
                 return json.load(f)
@@ -114,7 +115,7 @@ def _load_group_info() -> dict:
 
 def _save_group_info(data: dict):
 
-    with open(GROUP_INFO_FILE, 'w') as f:
+    with open(GROUP_INFO_FILE, 'w', encoding='utf-8') as f:
 
         json.dump(data, f, indent=2)
 
@@ -215,7 +216,7 @@ def _ai_suggestion(text: str, lang_code: str) -> str:
                 ),
             },
         ]
-        resp = openai.ChatCompletion.create(model="gpt-4.1", messages=messages)
+        resp = openai.ChatCompletion.create(model=OPENAI_MODEL, messages=messages)
         return resp.choices[0].message["content"].strip()
     except Exception as exc:
         return f"AI suggestion unavailable: {exc}"
@@ -445,6 +446,44 @@ def admin_export_csv():
         mimetype="text/csv",
         headers={"Content-Disposition": "attachment; filename=results.csv"}
     )
+
+
+@app.route('/admin/import_csv', methods=['POST'])
+@admin_required
+def admin_import_csv():
+    """Import survey results from a CSV file."""
+    file = request.files.get('file')
+    if not file or file.filename == '':
+        return redirect(url_for('admin_results'))
+
+    try:
+        stream = io.StringIO(file.read().decode('utf-8'))
+    except Exception:
+        return redirect(url_for('admin_results'))
+
+    reader = csv.DictReader(stream)
+    structure = _load_questionnaire_structure()
+    question_ids = [str(q.get('id')) for q in structure.get('questions', [])]
+
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    for row in reader:
+        response_id = row.get('id') or str(uuid4())
+        timestamp = row.get('timestamp') or datetime.now(timezone.utc).isoformat()
+        answers = {qid: row.get(f'Q{qid}', '') for qid in question_ids if row.get(f'Q{qid}', '')}
+        answers_json = json.dumps(answers)
+        cur.execute('SELECT 1 FROM responses WHERE id=?', (response_id,))
+        if cur.fetchone():
+            continue
+        cur.execute(
+            'INSERT INTO responses (id, timestamp, language_code, answers_json, products) '
+            'VALUES (?, ?, ?, ?, ?)',
+            (response_id, timestamp, '', answers_json, '')
+        )
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('admin_results'))
 
 @app.route('/admin/group_info', methods=['GET', 'POST'])
 @admin_required

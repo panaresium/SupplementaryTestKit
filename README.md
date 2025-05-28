@@ -17,9 +17,13 @@ This project provides a small Flask application that serves a multi-language hea
    ```
    OPENAI_API_KEY=your-key-here
    ```
-   The value should appear exactly as in the OpenAI dashboard with no quotes or
-   trailing spaces. Quoting the key (e.g. `OPENAI_API_KEY="sk-..."`) will cause a
-   "Malformed API key" error.
+The value should appear exactly as in the OpenAI dashboard with no quotes or
+trailing spaces. Quoting the key (e.g. `OPENAI_API_KEY="sk-..."`) will cause a
+"Malformed API key" error.
+
+You can also set the model used for AI suggestions with the `OPENAI_MODEL`
+environment variable. If not provided, the application defaults to
+`gpt-3.5-turbo`.
 
 ### Configuring your OpenAI API key
 
@@ -41,6 +45,8 @@ Start the Flask server with:
 python app.py
 ```
 The application will be available at `http://localhost:5000/`.
+You may set `OPENAI_MODEL` before running if you want to use a different
+OpenAI model.
 
 ## Development
 
@@ -48,4 +54,10 @@ The application will be available at `http://localhost:5000/`.
 Tests can be run with `pytest`.
 
 The questionnaire text and translations are stored in `static/questionnaire_structure.json` and rendered dynamically by `static/script.js`.
+
+### CSV Import/Export
+
+From the admin results page you can export all responses to a CSV file or import
+responses from a CSV created by the same export feature. The import form accepts
+a `.csv` file and adds any new rows to the database.
 
