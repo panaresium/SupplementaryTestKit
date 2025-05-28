@@ -124,7 +124,7 @@ GROUP_NAMES_LOCALIZED = {
         "G5": "វិស័យសេវាកម្ម",
         "G6": "កសិកម្ម/នេសាទ",
     }
-  }
+  
 }
 
 # Mapping of language codes to human-readable names
