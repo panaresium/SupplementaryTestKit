@@ -24,6 +24,13 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
 
+# Mapping of language codes to human-readable names
+LANGUAGE_NAMES = {
+    "en": "English",
+    "fr": "French",
+    "th": "Thai",
+}
+
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 
 
@@ -204,15 +211,22 @@ def _ai_suggestion(text: str, lang_code: str) -> str:
     if not text or not text.strip():
         return ""
     try:
+        language_name = LANGUAGE_NAMES.get(lang_code, LANGUAGE_NAMES.get("th", "Thai"))
         messages = [
-
-            {"role": "system", "content": "You are a helpful assistant providing supplement advice. where you will suggest supplements based on the 6 groups. G1=Office/Digital,G2=Medical/Caregiving,G3=Industrial/Factory,G4=Heavy Labor/Construction,G5=Service Sector,G6=Agriculture/Fishery"},
+            {
+                "role": "system",
+                "content": (
+                    "You are a helpful assistant providing supplement advice. "
+                    "You will suggest supplements based on the six groups "
+                    "G1=Office/Digital,G2=Medical/Caregiving,G3=Industrial/Factory," 
+                    "G4=Heavy Labor/Construction,G5=Service Sector,G6=Agriculture/Fishery."
+                ),
+            },
             {
                 "role": "user",
                 "content": (
-                    f"Please respond in {lang_code} based on the following concerns: {text}. "
+                    f"Please respond in {language_name} based on the following concerns: {text}. "
                     "Suggest ways to exercise, relax, and take supplements for better health."
-
                 ),
             },
         ]
@@ -235,7 +249,7 @@ def thank_you():
     except Exception as exc:
         return f"Invalid data parameter: {exc}", 400
 
-    language = request.args.get('lang', 'en')
+    language = request.args.get('lang', 'th')
     structure = _load_questionnaire_structure()
     scores, submitted = _calculate_scores(answers, structure, language)
     recommendation = _generate_recommendation(scores)
