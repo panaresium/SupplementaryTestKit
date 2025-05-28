@@ -470,7 +470,7 @@ async function submitAnswers() {
 
 // --- 7. Initial Call Flow (IIFE) ---
 (async () => {
-    currentLang = localStorage.getItem('language') || 'en';
+    currentLang = localStorage.getItem('language') || 'th';
     const languageSelectorElement = document.getElementById('languageSelector');
     if (languageSelectorElement) {
         languageSelectorElement.value = currentLang;
