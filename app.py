@@ -24,6 +24,16 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
 
+# Mapping of group IDs to descriptive names
+GROUP_NAMES = {
+    "G1": "Office/Digital",
+    "G2": "Medical/Caregiving",
+    "G3": "Industrial/Factory",
+    "G4": "Heavy Labor/Construction",
+    "G5": "Service Sector",
+    "G6": "Agriculture/Fishery",
+}
+
 # Mapping of language codes to human-readable names
 LANGUAGE_NAMES = {
     "en": "English",
@@ -179,14 +189,6 @@ def _calculate_scores(user_answers: dict, structure: dict, lang_code: str = "en"
 
 
 def _generate_recommendation(group_scores: dict) -> str:
-    group_names = {
-        "G1": "Office/Digital",
-        "G2": "Medical/Caregiving",
-        "G3": "Industrial/Factory",
-        "G4": "Heavy Labor/Construction",
-        "G5": "Service Sector",
-        "G6": "Agriculture/Fishery",
-    }
 
     scores = sorted(group_scores.items(), key=lambda kv: kv[1], reverse=True)
     recs = []
@@ -200,25 +202,32 @@ def _generate_recommendation(group_scores: dict) -> str:
 
     if len(recs) == 1:
         key, _ = recs[0]
-        return f"Your profile suggests you align with: {group_names.get(key, key)} ({key})."
+        return f"Your profile suggests you align with: {GROUP_NAMES.get(key, key)} ({key})."
 
-    group_texts = [f"{group_names.get(k, k)} ({k})" for k, _ in recs]
+    group_texts = [f"{GROUP_NAMES.get(k, k)} ({k})" for k, _ in recs]
     return f"Your profile suggests you align with: {' and '.join(group_texts)}."
 
 
-def _ai_suggestion(text: str, lang_code: str) -> str:
+def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
+
     """Query OpenAI for a supplement suggestion based on user text."""
     if not text or not text.strip():
         return ""
     try:
+
         language_name = LANGUAGE_NAMES.get(lang_code, LANGUAGE_NAMES.get("th", "Thai"))
+        group_info = ""
+        if groups:
+            names = [GROUP_NAMES.get(g, g) for g in groups]
+            group_info = f" The user aligns with: {', '.join(names)}."
+
         messages = [
             {
                 "role": "system",
                 "content": (
                     "You are a helpful assistant providing supplement advice. "
                     "You will suggest supplements based on the six groups "
-                    "G1=Office/Digital,G2=Medical/Caregiving,G3=Industrial/Factory," 
+                    "G1=Office/Digital,G2=Medical/Caregiving,G3=Industrial/Factory,"
                     "G4=Heavy Labor/Construction,G5=Service Sector,G6=Agriculture/Fishery."
                 ),
             },
@@ -226,7 +235,8 @@ def _ai_suggestion(text: str, lang_code: str) -> str:
                 "role": "user",
                 "content": (
                     f"Please respond in {language_name} based on the following concerns: {text}. "
-                    "Suggest ways to exercise, relax, and take supplements for better health."
+                    f"{group_info} Suggest ways to exercise, relax, and take supplements for better health."
+
                 ),
             },
         ]
@@ -255,18 +265,22 @@ def thank_you():
     recommendation = _generate_recommendation(scores)
 
 
-    # Use the freetext from the last question for AI suggestion
-    last_text = answers.get('10', '')
+    # Determine the user's top groups for tailored AI advice
 
-    ai_suggestion = _ai_suggestion(last_text, language)
-
-    group_info = _load_group_info()
     top_groups = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
     rec_groups = []
     if top_groups:
         rec_groups.append(top_groups[0][0])
         if len(top_groups) > 1 and (top_groups[0][1] - top_groups[1][1] <= 5):
             rec_groups.append(top_groups[1][0])
+
+    # Use the freetext from the last question for AI suggestion
+    last_text = answers.get('10', '')
+
+    ai_suggestion = _ai_suggestion(last_text, language, rec_groups)
+
+    group_info = _load_group_info()
+
 
     return render_template(
         'thank_you.html',
