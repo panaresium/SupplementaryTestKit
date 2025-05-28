@@ -178,7 +178,7 @@
             {% for gid in rec_groups %}
             <div class="group-suggestion">
                 <h4>{{ gid }}</h4>
-                <p>{{ group_info[gid].message }}</p>
+                <p>{{ group_info[gid].messages[language_code] }}</p>
                 {% if group_info[gid].image %}
                 <img src="{{ group_info[gid].image }}" alt="{{ gid }}" style="max-width:200px;">
                 {% endif %}
