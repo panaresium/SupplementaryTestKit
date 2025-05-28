@@ -239,7 +239,10 @@
             const qid = Object.keys(questionCounts)[qidx];
             return questionCounts[qid][ans] || 0;
         }),
-        backgroundColor: pickColor(idx)
+        backgroundColor: pickColor(idx),
+        barThickness: 30,
+        barPercentage: 1.0,
+        categoryPercentage: 0.8
     }));
     const ctxQ = document.getElementById('questionChart').getContext('2d');
     const questionChart = new Chart(ctxQ, {
