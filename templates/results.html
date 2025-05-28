@@ -175,11 +175,7 @@
                 <input type="number" id="rowsPerPage" value="100" min="1" style="width:60px;">
             </label>
         </div>
-        <div id="paginationControls" style="text-align:center;margin-top:10px;">
-            <button id="prevPage">&lt;</button>
-            <span id="pageInfo"></span>
-            <button id="nextPage">&gt;</button>
-        </div>
+        <!-- single pagination control -->
         {% else %}
             <p>No survey results found.</p>
         {% endif %}
@@ -192,7 +188,8 @@
     const prevBtn = document.getElementById('prevPage');
     const nextBtn = document.getElementById('nextPage');
     const pageInfo = document.getElementById('pageInfo');
-    const rowsPerPage = 100;
+    const rowsPerPageInput = document.getElementById('rowsPerPage');
+    let rowsPerPage = parseInt(rowsPerPageInput.value, 10) || 100;
     let currentPage = 1;
 
     table.querySelectorAll('tbody tr').forEach(r => r.dataset.visible = '1');
@@ -244,25 +241,10 @@
         });
     });
 
-    prevPageBtn.addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            renderTable();
-        }
-    });
-
-    nextPageBtn.addEventListener('click', () => {
-        const totalPages = Math.max(Math.ceil(filteredRows.length / rowsPerPage), 1);
-        if (currentPage < totalPages) {
-            currentPage++;
-            renderTable();
-        }
-    });
-
     rowsPerPageInput.addEventListener('change', () => {
         rowsPerPage = Math.max(parseInt(rowsPerPageInput.value, 10) || 1, 1);
         currentPage = 1;
-        renderTable();
+        updatePagination();
     });
 
     // initial render
@@ -405,12 +387,6 @@
         container.innerHTML = '<h3>Free Text Keywords</h3>';
         container.appendChild(list);
     }
-
-    showPage(1);
-
-
-
-
-    </script>
+</script>
 </body>
 </html>

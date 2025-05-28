@@ -448,7 +448,7 @@ def admin_results():
                 if cnt:
                     keyword_counts[word] += cnt
 
-                    headers = [f"Q{qid}" for qid in q_map.keys()] + list(aggregate_scores.keys())
+    headers = [f"Q{qid}" for qid in q_map.keys()] + list(aggregate_scores.keys())
     averages = {g: (aggregate_scores[g]/len(results) if results else 0) for g in aggregate_scores}
 
     def _corr(xs, ys):
