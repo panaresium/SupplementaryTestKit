@@ -22,7 +22,7 @@ CORS(app)
 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1")
 
 # Mapping of group IDs to descriptive names
 GROUP_NAMES = {
