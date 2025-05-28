@@ -28,45 +28,64 @@
 <body>
 <div class="container">
     <h1>Select your language</h1>
+
     <div id="languageOptions">
+        <!-- English -->
         <div class="language-option" data-lang="en">
             <div class="icon" role="img" aria-label="English">🇬🇧</div>
             <div class="lang-label">English</div>
         </div>
+
+        <!-- French -->
         <div class="language-option" data-lang="fr">
             <div class="icon" role="img" aria-label="Français">🇫🇷</div>
             <div class="lang-label">Français</div>
         </div>
+
+        <!-- Thai -->
         <div class="language-option" data-lang="th">
             <div class="icon" role="img" aria-label="ไทย">🇹🇭</div>
             <div class="lang-label">ไทย</div>
         </div>
+
+        <!-- Burmese -->
         <div class="language-option" data-lang="my">
-            <div class="icon" role="img" aria-label="Burmese">🇲🇲</div>
-            <div class="lang-label">Burmese</div>
+            <div class="icon" role="img" aria-label="မြန်မာ">🇲🇲</div>
+            <div class="lang-label">မြန်မာ</div>
         </div>
+
+        <!-- Lao -->
         <div class="language-option" data-lang="lo">
-            <div class="icon" role="img" aria-label="Lao">🇱🇦</div>
-            <div class="lang-label">Lao</div>
+            <div class="icon" role="img" aria-label="ລາວ">🇱🇦</div>
+            <div class="lang-label">ລາວ</div>
         </div>
+
+        <!-- Japanese -->
         <div class="language-option" data-lang="ja">
             <div class="icon" role="img" aria-label="日本語">🇯🇵</div>
             <div class="lang-label">日本語</div>
         </div>
+
+        <!-- Chinese (Simplified / generic) -->
         <div class="language-option" data-lang="zh">
             <div class="icon" role="img" aria-label="中文">🇨🇳</div>
             <div class="lang-label">中文</div>
         </div>
+
+        <!-- Korean -->
         <div class="language-option" data-lang="ko">
             <div class="icon" role="img" aria-label="한국어">🇰🇷</div>
             <div class="lang-label">한국어</div>
         </div>
+
+        <!-- Malay -->
         <div class="language-option" data-lang="ms">
-            <div class="icon" role="img" aria-label="Malay">🇲🇾</div>
-            <div class="lang-label">Malay</div>
+            <div class="icon" role="img" aria-label="Bahasa Melayu">🇲🇾</div>
+            <div class="lang-label">Bahasa Melayu</div>
         </div>
     </div>
 </div>
+
 <script>
     document.querySelectorAll('.language-option').forEach(function(el) {
         el.addEventListener('click', function() {
