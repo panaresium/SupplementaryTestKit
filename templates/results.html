@@ -286,6 +286,7 @@
     const questionCounts = {{ question_counts | tojson }};
     const qIds = Object.keys(questionCounts).sort((a,b)=>parseInt(a)-parseInt(b));
     const qLabels = qIds.map(k => 'Q' + k);
+
     const allAnswers = new Set();
     qIds.forEach(id => {
         const obj = questionCounts[id];
@@ -297,6 +298,7 @@
         data: qIds.map(qid => questionCounts[qid][ans] || 0),
         backgroundColor: pickColor(idx),
         borderWidth: 1
+
     }));
     const ctxQ = document.getElementById('questionChart').getContext('2d');
     const questionChart = new Chart(ctxQ, {
@@ -310,6 +312,7 @@
                 legend: { display: false }
             },
             scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true } }
+
         }
 
     });

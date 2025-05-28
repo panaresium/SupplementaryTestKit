@@ -392,6 +392,7 @@ def admin_results():
             continue
         qid = str(q["id"])
         question_counts[qid] = {ans.get("value"): 0 for ans in q.get("answers", [])}
+
     free_texts = []
     # store raw history for correlation
     score_history_raw = {"timestamps": [], "G1": [], "G2": [], "G3": [], "G4": [], "G5": [], "G6": []}
