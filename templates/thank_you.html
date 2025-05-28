@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ language_code }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,14 +28,49 @@
     </style>
 </head>
 <body>
+{% set texts = {
+    'en': {
+        'title': 'Thank You!',
+        'message': 'Your submission has been received. We appreciate you taking the time to complete the questionnaire.',
+        'answers': 'Your Submitted Answers:',
+        'scores': 'Group Scores:',
+        'profile': 'Your Profile Analysis:',
+        'focus': 'Recommended Profile Focus:',
+        'supplements': 'Supplement Suggestions',
+        'ai': 'AI Suggestion',
+        'no_data': 'No submission data found.'
+    },
+    'fr': {
+        'title': 'Merci !',
+        'message': "Votre réponse a bien été enregistrée. Merci d'avoir pris le temps de remplir le questionnaire.",
+        'answers': 'Vos réponses :',
+        'scores': 'Scores par groupe :',
+        'profile': 'Analyse de votre profil :',
+        'focus': 'Profil recommandé :',
+        'supplements': 'Suggestions de suppléments',
+        'ai': "Suggestion de l'IA",
+        'no_data': 'Aucune donnée de soumission trouvée.'
+    },
+    'th': {
+        'title': 'ขอบคุณ!',
+        'message': 'เราได้รับแบบสอบถามของคุณแล้ว ขอบคุณที่สละเวลาในการตอบแบบสอบถาม',
+        'answers': 'คำตอบของคุณ:',
+        'scores': 'คะแนนกลุ่ม:',
+        'profile': 'วิเคราะห์โปรไฟล์ของคุณ:',
+        'focus': 'โปรไฟล์ที่แนะนำ:',
+        'supplements': 'คำแนะนำอาหารเสริม',
+        'ai': 'ข้อเสนอแนะจาก AI',
+        'no_data': 'ไม่พบข้อมูลการส่งแบบสอบถาม'
+    }
+} %}
 <div class="container">
     <div class="thank-you-container">
-        <h1>Thank You!</h1>
-        <p>Your submission has been received. We appreciate you taking the time to complete the questionnaire.</p>
+        <h1>{{ texts[language_code].title }}</h1>
+        <p>{{ texts[language_code].message }}</p>
 
         {% if submitted_answers %}
         <div class="results-display">
-            <h3>Your Submitted Answers:</h3>
+            <h3>{{ texts[language_code].answers }}</h3>
             <dl>
                 {% for q, a in submitted_answers %}
                 <dt>{{ q }}</dt>
@@ -45,7 +80,7 @@
         </div>
 
         <div class="results-display" id="groupScoresDisplay">
-            <h3>Group Scores:</h3>
+            <h3>{{ texts[language_code].scores }}</h3>
             <dl>
                 <dt>Office/Digital (G1):</dt><dd>{{ group_scores['G1'] }}</dd>
                 <dt>Medical/Caregiving (G2):</dt><dd>{{ group_scores['G2'] }}</dd>
@@ -57,18 +92,18 @@
         </div>
 
         <div class="results-display" id="radarChartContainer" style="margin-top:2rem;">
-            <h3>Your Profile Analysis:</h3>
+            <h3>{{ texts[language_code].profile }}</h3>
             <canvas id="profileRadarChart"></canvas>
         </div>
 
         <div class="results-display" id="groupRecommendationContainer" style="margin-top:2rem;">
-            <h3>Recommended Profile Focus:</h3>
+            <h3>{{ texts[language_code].focus }}</h3>
             <p id="recommendedGroupsText">{{ recommendation_text }}</p>
         </div>
 
         {% if rec_groups %}
         <div class="results-display" id="supplementSuggestions" style="margin-top:2rem;">
-            <h3>Supplement Suggestions</h3>
+            <h3>{{ texts[language_code].supplements }}</h3>
             {% for gid in rec_groups %}
             <div class="group-suggestion">
                 <h4>{{ gid }}</h4>
@@ -83,12 +118,12 @@
 
         {% if ai_suggestion %}
         <div class="results-display" id="aiSuggestion" style="margin-top:2rem;">
-            <h3>AI Suggestion</h3>
+            <h3>{{ texts[language_code].ai }}</h3>
             <p>{{ ai_suggestion }}</p>
         </div>
         {% endif %}
         {% else %}
-        <p>No submission data found.</p>
+        <p>{{ texts[language_code].no_data }}</p>
         {% endif %}
     </div>
 </div>
@@ -102,7 +137,7 @@ new Chart(ctx, {
     data: {
         labels: ['Office/Digital (G1)', 'Medical/Caregiving (G2)', 'Industrial/Factory (G3)', 'Heavy Labor/Construction (G4)', 'Service Sector (G5)', 'Agriculture/Fishery (G6)'],
         datasets: [{
-            label: 'Group Scores',
+            label: texts[language_code].scores,
             data: [groupScores.G1, groupScores.G2, groupScores.G3, groupScores.G4, groupScores.G5, groupScores.G6],
             fill: true,
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
