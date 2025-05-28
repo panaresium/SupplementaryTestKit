@@ -166,6 +166,7 @@
                 </tbody>
             </table>
         </div>
+        <div id="paginationControls" style="margin-top:10px;"></div>
         {% else %}
             <p>No survey results found.</p>
         {% endif %}
@@ -175,27 +176,69 @@
     <script>
     const filterInput = document.getElementById('filterInput');
     const table = document.getElementById('resultsTable');
+    const pagination = document.getElementById('paginationControls');
+    const allRows = Array.from(table.querySelectorAll('tbody tr'));
+    let filteredRows = allRows.slice();
+    const rowsPerPage = 100;
+    let currentPage = 1;
 
-    function filterRows() {
-        const query = filterInput.value.toLowerCase();
-        const rows = table.querySelectorAll('tbody tr');
-        rows.forEach(r => {
-            const text = r.textContent.toLowerCase();
-            r.style.display = text.includes(query) ? '' : 'none';
-        });
+    const prevBtn = document.createElement('button');
+    prevBtn.textContent = 'Previous';
+    const nextBtn = document.createElement('button');
+    nextBtn.textContent = 'Next';
+    const pageInfo = document.createElement('span');
+    pageInfo.style.margin = '0 10px';
+    pagination.appendChild(prevBtn);
+    pagination.appendChild(pageInfo);
+    pagination.appendChild(nextBtn);
+
+    function updatePagination() {
+        const totalPages = Math.ceil(filteredRows.length / rowsPerPage) || 1;
+        prevBtn.disabled = currentPage <= 1;
+        nextBtn.disabled = currentPage >= totalPages;
+        pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        allRows.forEach(r => (r.style.display = 'none'));
+        filteredRows.slice(start, end).forEach(r => (r.style.display = ''));
     }
 
-    filterInput.addEventListener('input', filterRows);
+    prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            updatePagination();
+        }
+    });
+    nextBtn.addEventListener('click', () => {
+        const totalPages = Math.ceil(filteredRows.length / rowsPerPage) || 1;
+        if (currentPage < totalPages) {
+            currentPage++;
+            updatePagination();
+        }
+    });
+
+    function applyFilter() {
+        const query = filterInput.value.toLowerCase();
+        filteredRows = allRows.filter(r => r.textContent.toLowerCase().includes(query));
+        currentPage = 1;
+        updatePagination();
+    }
+
+    filterInput.addEventListener('input', applyFilter);
 
     table.querySelectorAll('th').forEach((th, idx) => {
         th.addEventListener('click', () => {
-            const rows = Array.from(table.querySelectorAll('tbody tr'));
-            const sorted = rows.sort((a, b) => a.children[idx].textContent.localeCompare(b.children[idx].textContent));
+            const sorted = filteredRows.sort((a, b) => a.children[idx].textContent.localeCompare(b.children[idx].textContent));
             const tbody = table.querySelector('tbody');
             tbody.innerHTML = '';
             sorted.forEach(r => tbody.appendChild(r));
+            filteredRows = Array.from(tbody.querySelectorAll('tr'));
+            currentPage = 1;
+            updatePagination();
         });
     });
+
+    updatePagination();
 
     const colors = ['#e74c3c','#3498db','#f1c40f','#2ecc71','#9b59b6','#e67e22','#1abc9c'];
     function pickColor(i){ return colors[i % colors.length]; }
@@ -270,7 +313,7 @@
     });
 
     const scoreHistory = {{ score_history | tojson }};
-    const timeLabels = scoreHistory.timestamps.map(t => new Date(t).toLocaleDateString());
+    const timeLabels = scoreHistory.dates;
     const groups = ['G1','G2','G3','G4','G5','G6'];
     const timeDatasets = groups.map((g, idx) => ({
         label: g,
@@ -320,16 +363,16 @@
         avgChart.update();
     });
 
-    const freeTexts = {{ free_texts | tojson }};
-    if (freeTexts.length) {
+    const keywordCounts = {{ keyword_counts | tojson }};
+    if (Object.keys(keywordCounts).length) {
         const container = document.getElementById('freeTextContainer');
         const list = document.createElement('ul');
-        freeTexts.forEach(t => {
+        Object.entries(keywordCounts).sort((a,b)=>b[1]-a[1]).forEach(([word,count]) => {
             const li = document.createElement('li');
-            li.textContent = t;
+            li.textContent = `${word}: ${count}`;
             list.appendChild(li);
         });
-        container.innerHTML = '<h3>Free Text Responses</h3>';
+        container.innerHTML = '<h3>Free Text Keywords</h3>';
         container.appendChild(list);
     }
 
