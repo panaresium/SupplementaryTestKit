@@ -3,7 +3,6 @@ import sqlite3
 import csv
 import io
 import json  # Added json import
-import re
 from collections import defaultdict, Counter
 from flask import (
     Flask,
@@ -120,6 +119,7 @@ def _load_questionnaire_structure() -> dict:
 
 
 GROUP_INFO_FILE = os.path.join(os.path.dirname(__file__), 'group_info.json')
+KEYWORD_FILE = os.path.join(os.path.dirname(__file__), 'thai_keywords.json')
 
 
 def _load_group_info() -> dict:
@@ -147,6 +147,17 @@ def _save_group_info(data: dict):
     with open(GROUP_INFO_FILE, 'w', encoding='utf-8') as f:
 
         json.dump(data, f, indent=2)
+
+
+def _load_keywords() -> dict:
+    """Load keyword categories from KEYWORD_FILE."""
+    if os.path.exists(KEYWORD_FILE):
+        with open(KEYWORD_FILE, 'r', encoding='utf-8') as f:
+            try:
+                return json.load(f)
+            except json.JSONDecodeError:
+                pass
+    return {}
 
 
 def _calculate_scores(user_answers: dict, structure: dict, lang_code: str = "en"):
@@ -382,6 +393,8 @@ def admin_results():
     # daily aggregation helpers
     daily_totals = defaultdict(lambda: {g: 0 for g in aggregate_scores})
     daily_counts = defaultdict(int)
+    keywords_map = _load_keywords()
+
     processed_results = []
     for row in results:
         row_dict = dict(row)
@@ -426,13 +439,16 @@ def admin_results():
     for g in aggregate_scores:
         score_history[g] = [daily_totals[d][g] / daily_counts[d] for d in sorted_days]
 
-    # keyword summary for free text responses
+    # keyword summary for free text responses using predefined Thai terms
     keyword_counts = Counter()
     for text in free_texts:
-        words = re.findall(r"\b\w+\b", text.lower())
-        keyword_counts.update([w for w in words if len(w) > 2])
+        for words in keywords_map.values():
+            for word in words:
+                cnt = text.count(word)
+                if cnt:
+                    keyword_counts[word] += cnt
 
-    headers = [f"Q{qid}" for qid in q_map.keys()] + list(aggregate_scores.keys())
+                    headers = [f"Q{qid}" for qid in q_map.keys()] + list(aggregate_scores.keys())
     averages = {g: (aggregate_scores[g]/len(results) if results else 0) for g in aggregate_scores}
 
     def _corr(xs, ys):

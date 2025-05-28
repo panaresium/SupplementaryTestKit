@@ -175,6 +175,11 @@
                 <input type="number" id="rowsPerPage" value="100" min="1" style="width:60px;">
             </label>
         </div>
+        <div id="paginationControls" style="text-align:center;margin-top:10px;">
+            <button id="prevPage">&lt;</button>
+            <span id="pageInfo"></span>
+            <button id="nextPage">&gt;</button>
+        </div>
         {% else %}
             <p>No survey results found.</p>
         {% endif %}
@@ -184,49 +189,57 @@
     <script>
     const filterInput = document.getElementById('filterInput');
     const table = document.getElementById('resultsTable');
-    const tbody = table.querySelector('tbody');
-    const rowsPerPageInput = document.getElementById('rowsPerPage');
-    const prevPageBtn = document.getElementById('prevPage');
-    const nextPageBtn = document.getElementById('nextPage');
+    const prevBtn = document.getElementById('prevPage');
+    const nextBtn = document.getElementById('nextPage');
     const pageInfo = document.getElementById('pageInfo');
-
-    let allRows = Array.from(tbody.querySelectorAll('tr'));
-    let filteredRows = allRows.slice();
+    const rowsPerPage = 100;
     let currentPage = 1;
-    let rowsPerPage = parseInt(rowsPerPageInput.value, 10) || 1;
 
-    function applyFilter() {
+    table.querySelectorAll('tbody tr').forEach(r => r.dataset.visible = '1');
+
+    function getVisibleRows(){
+        return Array.from(table.querySelectorAll('tbody tr')).filter(r => r.dataset.visible === '1');
+    }
+
+    function updatePagination(){
+        const rows = getVisibleRows();
+        const totalPages = Math.ceil(rows.length / rowsPerPage) || 1;
+        if(currentPage > totalPages) currentPage = totalPages;
+        rows.forEach((r, i) => {
+            r.style.display = (i >= (currentPage-1)*rowsPerPage && i < currentPage*rowsPerPage) ? '' : 'none';
+        });
+        pageInfo.textContent = currentPage + '/' + totalPages;
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages;
+    }
+
+    function filterRows(){
         const query = filterInput.value.toLowerCase();
-
-        filteredRows = allRows.filter(r => r.textContent.toLowerCase().includes(query));
-    }
-
-    function renderTable() {
-        const totalPages = Math.max(Math.ceil(filteredRows.length / rowsPerPage), 1);
-        if (currentPage > totalPages) currentPage = totalPages;
-        const start = (currentPage - 1) * rowsPerPage;
-        const pageRows = filteredRows.slice(start, start + rowsPerPage);
-        tbody.innerHTML = '';
-        pageRows.forEach(r => tbody.appendChild(r));
-        pageInfo.textContent = `${currentPage}/${totalPages}`;
-        prevPageBtn.disabled = currentPage === 1;
-        nextPageBtn.disabled = currentPage >= totalPages;
-    }
-
-    function filterRows() {
-        applyFilter();
+        table.querySelectorAll('tbody tr').forEach(r => {
+            const text = r.textContent.toLowerCase();
+            r.dataset.visible = text.includes(query) ? '1' : '0';
+        });
         currentPage = 1;
-        renderTable();
+        updatePagination();
 
     }
 
     filterInput.addEventListener('input', filterRows);
+    prevBtn.addEventListener('click', () => { if(currentPage>1){ currentPage--; updatePagination(); } });
+    nextBtn.addEventListener('click', () => {
+        const total = Math.ceil(getVisibleRows().length / rowsPerPage) || 1;
+        if(currentPage < total){ currentPage++; updatePagination(); }
+    });
 
     table.querySelectorAll('th').forEach((th, idx) => {
         th.addEventListener('click', () => {
 
-            allRows.sort((a, b) => a.children[idx].textContent.localeCompare(b.children[idx].textContent));
-            filterRows();
+            const rows = Array.from(table.querySelectorAll('tbody tr'));
+            const sorted = rows.sort((a, b) => a.children[idx].textContent.localeCompare(b.children[idx].textContent));
+            const tbody = table.querySelector('tbody');
+            tbody.innerHTML = '';
+            sorted.forEach(r => tbody.appendChild(r));
+            updatePagination();
 
         });
     });
@@ -377,6 +390,8 @@
         avgChart.options.plugins.legend.display = avgLegendToggle.checked;
         avgChart.update();
     });
+
+    updatePagination();
 
     const keywordCounts = {{ keyword_counts | tojson }};
     if (Object.keys(keywordCounts).length) {
