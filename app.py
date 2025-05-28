@@ -116,6 +116,7 @@ GROUP_NAMES_LOCALIZED = {
         "G5": "Sektor Perkhidmatan",
         "G6": "Pertanian/Perikanan",
     },
+    "km": GROUP_NAMES,
 }
 
 # Mapping of language codes to human-readable names
@@ -129,6 +130,34 @@ LANGUAGE_NAMES = {
     "zh": "Chinese",
     "ko": "Korean",
     "ms": "Malay",
+    "km": "Khmer",
+}
+
+# Labels and flag emojis used on the language selection page
+LANGUAGE_LABELS = {
+    "en": "English",
+    "fr": "Français",
+    "th": "ไทย",
+    "my": "မြန်မာ",
+    "lo": "ລາວ",
+    "ja": "日本語",
+    "zh": "中文",
+    "ko": "한국어",
+    "ms": "Bahasa Melayu",
+    "km": "ខ្មែរ",
+}
+
+LANGUAGE_FLAGS = {
+    "en": "🇬🇧",
+    "fr": "🇫🇷",
+    "th": "🇹🇭",
+    "my": "🇲🇲",
+    "lo": "🇱🇦",
+    "ja": "🇯🇵",
+    "zh": "🇨🇳",
+    "ko": "🇰🇷",
+    "ms": "🇲🇾",
+    "km": "🇰🇭",
 }
 
 # Labels and flag emojis used on the language selection page
@@ -374,6 +403,7 @@ def _generate_recommendation(group_scores: dict, lang_code: str = "en") -> str:
             "zh": "根据当前得分未找到特定的匹配档案。",
             "ko": "현재 점수로 일치하는 프로필을 찾을 수 없습니다.",
             "ms": "Tiada padanan profil khusus ditemui berdasarkan skor semasa.",
+            "km": "No specific profile alignment found based on current scores.",
         }
         return no_data.get(lang_code, no_data["en"])
 
@@ -391,6 +421,7 @@ def _generate_recommendation(group_scores: dict, lang_code: str = "en") -> str:
             "zh": "您的个人资料表明您与 {} 相符。",
             "ko": "귀하의 프로필에 따르면 귀하는 {}와 일치합니다.",
             "ms": "Profil anda menunjukkan anda sepadan dengan {}.",
+            "km": "Your profile suggests you align with: {}.",
         }
         return templates.get(lang_code, templates["en"]).format(group_str)
 
@@ -411,6 +442,8 @@ def _generate_recommendation(group_scores: dict, lang_code: str = "en") -> str:
         conj = " 및 "
     elif lang_code == "ms":
         conj = " dan "
+    elif lang_code == "km":
+        conj = " និង "
     else:
         conj = " and "
     groups_str = conj.join(group_texts)
@@ -424,6 +457,7 @@ def _generate_recommendation(group_scores: dict, lang_code: str = "en") -> str:
         "zh": "您的个人资料表明您与 {} 相符。",
         "ko": "귀하의 프로필에 따르면 귀하는 {}와 일치합니다.",
         "ms": "Profil anda menunjukkan anda sepadan dengan {}.",
+        "km": "Your profile suggests you align with: {}.",
     }
     return templates.get(lang_code, templates["en"]).format(groups_str)
 
