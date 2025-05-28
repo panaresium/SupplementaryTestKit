@@ -165,6 +165,7 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <div id="paginationControls" style="margin-top:10px;"></div>
         </div>
         {% else %}
             <p>No survey results found.</p>
@@ -175,6 +176,27 @@
     <script>
     const filterInput = document.getElementById('filterInput');
     const table = document.getElementById('resultsTable');
+    const pagination = document.getElementById('paginationControls');
+    const PER_PAGE = 100;
+    let currentPage = 1;
+
+    function showPage(page) {
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+        const total = rows.length;
+        rows.forEach((r, idx) => {
+            r.style.display = idx >= (page - 1) * PER_PAGE && idx < page * PER_PAGE ? '' : 'none';
+        });
+        currentPage = page;
+        const pages = Math.ceil(total / PER_PAGE);
+        pagination.innerHTML = '';
+        for (let i = 1; i <= pages; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+            btn.disabled = i === page;
+            btn.addEventListener('click', () => showPage(i));
+            pagination.appendChild(btn);
+        }
+    }
 
     function filterRows() {
         const query = filterInput.value.toLowerCase();
@@ -183,6 +205,7 @@
             const text = r.textContent.toLowerCase();
             r.style.display = text.includes(query) ? '' : 'none';
         });
+        showPage(1);
     }
 
     filterInput.addEventListener('input', filterRows);
@@ -194,6 +217,7 @@
             const tbody = table.querySelector('tbody');
             tbody.innerHTML = '';
             sorted.forEach(r => tbody.appendChild(r));
+            showPage(1);
         });
     });
 
@@ -270,7 +294,7 @@
     });
 
     const scoreHistory = {{ score_history | tojson }};
-    const timeLabels = scoreHistory.timestamps.map(t => new Date(t).toLocaleDateString());
+    const timeLabels = scoreHistory.dates;
     const groups = ['G1','G2','G3','G4','G5','G6'];
     const timeDatasets = groups.map((g, idx) => ({
         label: g,
@@ -320,18 +344,20 @@
         avgChart.update();
     });
 
-    const freeTexts = {{ free_texts | tojson }};
-    if (freeTexts.length) {
+    const keywordCounts = {{ keyword_counts | tojson }};
+    if (Object.keys(keywordCounts).length) {
         const container = document.getElementById('freeTextContainer');
         const list = document.createElement('ul');
-        freeTexts.forEach(t => {
+        Object.entries(keywordCounts).sort((a,b)=>b[1]-a[1]).forEach(([word,count]) => {
             const li = document.createElement('li');
-            li.textContent = t;
+            li.textContent = `${word}: ${count}`;
             list.appendChild(li);
         });
-        container.innerHTML = '<h3>Free Text Responses</h3>';
+        container.innerHTML = '<h3>Free Text Keywords</h3>';
         container.appendChild(list);
     }
+
+    showPage(1);
 
 
 
