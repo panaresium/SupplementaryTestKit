@@ -4,6 +4,7 @@ import csv
 import io
 import json  # Added json import
 from collections import defaultdict, Counter
+from typing import Iterable, Optional
 from flask import (
     Flask,
     request,
@@ -160,9 +161,33 @@ def _load_keywords() -> dict:
     return {}
 
 
-def _calculate_scores(user_answers: dict, structure: dict, lang_code: str = "en"):
+def _calculate_scores(
+    user_answers: dict,
+    structure: dict,
+    lang_code: str = "en",
+    *,
+    exclude_qids: Optional[Iterable[str]] = None,
+):
+    """Calculate group scores for provided answers.
+
+    Parameters
+    ----------
+    user_answers : dict
+        Mapping of question id to answer value.
+    structure : dict
+        Loaded questionnaire structure.
+    lang_code : str, optional
+        Language code used for looking up question text.
+    exclude_qids : Iterable[str] or None, optional
+        Question IDs to ignore when tallying group scores.  The submitted
+        answers list still includes these questions so that behaviour of
+        callers relying on full submissions is unchanged.
+    """
+
     group_scores = {"G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0}
     submitted = []
+
+    exclude_set = set(exclude_qids or [])
 
     for q in structure.get('questions', []):
         qid = str(q.get('id'))
@@ -178,7 +203,7 @@ def _calculate_scores(user_answers: dict, structure: dict, lang_code: str = "en"
                 if opt:
                     display = opt.get('text', {}).get(lang_code, opt.get('text', {}).get('en', val))
                     for g, w in opt.get('weights', {}).items():
-                        if g in group_scores and isinstance(w, (int, float)):
+                        if g in group_scores and isinstance(w, (int, float)) and qid not in exclude_set:
                             group_scores[g] += w
                 else:
                     display = f"Selected value not found: {val}"
@@ -190,7 +215,7 @@ def _calculate_scores(user_answers: dict, structure: dict, lang_code: str = "en"
                     if opt:
                         texts.append(opt.get('text', {}).get(lang_code, opt.get('text', {}).get('en', choice)))
                         for g, w in opt.get('weights', {}).items():
-                            if g in group_scores and isinstance(w, (int, float)):
+                            if g in group_scores and isinstance(w, (int, float)) and qid not in exclude_set:
                                 group_scores[g] += w
                     else:
                         texts.append(f"Value not found: {choice}")
@@ -394,6 +419,7 @@ def admin_results():
     free_texts = []
     # store raw history for correlation
     score_history_raw = {"timestamps": [], "G1": [], "G2": [], "G3": [], "G4": [], "G5": [], "G6": []}
+    score_history_corr = {"G1": [], "G2": [], "G3": [], "G4": [], "G5": [], "G6": []}
     # daily aggregation helpers
     daily_totals = defaultdict(lambda: {g: 0 for g in aggregate_scores})
     daily_counts = defaultdict(int)
@@ -413,10 +439,12 @@ def admin_results():
         row_dict.pop('answers_json', None)
         row_dict.pop('products', None)
         scores, _ = _calculate_scores(answers, structure)
+        corr_scores, _ = _calculate_scores(answers, structure, exclude_qids={"3", "7", "10"})
         row_dict.update(scores)
         for g in aggregate_scores:
             aggregate_scores[g] += scores[g]
             score_history_raw[g].append(scores[g])
+            score_history_corr[g].append(corr_scores[g])
         score_history_raw["timestamps"].append(row_dict["timestamp"])
         day = row_dict["timestamp"][:10]
         daily_counts[day] += 1
@@ -480,7 +508,20 @@ def admin_results():
         return num/denom if denom else 0
 
     groups = list(aggregate_scores.keys())
-    correlations = {g1: {g2: _corr(score_history_raw[g1], score_history_raw[g2]) for g2 in groups} for g1 in groups}
+    correlations = {
+        g1: {g2: _corr(score_history_corr[g1], score_history_corr[g2]) for g2 in groups}
+        for g1 in groups
+    }
+
+    correlation_summary = []
+    for i, g1 in enumerate(groups):
+        for g2 in groups[i+1:]:
+            corr_val = correlations[g1][g2]
+            if abs(corr_val) >= 0.5:
+                relation = "positive" if corr_val > 0 else "negative"
+                correlation_summary.append(
+                    f"{GROUP_NAMES.get(g1, g1)} and {GROUP_NAMES.get(g2, g2)} show a {relation} correlation of {corr_val:.2f}."
+                )
     return render_template(
         'results.html',
         results=processed_results,
@@ -492,7 +533,8 @@ def admin_results():
         free_texts=free_texts,
         keyword_counts=dict(keyword_counts),
         score_history=score_history,
-        correlations=correlations
+        correlations=correlations,
+        correlation_summary=correlation_summary,
     )
 
 

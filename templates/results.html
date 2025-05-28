@@ -119,7 +119,7 @@
         <div id="freeTextContainer" style="margin-top:40px;"></div>
 
         {% if correlations %}
-        <h3 style="margin-top:40px;">Category Correlations</h3>
+        <h3 style="margin-top:40px;">Category Correlations (excluding Q3, Q7, Q10)</h3>
         <div style="overflow-x:auto;">
             <table>
                 <thead>
@@ -142,6 +142,11 @@
                 </tbody>
             </table>
         </div>
+        {% if correlation_summary %}
+        <p style="margin-top:10px;">
+            {{ correlation_summary|join(' ') }}
+        </p>
+        {% endif %}
         {% endif %}
 
         <input type="text" id="filterInput" placeholder="Filter results" style="margin-top:10px;">
