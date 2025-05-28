@@ -8,15 +8,27 @@
       "type": "radio",
       "questionText": {
         "en": "How physically demanding are your daily tasks?",
-        "fr": "À quel point vos tâches quotidiennes sont-elles exigeantes physiquement ?",
-        "th": "งานประจำวันของคุณใช้แรงกายมากน้อยแค่ไหน?"
+        "fr": "À quel point vos tâches quotidiennes sont-elles exigeantes physiquement ?",
+        "th": "งานประจำวันของคุณใช้แรงกายมากน้อยแค่ไหน?",
+        "my": "သင်၏ နေ့စဉ် အလုပ်များသည် ကိုယ်ခန္ဓာအားလိုအပ်မှု ဘယ်လောက် ကြီးမားသလဲ?",
+        "lo": "ວຽກງານປະຈຳວັນຂອງທ່ານ ຕ້ອງໃຊ້ພະລັງກາຍ ຫຼາຍບໍ?",
+        "ja": "あなたの日常業務はどの程度身体的に負担がかかりますか？",
+        "zh": "您的日常工作需要多大的体力？",
+        "ko": "당신의 일상 업무는 신체적으로 얼마나 힘이 듭니까?",
+        "ms": "Seberapa menuntut secara fizikal tugas harian anda?"
       },
       "answers": [
         {
           "text": {
             "en": "Mostly light (minimal lifting/moving, mainly mental tasks)",
             "fr": "Principalement léger (peu de levage/déplacement, surtout mental)",
-            "th": "ค่อนข้างเบา (ยก/เคลื่อนย้ายน้อย ส่วนใหญ่ใช้ความคิด)"
+            "th": "ค่อนข้างเบา (ยก/เคลื่อนย้ายน้อย ส่วนใหญ่ใช้ความคิด)",
+            "my": "အများအားဖြင့် ပေါ့ပါး (တင်၊ ရွှေ့ နည်းပြီး အဓိက စိတ်ပိုင်း လုပ်ငန်းများ)",
+            "lo": "ເບົາໆ (ຍົກ/ເຄື່ອນໄຫຼ້ນ້ອຍ ສ່ວນໃຫຍ່ເຮັດວຽກໃຊ້ຄວາມຄິດ)",
+            "ja": "ほとんど軽作業（搬送や移動は最小限、主に頭脳労働）",
+            "zh": "主要轻度（很少搬抬/移动，以脑力工作为主）",
+            "ko": "대부분 가벼움 (들고 옮기는 일 최소, 주로 정신 노동)",
+            "ms": "Kebanyakannya ringan (minima angkat/gerak, kebanyakannya tugas mental)"
           },
           "value": "Mostly light",
           "weights": { "G1": 3, "G2": 1, "G3": 0, "G4": 0, "G5": 1, "G6": 0 }
@@ -25,7 +37,13 @@
           "text": {
             "en": "Moderate (some lifting, standing, or physical strain)",
             "fr": "Modéré (un peu de port, de station debout, ou d'effort physique)",
-            "th": "ปานกลาง (มีการยกของ ยืน หรือใช้แรงกายบ้าง)"
+            "th": "ปานกลาง (มีการยกของ ยืน หรือใช้แรงกายบ้าง)",
+            "my": "အလယ်အလတ် (တင်ယော့၊ ရပ်နေ သို့မဟုတ် ကိုယ်ခန္ဓာ ဖိအား တချို့ရှိ)",
+            "lo": "ປານກາງ (ຍົກ ຫຼື ຢືນ ຫຼື ອອກແຮງກາຍເປັນບາງຄັ້ງ)",
+            "ja": "中程度（ある程度の持ち上げ、立ち仕事、身体的負荷）",
+            "zh": "中等（需要一定搬抬、站立或体力消耗）",
+            "ko": "보통 (어느 정도 들기·서 있기·육체적 부담)",
+            "ms": "Sederhana (sedikit mengangkat, berdiri atau regangan fizikal)"
           },
           "value": "Moderate",
           "weights": { "G1": 1, "G2": 2, "G3": 2, "G4": 1, "G5": 2, "G6": 1 }
@@ -34,7 +52,13 @@
           "text": {
             "en": "Heavy (frequent lifting, intense movement, end day sore)",
             "fr": "Lourd (levage fréquent, mouvements intenses, fin de journée douloureuse)",
-            "th": "หนัก (ยกของบ่อย เคลื่อนไหวมาก หมดวันจะปวดเมื่อย)"
+            "th": "หนัก (ยกของบ่อย เคลื่อนไหวมาก หมดวันจะปวดเมื่อย)",
+            "my": "လေးလံ (မြဲမြန့် တင်ယူရ၊ လှုပ်ရှားမှု များ၊ နေ့ကုန်တွင် ကိုယ်ကိုက်)",
+            "lo": "ຫນັກ (ຍົກຂື້ນບໍ່ສົມ່ຳ ເຄື່ອນໄຫຼ້ໜັກ ແລະ ເຈັບປວດຍາມສິ້ນວັນ)",
+            "ja": "重い（頻繁な持ち上げや激しい動き、終業時には体が痛む）",
+            "zh": "重度（频繁搬抬、剧烈活动，一天下来身体酸痛）",
+            "ko": "무거움 (잦은 들기, 격렬한 움직임, 하루 끝에 통증)",
+            "ms": "Berat (kerap mengangkat, pergerakan intens, sakit di akhir hari)"
           },
           "value": "Heavy",
           "weights": { "G1": 0, "G2": 0, "G3": 2, "G4": 3, "G5": 0, "G6": 2 }
@@ -47,15 +71,27 @@
       "type": "radio",
       "questionText": {
         "en": "Which best describes the environment you usually work or spend most of your day in?",
-        "fr": "Quel énoncé décrit le mieux l’environnement où vous travaillez ou passez la majeure partie de votre journée ?",
-        "th": "สภาพแวดล้อมแบบใดที่คุณใช้เวลาส่วนใหญ่ในแต่ละวัน?"
+        "fr": "Quel énoncé décrit le mieux l’environnement où vous travaillez ou passez la majeure partie de votre journée ?",
+        "th": "สภาพแวดล้อมแบบใดที่คุณใช้เวลาส่วนใหญ่ในแต่ละวัน?",
+        "my": "သင် ပုံမှန် အလုပ်လုပ် သို့မဟုတ် နေ့အချိန် အများစုကို ရှိနေသည့် ပတ်ဝန်းကျင်ကို အောက်ကတစ်ခုไหนက အကောင်းဆုံး ဖော်ပြပါသလဲ?",
+        "lo": "ຂໍ້ໃດຕໍ່ພາກລຸ້ມທີ່ອະທິບາຍພາບແວດລ້ອມທີ່ທ່ານເຮັດວຽກ ຫຼື ໃຊ້ເວລາສ່ວນໃຫຍ່ໃນມື້ໄດ້ດີທີ່ສຸດ?",
+        "ja": "普段仕事をする、あるいは一日の大半を過ごす環境として最も当てはまるものはどれですか？",
+        "zh": "以下哪一项最能描述您平时工作或大部分时间所在的环境？",
+        "ko": "다음 중 당신이 보통 일하거나 하루 대부분을 보내는 환경을 가장 잘 설명하는 것은 무엇입니까?",
+        "ms": "Manakah yang paling menggambarkan persekitaran tempat anda biasanya bekerja atau menghabiskan sebahagian besar hari anda?"
       },
       "answers": [
         {
           "text": {
             "en": "Indoors, climate-controlled, seated or minimal movement",
             "fr": "À l’intérieur, climatisé, assis ou mouvements minimes",
-            "th": "ในอาคาร ควบคุมอุณหภูมิ นั่งหรือต้องขยับน้อย"
+            "th": "ในอาคาร ควบคุมอุณหภูมิ นั่งหรือต้องขยับน้อย",
+            "my": "အတွင်းခန်း၊ အပူချိန်ထိန်း၊ ထိုင်နေ သို့မဟုတ် လှုပ်ရှားမှု နည်း",
+            "lo": "ຢູ່ໃນອາຄານ ອຸນຫະພູມຄວບຄຸມ ນັ່ງ ຫຼື ເຄື່ອນໄຫຼ້ນ້ອຍ",
+            "ja": "屋内・空調完備、座ったまま又は動きは最小限",
+            "zh": "室内、温控、坐姿或活动极少",
+            "ko": "실내, 온도 조절, 앉아 있거나 최소한의 움직임",
+            "ms": "Dalam bangunan, terkawal suhu, duduk atau pergerakan minimum"
           },
           "value": "Indoors minimal",
           "weights": { "G1": 3, "G2": 2, "G3": 1, "G4": 0, "G5": 2, "G6": 0 }
@@ -64,7 +100,13 @@
           "text": {
             "en": "Indoors with frequent movement or repetitive tasks",
             "fr": "À l’intérieur avec des mouvements fréquents ou tâches répétitives",
-            "th": "ในอาคาร แต่เคลื่อนไหวบ่อยหรืองานซ้ำๆ"
+            "th": "ในอาคาร แต่เคลื่อนไหวบ่อยหรืองานซ้ำๆ",
+            "my": "အတွင်းခန်း၊ လှုပ်ရှားမှုများ သို့မဟုတ် ထပ်တလဲလဲ အလုပ်များ",
+            "lo": "ຢູ່ໃນອາຄານ ມີການເຄື່ອນໄຫຼ້ຫຼາຍ ຫຼື ວຽກຊ້ຳໆ",
+            "ja": "屋内で頻繁に動く、または同じ作業を繰り返す",
+            "zh": "室内但需频繁移动或重复作业",
+            "ko": "실내, 잦은 움직임 또는 반복 작업",
+            "ms": "Dalam bangunan dengan pergerakan kerap atau tugas berulang"
           },
           "value": "Indoors frequent movement",
           "weights": { "G1": 0, "G2": 1, "G3": 3, "G4": 1, "G5": 1, "G6": 0 }
@@ -73,7 +115,13 @@
           "text": {
             "en": "Outdoors or mixed (often exposed to weather/environment)",
             "fr": "En extérieur ou mixte (souvent exposé aux conditions météo/environnement)",
-            "th": "กลางแจ้งหรือผสม (เจอสภาพอากาศ/สิ่งแวดล้อมบ่อย)"
+            "th": "กลางแจ้งหรือผสม (เจอสภาพอากาศ/สิ่งแวดล้อมบ่อย)",
+            "my": "ပြင်ပ သို့မဟုတ် ရောစပ် (မကြာခဏ မိုးလေဝသ/ပတ်ဝန်းကျင်နှင့် ထိတွေ့)",
+            "lo": "ກາງແຈ້ງ ຫຼື ປົນປົນ (ພົບເຫັນສະພາບອາກາດ/ສິ່ງແວດລ້ອມບໍ່ເປັນຮອບ)",
+            "ja": "屋外または屋内外混合（天候や環境に頻繁にさらされる）",
+            "zh": "户外或混合（经常暴露在天气/环境中）",
+            "ko": "실외 또는 혼합 (날씨/환경에 자주 노출)",
+            "ms": "Luar bangunan atau campuran (sering terdedah kepada cuaca/persekitaran)"
           },
           "value": "Outdoors or mixed",
           "weights": { "G1": 0, "G2": 0, "G3": 0, "G4": 3, "G5": 0, "G6": 3 }
@@ -87,14 +135,26 @@
       "questionText": {
         "en": "Which physical or environmental factors often affect you? (Select all that apply.)",
         "fr": "Quels facteurs physiques ou environnementaux vous affectent souvent ? (Sélectionnez tout ce qui s'applique.)",
-        "th": "ปัจจัยทางกายภาพหรือสิ่งแวดล้อมใดที่ส่งผลต่อคุณบ่อย (เลือกได้หลายข้อ)"
+        "th": "ปัจจัยทางกายภาพหรือสิ่งแวดล้อมใดที่ส่งผลต่อคุณบ่อย (เลือกได้หลายข้อ)",
+        "my": "သင့်ကို မကြာခဏ သက်ရောက်မှုရှိသော ကာယပိုင်းဆိုင်ရာ သို့မဟုတ် ပတ်ဝန်းကျင်ဆိုင်ရာ အကြောင်းအချက်များက ဘာတွေလဲ။ (သက်ဆိုင်ရာအားလုံးကို ရွေးချယ်ပါ။)",
+        "lo": "ປັດໃຈທາງກາຍະພາບ ຫຼື ສິ່ງແວດລ້ອມໃດແດ່ ທີ່ສົ່ງຜົນກະທົບຕໍ່ທ່ານເລື້ອຍໆ? (ເລືອກທຸກລາຍການທີ່ນຳໃຊ້)",
+        "ja": "どの物理的または環境的要因があなたにしばしば影響を与えますか？（該当するものをすべて選択してください。）",
+        "zh": "哪些身体或环境因素经常影响您？（选择所有适用项。）",
+        "ko": "어떤 신체적 또는 환경적 요인이 당신에게 자주 영향을 줍니까? (해당하는 모든 항목을 선택하십시오.)",
+        "ms": "Faktor fizikal atau persekitaran manakah yang sering menjejaskan anda? (Pilih semua yang berkenaan.)"
       },
       "answers": [
         {
           "text": {
             "en": "Repetitive motions or standing for long periods",
             "fr": "Mouvements répétitifs ou station debout prolongée",
-            "th": "การเคลื่อนไหวซ้ำๆ หรือยืนนาน"
+            "th": "การเคลื่อนไหวซ้ำๆ หรือยืนนาน",
+            "my": "ထပ်ခါတလဲလဲ လှုပ်ရှားမှုများ သို့မဟုတ် အချိန်ကြာမြင့်စွာ မတ်တပ်ရပ်ခြင်း",
+            "lo": "ການເຄື່ອນໄຫວຊ້ຳໆ ຫຼື ການຢືນເປັນເວລາດົນ",
+            "ja": "反復動作または長時間の立ち仕事",
+            "zh": "重复性动作或长时间站立",
+            "ko": "반복적인 동작 또는 장시간 서 있기",
+            "ms": "Pergerakan berulang atau berdiri untuk tempoh yang lama"
           },
           "value": "Repetitive motions or long standing",
           "weights": { "G1": 0, "G2": 1, "G3": 3, "G4": 2, "G5": 1, "G6": 1 }
@@ -103,7 +163,13 @@
           "text": {
             "en": "Heavy lifting or physically demanding tasks",
             "fr": "Levage lourd ou tâches physiquement exigeantes",
-            "th": "ยกของหนักหรือใช้แรงมาก"
+            "th": "ยกของหนักหรือใช้แรงมาก",
+            "my": "လေးလံသော အရာများကို မတင်ခြင်း သို့မဟုတ် ကာယပိုင်းဆိုင်ရာ အားစိုက်ရသော အလုပ်များ",
+            "lo": "ການຍົກຂອງໜັກ ຫຼື ວຽກທີ່ຕ້ອງໃຊ້ກຳລັງກາຍຫຼາຍ",
+            "ja": "重い物を持ち上げることや身体的にきつい作業",
+            "zh": "重物搬运或体力消耗大的任务",
+            "ko": "무거운 물건 들기 또는 육체적으로 힘든 작업",
+            "ms": "Mengangkat berat atau tugas yang menuntut fizikal"
           },
           "value": "Heavy lifting or demanding tasks",
           "weights": { "G1": 0, "G2": 0, "G3": 2, "G4": 3, "G5": 0, "G6": 2 }
@@ -112,7 +178,13 @@
           "text": {
             "en": "Exposure to dust, chemicals, or harsh conditions",
             "fr": "Exposition à la poussière, produits chimiques ou conditions extrêmes",
-            "th": "สัมผัสฝุ่น สารเคมี หรือสภาพแวดล้อมรุนแรง"
+            "th": "สัมผัสฝุ่น สารเคมี หรือสภาพแวดล้อมรุนแรง",
+            "my": "ဖုန်မှုန့်၊ ဓာတုပစ္စည်းများ သို့မဟုတ် ကြမ်းတမ်းသော အခြေအနေများနှင့် ထိတွေ့ခြင်း",
+            "lo": "ການສຳຜັດກັບຝຸ່ນ, ສານເຄມີ ຫຼື ສະພາບແວດລ້ອມທີ່ຮຸນແຮງ",
+            "ja": "ほこり、化学物質、または過酷な条件への暴露",
+            "zh": "暴露于灰尘、化学品或恶劣条件",
+            "ko": "먼지, 화학 물질 또는 열악한 환경에 노출",
+            "ms": "Pendedahan kepada habuk, bahan kimia, atau keadaan yang teruk"
           },
           "value": "Exposure dust chemicals harsh",
           "weights": { "G1": 0, "G2": 0, "G3": 3, "G4": 2, "G5": 0, "G6": 3 }
@@ -121,7 +193,13 @@
           "text": {
             "en": "Long hours in front of a screen or desk",
             "fr": "Longues heures devant un écran ou un bureau",
-            "th": "ใช้เวลานานหน้าจอหรือโต๊ะทำงาน"
+            "th": "ใช้เวลานานหน้าจอหรือโต๊ะทำงาน",
+            "my": "မျက်နှာပြင် သို့မဟုတ် စားပွဲရှေ့တွင် အချိန်ကြာမြင့်စွာ ရှိနေခြင်း",
+            "lo": "ການໃຊ້ເວລາດົນຢູ່ໜ້າຈໍ ຫຼື ໂຕະເຮັດວຽກ",
+            "ja": "スクリーンやデスクの前での長時間作業",
+            "zh": "长时间面对屏幕或办公桌",
+            "ko": "화면이나 책상 앞에서 장시간 근무",
+            "ms": "Berjam-jam di hadapan skrin atau meja"
           },
           "value": "Long hours screen or desk",
           "weights": { "G1": 3, "G2": 1, "G3": 0, "G4": 0, "G5": 1, "G6": 0 }
@@ -135,14 +213,26 @@
       "questionText": {
         "en": "How often do you work beyond standard daytime hours (early mornings, late nights, or shifts)?",
         "fr": "À quelle fréquence travaillez-vous en dehors des heures de jour standard (tôt le matin, tard le soir, en équipe) ?",
-        "th": "คุณทำงานนอกเวลาปกติช่วงกลางวัน (เช้าตรู่ ดึก หรือเป็นกะ) บ่อยแค่ไหน?"
+        "th": "คุณทำงานนอกเวลาปกติช่วงกลางวัน (เช้าตรู่ ดึก หรือเป็นกะ) บ่อยแค่ไหน?",
+        "my": "ပုံမှန်နေ့အချိန်များထက်ကျော်လွန်၍ (နံနက်စောစော၊ ညဉ့်နက်ပိုင်း သို့မဟုတ် အလှည့်ကျ) မည်မျှ မကြာခဏ အလုပ်လုပ်ပါသနည်း။",
+        "lo": "ທ່ານເຮັດວຽກນອກເວລາເຮັດວຽກປົກກະຕິ (ຕອນເຊົ້າໆ, ກາງຄືນເດິກ, ຫຼື ເປັນກະ) ເລື້ອຍປານໃດ?",
+        "ja": "標準的な日中の時間外（早朝、深夜、またはシフト勤務）にどのくらいの頻度で働きますか？",
+        "zh": "您多久会在标准日间工作时间以外工作（清晨、深夜或轮班）？",
+        "ko": "표준 주간 근무 시간(이른 아침, 늦은 밤 또는 교대 근무)을 넘어 얼마나 자주 일하십니까?",
+        "ms": "Berapa kerap anda bekerja di luar waktu siang standard (awal pagi, lewat malam, atau syif)?"
       },
       "answers": [
         {
           "text": {
             "en": "Rarely or never",
             "fr": "Rarement ou jamais",
-            "th": "แทบไม่หรือไม่เคย"
+            "th": "แทบไม่หรือไม่เคย",
+            "my": "ရှားရှားပါးပါး သို့မဟုတ် ဘယ်တော့မှမလုပ်",
+            "lo": "ບໍ່ຄ່ອຍ ຫຼື ບໍ່ເຄີຍເລີຍ",
+            "ja": "めったにないか、まったくありません",
+            "zh": "很少或从不",
+            "ko": "거의 또는 전혀 없음",
+            "ms": "Jarang atau tidak pernah"
           },
           "value": "Rarely or never shift",
           "weights": { "G1": 2, "G2": 0, "G3": 1, "G4": 1, "G5": 1, "G6": 1 }
@@ -151,7 +241,13 @@
           "text": {
             "en": "Occasionally (1–3 times a month)",
             "fr": "Occasionnellement (1–3 fois par mois)",
-            "th": "เป็นบางครั้ง (1–3 ครั้งต่อเดือน)"
+            "th": "เป็นบางครั้ง (1–3 ครั้งต่อเดือน)",
+            "my": "တစ်ခါတစ်ရံ (တစ်လလျှင် ၁-၃ ကြိမ်)",
+            "lo": "ບາງຄັ້ງຄາວ (1-3 ຄັ້ງຕໍ່ເດືອນ)",
+            "ja": "時々（月に1〜3回）",
+            "zh": "偶尔（每月1-3次）",
+            "ko": "가끔 (한 달에 1-3회)",
+            "ms": "Kadang-kadang (1–3 kali sebulan)"
           },
           "value": "Occasional shift",
           "weights": { "G1": 1, "G2": 2, "G3": 2, "G4": 2, "G5": 1, "G6": 1 }
@@ -160,7 +256,13 @@
           "text": {
             "en": "Often or rotating shifts",
             "fr": "Souvent ou en rotation",
-            "th": "บ่อยครั้ง หรือเป็นกะหมุนเวียน"
+            "th": "บ่อยครั้ง หรือเป็นกะหมุนเวียน",
+            "my": "မကြာခဏ သို့မဟုတ် အလှည့်ကျအလုပ်များ",
+            "lo": "ເລື້ອຍໆ ຫຼື ເປັນກະໝູນວຽນ",
+            "ja": "頻繁または交代制勤務",
+            "zh": "经常或轮班制",
+            "ko": "자주 또는 교대 근무",
+            "ms": "Kerap atau syif bergilir"
           },
           "value": "Often rotating shifts",
           "weights": { "G1": 0, "G2": 3, "G3": 3, "G4": 2, "G5": 2, "G6": 1 }
@@ -174,32 +276,56 @@
       "questionText": {
         "en": "How frequently do you have to interact directly with other people (customers, clients, or those needing assistance)?",
         "fr": "À quelle fréquence devez-vous interagir directement avec d’autres personnes (clients, patients, personnes nécessitant de l’aide) ?",
-        "th": "คุณต้องติดต่อโดยตรงกับผู้อื่น (ลูกค้า ผู้ป่วย ผู้ที่ต้องการความช่วยเหลือ) บ่อยแค่ไหน?"
+        "th": "คุณต้องติดต่อโดยตรงกับผู้อื่น (ลูกค้า ผู้ป่วย ผู้ที่ต้องการความช่วยเหลือ) บ่อยแค่ไหน?",
+        "my": "အခြားသူများ (ဖောက်သည်များ၊ ၀န်ဆောင်မှုလက်ခံသူများ သို့မဟုတ် အကူအညီလိုအပ်သူများ) နှင့် တိုက်ရိုက်ဆက်ဆံရသည့် အကြိမ်ရေ မည်မျှရှိသနည်း။",
+        "lo": "ທ່ານຕ້ອງພົວພັນໂດຍກົງກັບຄົນອື່ນ (ລູກຄ້າ, ຜູ້ຮັບບໍລິການ, ຫຼື ຜູ້ທີ່ຕ້ອງການຄວາມຊ່ວຍເຫຼືອ) ເລື້ອຍປານໃດ?",
+        "ja": "他の人（顧客、クライアント、または支援が必要な人）と直接やり取りする必要がある頻度はどれくらいですか？",
+        "zh": "您需要多久与其他（客户、来访者或需要帮助的人）直接互动一次？",
+        "ko": "다른 사람들(고객, 의뢰인 또는 도움이 필요한 사람들)과 직접적으로 상호 작용해야 하는 빈도는 얼마나 됩니까?",
+        "ms": "Berapa kerap anda perlu berinteraksi secara langsung dengan orang lain (pelanggan, klien, atau mereka yang memerlukan bantuan)?"
       },
       "answers": [
         {
-          "text": { 
-            "en": "Minimal; mostly work alone or in small teams", 
-            "fr": "Minime ; je travaille principalement seul ou en petite équipe", 
-            "th": "น้อยมาก; ทำงานคนเดียวหรือทีมเล็กส่วนใหญ่" 
+          "text": {
+            "en": "Minimal; mostly work alone or in small teams",
+            "fr": "Minime ; je travaille principalement seul ou en petite équipe",
+            "th": "น้อยมาก; ทำงานคนเดียวหรือทีมเล็กส่วนใหญ่",
+            "my": "အနည်းဆုံး၊ အများအားဖြင့် တစ်ဦးတည်း သို့မဟုတ် အဖွဲ့ငယ်များနှင့် အလုပ်လုပ်သည်",
+            "lo": "ໜ້ອຍທີ່ສຸດ; ສ່ວນຫຼາຍເຮັດວຽກຄົນດຽວ ຫຼື ເປັນທີມນ້ອຍໆ",
+            "ja": "最小限。ほとんど一人で、または少人数のチームで作業します",
+            "zh": "极少；大多单独工作或在小团队中工作",
+            "ko": "최소한; 대부분 혼자 또는 소규모 팀으로 작업",
+            "ms": "Minimum; kebanyakannya bekerja bersendirian atau dalam pasukan kecil"
           },
           "value": "Minimal direct contact",
           "weights": { "G1": 3, "G2": 0, "G3": 2, "G4": 1, "G5": 0, "G6": 1 }
         },
         {
-          "text": { 
-            "en": "Moderate; some teamwork or regular collaboration, but not heavy public contact", 
-            "fr": "Modérée ; un peu de travail d’équipe ou de collaboration, pas beaucoup de contact public", 
-            "th": "ปานกลาง; ทำงานร่วมกับทีมบ้าง แต่ไม่ค่อยเจอสาธารณชนมาก" 
+          "text": {
+            "en": "Moderate; some teamwork or regular collaboration, but not heavy public contact",
+            "fr": "Modérée ; un peu de travail d’équipe ou de collaboration, pas beaucoup de contact public",
+            "th": "ปานกลาง; ทำงานร่วมกับทีมบ้าง แต่ไม่ค่อยเจอสาธารณชนมาก",
+            "my": "အလယ်အလတ်၊ အဖွဲ့လိုက်လုပ်ဆောင်မှုအချို့ သို့မဟုတ် ပုံမှန်ပူးပေါင်းဆောင်ရွက်မှုရှိသော်လည်း ပြည်သူလူထုနှင့် ထိတွေ့မှုများပြားခြင်းမရှိ",
+            "lo": "ປານກາງ; ມີການເຮັດວຽກເປັນທີມ ຫຼື ການຮ່ວມມືເປັນປະຈຳບາງສ່ວນ, ແຕ່ບໍ່ໄດ້ຕິດຕໍ່ກັບສາທາລະນະชนຫຼາຍ",
+            "ja": "中程度。いくつかのチームワークや定期的な共同作業はありますが、公衆との接触は多くありません",
+            "zh": "中等；有一些团队合作或定期协作，但与公众接触不多",
+            "ko": "보통; 일부 팀워크 또는 정기적인 협업이 있지만 대중과의 접촉은 많지 않음",
+            "ms": "Sederhana; sedikit kerja berpasukan atau kerjasama biasa, tetapi tidak banyak hubungan dengan orang awam"
           },
           "value": "Moderate contact",
           "weights": { "G1": 1, "G2": 1, "G3": 2, "G4": 1, "G5": 1, "G6": 1 }
         },
         {
-          "text": { 
-            "en": "High contact; dealing with many people daily", 
-            "fr": "Contact élevé ; je gère de nombreuses personnes chaque jour", 
-            "th": "ติดต่อกับผู้คนจำนวนมากในแต่ละวัน" 
+          "text": {
+            "en": "High contact; dealing with many people daily",
+            "fr": "Contact élevé ; je gère de nombreuses personnes chaque jour",
+            "th": "ติดต่อกับผู้คนจำนวนมากในแต่ละวัน",
+            "my": "ထိတွေ့မှုများပြားခြင်း၊ နေ့စဉ်လူအများနှင့် ဆက်ဆံရခြင်း",
+            "lo": "ການຕິດຕໍ່ສູງ; ພົວພັນກັບຄົນຈຳນວນຫຼາຍປະຈຳວັນ",
+            "ja": "接触が多い。毎日多くの人と接する",
+            "zh": "高度接触；每天与许多人打交道",
+            "ko": "높은 접촉 빈도; 매일 많은 사람들을 상대함",
+            "ms": "Hubungan yang tinggi; berurusan dengan ramai orang setiap hari"
           },
           "value": "High contact daily",
           "weights": { "G1": 0, "G2": 3, "G3": 0, "G4": 0, "G5": 3, "G6": 0 }
@@ -213,14 +339,26 @@
       "questionText": {
         "en": "How would you describe the mental or emotional stress involved in your daily tasks?",
         "fr": "Comment décririez-vous le stress mental ou émotionnel associé à vos tâches quotidiennes ?",
-        "th": "คุณจะอธิบายความเครียดทางจิตใจหรืออารมณ์ในงานประจำวันของคุณว่าอย่างไร?"
+        "th": "คุณจะอธิบายความเครียดทางจิตใจหรืออารมณ์ในงานประจำวันของคุณว่าอย่างไร?",
+        "my": "သင်၏နေ့စဉ်အလုပ်များတွင် ပါဝင်သော စိတ်ပိုင်းဆိုင်ရာ သို့မဟုတ် စိတ်ခံစားမှုဆိုင်ရာ ဖိအားကို သင်မည်သို့ဖော်ပြမည်နည်း။",
+        "lo": "ທ່ານຈະອະທິບາຍຄວາມຄຽດທາງຈິດໃຈ ຫຼື ອາລົມທີ່ກ່ຽວຂ້ອງກັບວຽກປະຈຳວັນຂອງທ່ານແນວໃດ?",
+        "ja": "日常業務に伴う精神的または感情的なストレスをどのように表現しますか？",
+        "zh": "您如何描述日常工作中所涉及的精神或情绪压力？",
+        "ko": "일상 업무에 수반되는 정신적 또는 정서적 스트레스를 어떻게 설명하시겠습니까?",
+        "ms": "Bagaimanakah anda akan menerangkan tekanan mental atau emosi yang terlibat dalam tugas harian anda?"
       },
       "answers": [
         {
           "text": {
             "en": "Mostly mental (deadlines, data, problem-solving)",
             "fr": "Principalement mental (délais, données, résolution de problèmes)",
-            "th": "ส่วนใหญ่ทางสมอง (เดดไลน์ ข้อมูล แก้ปัญหา)"
+            "th": "ส่วนใหญ่ทางสมอง (เดดไลน์ ข้อมูล แก้ปัญหา)",
+            "my": "အများအားဖြင့် စိတ်ပိုင်းဆိုင်ရာ (သတ်မှတ်ရက်များ၊ အချက်အလက်များ၊ ပြဿနာဖြေရှင်းခြင်း)",
+            "lo": "ສ່ວນຫຼາຍແມ່ນທາງຈິດໃຈ (ກຳນົດເວລາ, ຂໍ້ມູນ, ການແກ້ໄຂບັນຫາ)",
+            "ja": "主に精神的（締め切り、データ、問題解決）",
+            "zh": "主要为精神压力（截止日期、数据、解决问题）",
+            "ko": "주로 정신적 (마감일, 데이터, 문제 해결)",
+            "ms": "Kebanyakannya mental (tarikh akhir, data, penyelesaian masalah)"
           },
           "value": "Mostly mental stress",
           "weights": { "G1": 3, "G2": 1, "G3": 0, "G4": 0, "G5": 0, "G6": 0 }
@@ -229,7 +367,13 @@
           "text": {
             "en": "Emotional (dealing with people in difficult situations)",
             "fr": "Émotionnel (gérer des personnes dans des situations difficiles)",
-            "th": "ทางอารมณ์ (ติดต่อกับผู้คนในสถานการณ์ยากลำบาก)"
+            "th": "ทางอารมณ์ (ติดต่อกับผู้คนในสถานการณ์ยากลำบาก)",
+            "my": "စိတ်ခံစားမှုပိုင်းဆိုင်ရာ (ခက်ခဲသော အခြေအနေများတွင် လူများနှင့် ဆက်ဆံခြင်း)",
+            "lo": "ທາງອາລົມ (ການພົວພັນກັບຄົນໃນສະຖານະການທີ່ຫຍຸ້ງຍາກ)",
+            "ja": "感情的（困難な状況にある人々への対応）",
+            "zh": "情绪压力（处理处于困境中的人）",
+            "ko": "정서적 (어려운 상황에 처한 사람들 다루기)",
+            "ms": "Emosi (berurusan dengan orang dalam situasi sukar)"
           },
           "value": "Emotional stress",
           "weights": { "G1": 0, "G2": 3, "G3": 0, "G4": 0, "G5": 2, "G6": 0 }
@@ -238,7 +382,13 @@
           "text": {
             "en": "Physical (heat, heavy tasks, strenuous environment)",
             "fr": "Physique (chaleur, tâches lourdes, environnement pénible)",
-            "th": "ทางกาย (ความร้อน งานหนัก สภาพแวดล้อมเหนื่อยยาก)"
+            "th": "ทางกาย (ความร้อน งานหนัก สภาพแวดล้อมเหนื่อยยาก)",
+            "my": "ကာယပိုင်းဆိုင်ရာ (အပူ၊ လေးလံသော အလုပ်များ၊ ပင်ပန်းသော ပတ်ဝန်းကျင်)",
+            "lo": "ທາງຮ່າງກາຍ (ຄວາມຮ້ອນ, ວຽກໜັກ, ສະພາບແວດລ້ອມທີ່ເມື່ອຍລ້າ)",
+            "ja": "肉体的（暑さ、重労働、過酷な環境）",
+            "zh": "身体压力（高温、重活、艰苦环境）",
+            "ko": "신체적 (더위, 힘든 일, 힘든 환경)",
+            "ms": "Fizikal (haba, tugas berat, persekitaran yang memenatkan)"
           },
           "value": "Physical stress",
           "weights": { "G1": 0, "G2": 0, "G3": 2, "G4": 3, "G5": 1, "G6": 2 }
@@ -252,14 +402,26 @@
       "questionText": {
         "en": "Which of the following describes your typical responsibilities? (Select all that apply.)",
         "fr": "Lequel des énoncés suivants décrit vos responsabilités habituelles ? (Sélectionnez tout ce qui s'applique.)",
-        "th": "ข้อใดต่อไปนี้อธิบายความรับผิดชอบหลักของคุณ (เลือกได้หลายข้อ)"
+        "th": "ข้อใดต่อไปนี้อธิบายความรับผิดชอบหลักของคุณ (เลือกได้หลายข้อ)",
+        "my": "အောက်ပါတို့မှ မည်သည်က သင်၏ပုံမှန်တာဝန်ဝတ္တရားများကို ဖော်ပြသနည်း။ (သက်ဆိုင်ရာအားလုံးကို ရွေးချယ်ပါ။)",
+        "lo": "ຂໍ້ໃດຕໍ່ໄປນີ້ອະທິບາຍຄວາມຮັບຜິດຊອບປົກກະຕິຂອງທ່ານ? (ເລືອກທຸກລາຍການທີ່ນຳໃຊ້)",
+        "ja": "次のうち、あなたの典型的な責任を表すものはどれですか？（該当するものをすべて選択してください。）",
+        "zh": "以下哪项描述了您的典型职责？（选择所有适用项。）",
+        "ko": "다음 중 귀하의 일반적인 책임은 무엇입니까? (해당하는 모든 항목을 선택하십시오.)",
+        "ms": "Manakah antara berikut menerangkan tanggungjawab biasa anda? (Pilih semua yang berkenaan.)"
       },
       "answers": [
         {
           "text": {
             "en": "Handling or assisting people who need physical help (lifting, caregiving)",
             "fr": "Aider ou soutenir physiquement des personnes (levage, soins)",
-            "th": "ช่วยยกหรือดูแลผู้ที่ต้องการความช่วยเหลือทางกาย (พยุง ยก ดูแล)"
+            "th": "ช่วยยกหรือดูแลผู้ที่ต้องการความช่วยเหลือทางกาย (พยุง ยก ดูแล)",
+            "my": "ကာယပိုင်းဆိုင်ရာ အကူအညီလိုအပ်သူများကို ကိုင်တွယ်ခြင်း သို့မဟုတ် ကူညီခြင်း (မတင်ခြင်း၊ ပြုစုစောင့်ရှောက်ခြင်း)",
+            "lo": "ການຈັດການ ຫຼື ຊ່ວຍເຫຼືອຄົນທີ່ຕ້ອງການຄວາມຊ່ວຍເຫຼືອທາງດ້ານຮ່າງກາຍ (ການຍົກ, ການດູແລ)",
+            "ja": "身体的な助けが必要な人々の対応または支援（持ち上げ、介護）",
+            "zh": "处理或协助需要身体帮助的人（搬运、护理）",
+            "ko": "신체적 도움이 필요한 사람들을 다루거나 지원 (들기, 간병)",
+            "ms": "Mengendalikan atau membantu orang yang memerlukan bantuan fizikal (mengangkat, menjaga)"
           },
           "value": "Assisting physically people",
           "weights": { "G2": 3 }
@@ -268,7 +430,13 @@
           "text": {
             "en": "Repeated machine operation or manual line work",
             "fr": "Utilisation répétée de machines ou travail manuel à la chaîne",
-            "th": "ควบคุมเครื่องจักรซ้ำๆ หรือทำไลน์งานด้วยมือ"
+            "th": "ควบคุมเครื่องจักรซ้ำๆ หรือทำไลน์งานด้วยมือ",
+            "my": "ထပ်ခါတလဲလဲ စက်လည်ပတ်ခြင်း သို့မဟုတ် လက်ဖြင့်လုပ်သော လိုင်းအလုပ်",
+            "lo": "ການເຮັດວຽກເຄື່ອງຈັກຊ້ຳໆ ຫຼື ວຽກສາຍການຜະລິດດ້ວຍມື",
+            "ja": "反復的な機械操作または手作業のライン作業",
+            "zh": "重复性机器操作或体力流水线作业",
+            "ko": "반복적인 기계 작동 또는 수동 라인 작업",
+            "ms": "Pengendalian mesin berulang atau kerja barisan manual"
           },
           "value": "Repeated machine operation",
           "weights": { "G3": 3 }
@@ -277,7 +445,13 @@
           "text": {
             "en": "Serving or managing multiple customer requests",
             "fr": "Servir ou gérer de nombreuses demandes de clients",
-            "th": "ให้บริการหรือรับมือกับคำขอลูกค้าจำนวนมาก"
+            "th": "ให้บริการหรือรับมือกับคำขอลูกค้าจำนวนมาก",
+            "my": "ဖောက်သည်တောင်းဆိုမှုအများအပြားကို ဆောင်ရွက်ပေးခြင်း သို့မဟုတ် စီမံခန့်ခွဲခြင်း",
+            "lo": "ການບໍລິການ ຫຼື ການຈັດການຄຳຮ້ອງຂໍຂອງລູກຄ້າຫຼາຍລາຍການ",
+            "ja": "複数の顧客リクエストへの対応または管理",
+            "zh": "服务或管理多个客户请求",
+            "ko": "여러 고객 요청 처리 또는 관리",
+            "ms": "Melayan atau menguruskan pelbagai permintaan pelanggan"
           },
           "value": "Serving customer requests",
           "weights": { "G5": 3 }
@@ -286,7 +460,13 @@
           "text": {
             "en": "Outdoor manual tasks (land cultivation, building, or similar)",
             "fr": "Tâches manuelles en extérieur (agriculture, construction, etc.)",
-            "th": "งานกลางแจ้ง (เพาะปลูก ก่อสร้าง หรือคล้ายๆ กัน)"
+            "th": "งานกลางแจ้ง (เพาะปลูก ก่อสร้าง หรือคล้ายๆ กัน)",
+            "my": "ပြင်ပလက်ဖြင့်လုပ်သော အလုပ်များ (မြေယာစိုက်ပျိုးခြင်း၊ ဆောက်လုပ်ရေး သို့မဟုတ် အလားတူ)",
+            "lo": "ວຽກດ້ວຍມືກາງແຈ້ງ (ການປູກຝັງ, ການກໍ່ສ້າງ, ຫຼື ຄ້າຍຄືກັນ)",
+            "ja": "屋外での手作業（土地耕作、建設など）",
+            "zh": "户外体力劳动（土地耕种、建筑或类似工作）",
+            "ko": "야외 수작업 (토지 경작, 건축 또는 이와 유사한 작업)",
+            "ms": "Tugas manual luar (penanaman tanah, pembinaan, atau yang serupa)"
           },
           "value": "Outdoor manual tasks",
           "weights": { "G4": 3, "G6": 3 }
@@ -295,7 +475,13 @@
           "text": {
             "en": "Data analysis, coding, or office-based computer work",
             "fr": "Analyse de données, codage, ou travail informatique de bureau",
-            "th": "การวิเคราะห์ข้อมูล เขียนโค้ด หรือทำงานคอมพิวเตอร์ในออฟฟิศ"
+            "th": "การวิเคราะห์ข้อมูล เขียนโค้ด หรือทำงานคอมพิวเตอร์ในออฟฟิศ",
+            "my": "အချက်အလက်ခွဲခြမ်းစိတ်ဖြာခြင်း၊ ကုဒ်ရေးခြင်း သို့မဟုတ် ရုံးအခြေစိုက် ကွန်ပျူတာအလုပ်",
+            "lo": "ການວິເຄາະຂໍ້ມູນ, ການຂຽນໂຄດ, ຫຼື ວຽກຄອມພິວເຕີໃນຫ້ອງການ",
+            "ja": "データ分析、コーディング、またはオフィスベースのコンピューター作業",
+            "zh": "数据分析、编码或办公室电脑工作",
+            "ko": "데이터 분석, 코딩 또는 사무실 기반 컴퓨터 작업",
+            "ms": "Analisis data, pengekodan, atau kerja komputer berasaskan pejabat"
           },
           "value": "Data or coding tasks",
           "weights": { "G1": 3 }
@@ -309,14 +495,26 @@
       "questionText": {
         "en": "How often do urgent tasks force you to skip breaks or meals?",
         "fr": "À quelle fréquence les tâches urgentes vous forcent-elles à sauter des pauses ou des repas ?",
-        "th": "คุณต้องข้ามการพักหรือมื้ออาหารเพราะงานเร่งด่วนบ่อยแค่ไหน?"
+        "th": "คุณต้องข้ามการพักหรือมื้ออาหารเพราะงานเร่งด่วนบ่อยแค่ไหน?",
+        "my": "အရေးပေါ်အလုပ်များကြောင့် အနားယူချိန် သို့မဟုတ် အစားအစာများကို မည်မျှ မကြာခဏ လွှတ်သွားရပါသနည်း။",
+        "lo": "ວຽກດ່ວນເຮັດໃຫ້ທ່ານຕ້ອງຂ້າມເວລາພັກຜ່ອນ ຫຼື ອາຫານເລື້ອຍປານໃດ?",
+        "ja": "緊急の仕事のために休憩や食事を抜くことはどのくらいの頻度でありますか？",
+        "zh": "紧急任务迫使您不休息或不吃饭的频率有多高？",
+        "ko": "긴급한 업무로 인해 휴식이나 식사를 거르는 경우가 얼마나 자주 있습니까?",
+        "ms": "Berapa kerapkah tugas mendesak memaksa anda untuk melangkau waktu rehat atau makan?"
       },
       "answers": [
         {
           "text": {
             "en": "Rarely or never",
             "fr": "Rarement ou jamais",
-            "th": "แทบไม่เคย"
+            "th": "แทบไม่เคย",
+            "my": "ရှားရှားပါးပါး သို့မဟုတ် ဘယ်တော့မှမရှိ",
+            "lo": "ບໍ່ຄ່ອຍ ຫຼື ບໍ່ເຄີຍເລີຍ",
+            "ja": "めったにないか、まったくありません",
+            "zh": "很少或从不",
+            "ko": "거의 또는 전혀 없음",
+            "ms": "Jarang atau tidak pernah"
           },
           "value": "Rarely skip breaks",
           "weights": { "G1": 2, "G2": 1, "G3": 1, "G4": 1, "G5": 1, "G6": 1 }
@@ -325,7 +523,13 @@
           "text": {
             "en": "Occasionally (once or twice a week)",
             "fr": "Occasionnellement (une ou deux fois par semaine)",
-            "th": "เป็นบางครั้ง (สัปดาห์ละ 1–2 ครั้ง)"
+            "th": "เป็นบางครั้ง (สัปดาห์ละ 1–2 ครั้ง)",
+            "my": "တစ်ခါတစ်ရံ (တစ်ပတ်လျှင် တစ်ကြိမ် သို့မဟုတ် နှစ်ကြိမ်)",
+            "lo": "ບາງຄັ້ງຄາວ (ອາທິດລະ 1-2 ຄັ້ງ)",
+            "ja": "時々（週に1〜2回）",
+            "zh": "偶尔（每周一到两次）",
+            "ko": "가끔 (일주일에 한두 번)",
+            "ms": "Kadang-kadang (sekali atau dua kali seminggu)"
           },
           "value": "Occasionally skip meals",
           "weights": { "G1": 2, "G2": 2, "G3": 2, "G4": 2, "G5": 2, "G6": 2 }
@@ -334,7 +538,13 @@
           "text": {
             "en": "Often (most days)",
             "fr": "Souvent (la plupart des jours)",
-            "th": "บ่อย (เกือบทุกวัน)"
+            "th": "บ่อย (เกือบทุกวัน)",
+            "my": "မကြာခဏ (ရက်အများစု)",
+            "lo": "ເລື້ອຍໆ (ເກືອບທຸກມື້)",
+            "ja": "頻繁に（ほとんど毎日）",
+            "zh": "经常（大多数日子）",
+            "ko": "자주 (대부분의 날)",
+            "ms": "Kerap (kebanyakan hari)"
           },
           "value": "Often skip meals",
           "weights": { "G1": 1, "G2": 2, "G3": 2, "G4": 2, "G5": 3, "G6": 1 }
@@ -343,7 +553,13 @@
           "text": {
             "en": "Constantly, almost every day I skip breaks",
             "fr": "Constamment, presque tous les jours je saute les pauses",
-            "th": "ประจำ เกือบทุกวันข้ามพัก"
+            "th": "ประจำ เกือบทุกวันข้ามพัก",
+            "my": "အမြဲတမ်းလိုလို၊ နေ့တိုင်းနီးပါး အနားယူချိန်များကို လွှတ်သွားသည်",
+            "lo": "ຕະຫຼອດເວລາ, ເກືອບທຸກມື້ຂ້ອຍຂ້າມເວລາພັກຜ່ອນ",
+            "ja": "常に、ほぼ毎日休憩を抜いています",
+            "zh": "持续地，几乎每天我都会不休息",
+            "ko": "지속적으로, 거의 매일 휴식을 거릅니다",
+            "ms": "Sentiasa, hampir setiap hari saya melangkau waktu rehat"
           },
           "value": "Constantly skip meals",
           "weights": { "G1": 0, "G2": 3, "G3": 3, "G4": 2, "G5": 3, "G6": 1 }
@@ -357,14 +573,26 @@
       "questionText": {
         "en": "Do you think your daily tasks require specialized footwear or safety gear?",
         "fr": "Pensez-vous que vos tâches quotidiennes nécessitent des chaussures ou un équipement de sécurité spécialisé ?",
-        "th": "คุณคิดว่างานประจำวันต้องใช้รองเท้าหรืออุปกรณ์ความปลอดภัยเฉพาะทางหรือไม่?"
+        "th": "คุณคิดว่างานประจำวันต้องใช้รองเท้าหรืออุปกรณ์ความปลอดภัยเฉพาะทางหรือไม่?",
+        "my": "သင်၏နေ့စဉ်အလုပ်များအတွက် အထူးပြုဖိနပ် သို့မဟုတ် ဘေးကင်းရေး ကိရိယာများ လိုအပ်သည်ဟု သင်ထင်ပါသလား။",
+        "lo": "ທ່ານຄິດວ່າວຽກປະຈຳວັນຂອງທ່ານຕ້ອງການເກີບ ຫຼື ອຸປະກອນຄວາມປອດໄພສະເພາະບໍ?",
+        "ja": "日常業務には特殊な履物や安全具が必要だと思いますか？",
+        "zh": "您认为您的日常工作需要特制鞋履或安全装备吗？",
+        "ko": "일상 업무에 특수 신발이나 안전 장비가 필요하다고 생각하십니까?",
+        "ms": "Adakah anda fikir tugas harian anda memerlukan kasut khas atau peralatan keselamatan?"
       },
       "answers": [
         {
           "text": {
             "en": "No, standard or casual shoes are enough",
             "fr": "Non, des chaussures standards ou décontractées suffisent",
-            "th": "ไม่ รองเท้าปกติหรือรองเท้าลำลองก็พอแล้ว"
+            "th": "ไม่ รองเท้าปกติหรือรองเท้าลำลองก็พอแล้ว",
+            "my": "မလိုအပ်ပါ၊ ပုံမှန် သို့မဟုတ် သာမန်ဖိနပ်များ လုံလောက်ပါသည်",
+            "lo": "ບໍ່, ເກີບທຳມະດາ ຫຼື ເກີບໃສ່ຫຼິ້ນກໍພຽງພໍແລ້ວ",
+            "ja": "いいえ、標準的またはカジュアルな靴で十分です",
+            "zh": "不，标准或休闲鞋就足够了",
+            "ko": "아니요, 일반적이거나 캐주얼한 신발로 충분합니다",
+            "ms": "Tidak, kasut standard atau kasual sudah cukup"
           },
           "value": "Standard shoes enough",
           "weights": { "G1": 3, "G2": 2, "G3": 1, "G4": 0, "G5": 2, "G6": 0 }
@@ -373,7 +601,13 @@
           "text": {
             "en": "Yes, I use safety footwear or heavy-duty gear",
             "fr": "Oui, j’utilise des chaussures de sécurité ou un équipement robuste",
-            "th": "ใช่ ฉันใช้รองเท้านิรภัยหรืออุปกรณ์ป้องกันหนัก"
+            "th": "ใช่ ฉันใช้รองเท้านิรภัยหรืออุปกรณ์ป้องกันหนัก",
+            "my": "ဟုတ်ကဲ့၊ ကျွန်ုပ်သည် ဘေးကင်းရေးဖိနပ် သို့မဟုတ် လေးလံသော ကိရိယာများကို အသုံးပြုပါသည်",
+            "lo": "ແມ່ນແລ້ວ, ຂ້ອຍໃຊ້ເກີບນິລະໄພ ຫຼື ອຸປະກອນທີ່ທົນທານ",
+            "ja": "はい、安全靴または頑丈な装備を使用しています",
+            "zh": "是的，我使用安全鞋或重型装备",
+            "ko": "예, 안전화 또는 중장비를 사용합니다",
+            "ms": "Ya, saya menggunakan kasut keselamatan atau peralatan tahan lasak"
           },
           "value": "Safety footwear gear",
           "weights": { "G1": 0, "G2": 1, "G3": 3, "G4": 3, "G5": 0, "G6": 1 }
@@ -382,7 +616,13 @@
           "text": {
             "en": "Sometimes depends on the task",
             "fr": "Parfois, cela dépend de la tâche",
-            "th": "บางครั้งขึ้นอยู่กับงาน"
+            "th": "บางครั้งขึ้นอยู่กับงาน",
+            "my": "တစ်ခါတစ်ရံ အလုပ်ပေါ်မူတည်သည်",
+            "lo": "ບາງຄັ້ງຂຶ້ນກັບວຽກ",
+            "ja": "作業内容によって異なります",
+            "zh": "有时视任务而定",
+            "ko": "때로는 작업에 따라 다름",
+            "ms": "Kadang-kadang bergantung pada tugas"
           },
           "value": "Sometimes gear",
           "weights": { "G1": 1, "G2": 1, "G3": 1, "G4": 1, "G5": 1, "G6": 1 }
@@ -396,12 +636,24 @@
       "questionText": {
         "en": "Is there anything else about your daily routine, work conditions, or health concerns you’d like to mention?",
         "fr": "Y a-t-il autre chose concernant votre routine quotidienne, vos conditions de travail ou vos préoccupations de santé que vous souhaitez mentionner ?",
-        "th": "มีอะไรเพิ่มเติมเกี่ยวกับกิจวัตรประจำวัน สภาพการทำงาน หรือข้อกังวลด้านสุขภาพของคุณที่ต้องการแจ้งหรือไม่?"
+        "th": "มีอะไรเพิ่มเติมเกี่ยวกับกิจวัตรประจำวัน สภาพการทำงาน หรือข้อกังวลด้านสุขภาพของคุณที่ต้องการแจ้งหรือไม่?",
+        "my": "သင်၏နေ့စဉ်လုပ်ငန်းဆောင်တာများ၊ အလုပ်ခွင်အခြေအနေများ သို့မဟုတ် ကျန်းမာရေးဆိုင်ရာ စိုးရိမ်မှုများနှင့်ပတ်သက်၍ သင်ဖော်ပြလိုသည့် အခြားအရာများ ရှိပါသလား။",
+        "lo": "ມີຫຍັງອີກແດ່ກ່ຽວກັບກິດຈະວັດປະຈຳວັນ, ສະພາບການເຮັດວຽກ, ຫຼື ຄວາມກັງວົນດ້ານສຸຂະພາບຂອງທ່ານທີ່ທ່ານຕ້ອງການບອກ?",
+        "ja": "あなたの日常業務、労働条件、または健康上の懸念について他に何か言及したいことはありますか？",
+        "zh": "关于您的日常生活、工作条件或健康问题，您还有其他需要提及的吗？",
+        "ko": "일상 생활, 근무 조건 또는 건강 문제에 대해 더 언급하고 싶은 사항이 있습니까?",
+        "ms": "Adakah apa-apa lagi mengenai rutin harian, keadaan kerja, atau kebimbangan kesihatan anda yang ingin anda nyatakan?"
       },
       "placeholderText": {
         "en": "Enter any additional comments here...",
         "fr": "Saisissez ici tous commentaires supplémentaires...",
-        "th": "กรอกข้อมูลเพิ่มเติมได้ที่นี่..."
+        "th": "กรอกข้อมูลเพิ่มเติมได้ที่นี่...",
+        "my": "နောက်ထပ်မှတ်ချက်များရှိပါက ဤနေရာတွင် ထည့်ပါ...",
+        "lo": "ໃສ່ຄຳເຫັນເພີ່ມເຕີມໃດໆທີ່ນີ້...",
+        "ja": "追加のコメントがあればここに入力してください...",
+        "zh": "在此处输入任何其他评论...",
+        "ko": "추가 의견이 있으시면 여기에 입력하십시오...",
+        "ms": "Masukkan sebarang komen tambahan di sini..."
       }
     }
   ]
