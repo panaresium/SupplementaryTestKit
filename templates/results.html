@@ -286,7 +286,6 @@
     const questionCounts = {{ question_counts | tojson }};
     const qIds = Object.keys(questionCounts).sort((a,b)=>parseInt(a)-parseInt(b));
     const qLabels = qIds.map(k => 'Q' + k);
-
     const allAnswers = new Set();
     qIds.forEach(id => {
         const obj = questionCounts[id];
