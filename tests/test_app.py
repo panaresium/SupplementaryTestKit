@@ -21,6 +21,10 @@ def test_index_route(client):
     res = client.get('/')
     assert res.status_code == 200
     assert b'<!DOCTYPE html>' in res.data
+    # The landing page should contain language options
+    assert b'language-option' in res.data
+    # Khmer flag should be present
+    assert '🇰🇭'.encode('utf-8') in res.data
 
 
 def test_submit_and_admin_results(client):

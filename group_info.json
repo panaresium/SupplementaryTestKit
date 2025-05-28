@@ -9,11 +9,11 @@
       "ja": "オフィスワーカーとデジタル時代のプロフェッショナル\r\n重点: 脳と目のケア、ストレス軽減、エネルギー増強、ビタミンD補給\r\n主成分: ビタミンD3、ビタミンB群 (B1、B2、B3、B5、B6、B12)、マグネシウム、ルテイン、ゼアキサンチン、必要に応じてイチョウ葉エキスやアシュワガンダなどのアダプトゲン",
       "zh": "办公室员工和数字时代专业人士\r\n重点：养护大脑和眼睛、减压、提升能量、补充维生素D\r\n主要成分：维生素D3、维生素B族（B1、B2、B3、B5、B6、B12）、镁、叶黄素、玉米黄质，可选添加银杏叶提取物或如印度人参（ashwagandha）等适应原",
       "ko": "사무직 및 디지털 시대 전문가\r\n중점: 두뇌·눈 건강, 스트레스 완화, 에너지 증진, 비타민 D 보충\r\n주요 성분: 비타민 D3, 비타민 B 복합체(B1, B2, B3, B5, B6, B12), 마그네슘, 루테인, 제아잔틴, 필요 시 은행잎 추출물 또는 아슈와간다와 같은 어댑토젠",
-      "ms": "Pekerja pejabat dan profesional era digital\r\nFokus: menyokong kesihatan otak dan mata, mengurangkan tekanan, meningkatkan tenaga serta menambah vitamin D\r\nBahan utama: vitamin D3, vitamin B kompleks (B1, B2, B3, B5, B6, B12), magnesium, lutein, zeaxanthin serta ekstrak ginkgo biloba atau adaptogen seperti ashwagandha"
+      "ms": "Pekerja pejabat dan profesional era digital\r\nFokus: menyokong kesihatan otak dan mata, mengurangkan tekanan, meningkatkan tenaga serta menambah vitamin D\r\nBahan utama: vitamin D3, vitamin B kompleks (B1, B2, B3, B5, B6, B12), magnesium, lutein, zeaxanthin serta ekstrak ginkgo biloba atau adaptogen seperti ashwagandha",
+      "km": "Office workers and digital-era professionals\r\nFocus: brain and eye nourishment, stress reduction, energy boost, and vitamin D support\r\nKey ingredients: vitamin D3, B-complex vitamins (B1, B2, B3, B5, B6, B12), magnesium, lutein, zeaxanthin, and optionally Ginkgo biloba extract or adaptogens such as ashwagandha"
     },
     "image": "https://suppv2.blob.core.windows.net/suppv2/G1.png"
   },
-
   "G2": {
     "messages": {
       "en": "Healthcare professionals and caregivers\r\nFocus: immune support, fatigue reduction, energy recovery, bone and muscle nourishment, and stress management\r\nKey ingredients: vitamin D3, high-dose vitamin C, zinc, iron (especially female-specific formulas), B-complex vitamins, calcium, magnesium, and optionally immunity-boosting extracts such as echinacea or beta-glucan",
@@ -24,11 +24,11 @@
       "ja": "医療従事者とケアギバー\r\n重点: 免疫サポート、疲労軽減、エネルギー回復、骨と筋肉のケア、ストレス管理\r\n主成分: ビタミンD3、高用量ビタミンC、亜鉛、鉄（特に女性向けフォーミュラ）、ビタミンB群、カルシウム、マグネシウム、さらにエキナセアやベータグルカンなど免疫強化エキス",
       "zh": "医护人员和照护者\r\n重点：提高免疫力、减轻疲劳、恢复体力、滋养骨骼和肌肉、管理压力\r\n主要成分：维生素D3、高剂量维生素C、锌、铁（尤其是女性配方）、维生素B族、钙、镁，可选加入增强免疫的提取物，如紫锥菊或β-葡聚糖",
       "ko": "의료 종사자 및 돌봄 제공자\r\n중점: 면역력 강화, 피로 감소, 에너지 회복, 뼈와 근육 건강, 스트레스 관리\r\n주요 성분: 비타민 D3, 고용량 비타민 C, 아연, 철(특히 여성용 포뮬러), 비타민 B 복합체, 칼슘, 마그네슘, 필요 시 에키네시아 또는 베타글루칸과 같은 면역 강화 추출물",
-      "ms": "Profesional kesihatan dan penjaga\r\nFokus: menyokong imuniti, mengurangkan keletihan, memulihkan tenaga, menyuburkan tulang dan otot serta mengurus tekanan\r\nBahan utama: vitamin D3, vitamin C dos tinggi, zink, zat besi (terutama formula khusus wanita), vitamin B kompleks, kalsium, magnesium serta ekstrak penggalak imun seperti echinacea atau beta-glucan"
+      "ms": "Profesional kesihatan dan penjaga\r\nFokus: menyokong imuniti, mengurangkan keletihan, memulihkan tenaga, menyuburkan tulang dan otot serta mengurus tekanan\r\nBahan utama: vitamin D3, vitamin C dos tinggi, zink, zat besi (terutama formula khusus wanita), vitamin B kompleks, kalsium, magnesium serta ekstrak penggalak imun seperti echinacea atau beta-glucan",
+      "km": "Healthcare professionals and caregivers\r\nFocus: immune support, fatigue reduction, energy recovery, bone and muscle nourishment, and stress management\r\nKey ingredients: vitamin D3, high-dose vitamin C, zinc, iron (especially female-specific formulas), B-complex vitamins, calcium, magnesium, and optionally immunity-boosting extracts such as echinacea or beta-glucan"
     },
     "image": "https://suppv2.blob.core.windows.net/suppv2/G2.png"
   },
-
   "G3": {
     "messages": {
       "en": "Industrial and factory workers\r\nFocus: energy boost, muscle inflammation reduction, immune support, and detox assistance\r\nKey ingredients: high-dose B-complex vitamins, vitamin C, vitamin E, selenium, calcium, iron, and optionally antioxidants such as alpha-lipoic acid or N-acetyl cysteine (NAC)",
@@ -39,11 +39,11 @@
       "ja": "産業労働者および工場作業員\r\n重点: エネルギー向上、筋肉の炎症軽減、免疫サポート、解毒支援\r\n主成分: 高用量ビタミンB群、ビタミンC、ビタミンE、セレン、カルシウム、鉄、さらにα-リポ酸やN-アセチルシステイン（NAC）などの抗酸化物質",
       "zh": "工业和工厂工人\r\n重点：提升能量、减少肌肉炎症、支持免疫、帮助排毒\r\n主要成分：高剂量维生素B族、维生素C、维生素E、硒、钙、铁，可选添加抗氧化剂，如α-硫辛酸或N-乙酰半胱氨酸（NAC）",
       "ko": "산업 및 공장 노동자\r\n중점: 에너지 증진, 근육 염증 완화, 면역 지원, 해독 보조\r\n주요 성분: 고용량 비타민 B 복합체, 비타민 C, 비타민 E, 셀레늄, 칼슘, 철, 필요 시 알파-리포산 또는 N-아세틸시스테인(NAC)과 같은 항산화제",
-      "ms": "Pekerja industri dan kilang\r\nFokus: meningkatkan tenaga, mengurangkan keradangan otot, menyokong imuniti dan membantu detoksifikasi\r\nBahan utama: vitamin B kompleks dos tinggi, vitamin C, vitamin E, selenium, kalsium, zat besi serta antioksidan seperti asid alfa-lipoik atau N-asetil sisteina (NAC)"
+      "ms": "Pekerja industri dan kilang\r\nFokus: meningkatkan tenaga, mengurangkan keradangan otot, menyokong imuniti dan membantu detoksifikasi\r\nBahan utama: vitamin B kompleks dos tinggi, vitamin C, vitamin E, selenium, kalsium, zat besi serta antioksidan seperti asid alfa-lipoik atau N-asetil sisteina (NAC)",
+      "km": "Industrial and factory workers\r\nFocus: energy boost, muscle inflammation reduction, immune support, and detox assistance\r\nKey ingredients: high-dose B-complex vitamins, vitamin C, vitamin E, selenium, calcium, iron, and optionally antioxidants such as alpha-lipoic acid or N-acetyl cysteine (NAC)"
     },
     "image": "https://suppv2.blob.core.windows.net/suppv2/G3.png"
   },
-
   "G4": {
     "messages": {
       "en": "Heavy laborers and construction workers\r\nFocus: high energy supply, muscle and bone strengthening, electrolyte replenishment, and recovery support\r\nKey ingredients: very high-dose B-complex vitamins, vitamin C, magnesium, potassium, calcium, protein (included or taken alongside), creatine (optional), and electrolyte blends",
@@ -54,11 +54,11 @@
       "ja": "重労働者および建設作業員\r\n重点: 高エネルギー供給、筋肉と骨の強化、電解質補給、リカバリーサポート\r\n主成分: 超高用量ビタミンB群、ビタミンC、マグネシウム、カリウム、カルシウム、プロテイン（配合または併用）、クレアチン（任意）、電解質ブレンド",
       "zh": "重体力劳动者和建筑工人\r\n重点：提供高能量、强化肌肉和骨骼、补充电解质、支持恢复\r\n主要成分：超高剂量维生素B族、维生素C、镁、钾、钙、蛋白质（可配合或另行摄入）、肌酸（可选）、电解质混合物",
       "ko": "중노동 및 건설 노동자\r\n중점: 고에너지 공급, 근육·뼈 강화, 전해질 보충, 회복 지원\r\n주요 성분: 초고용량 비타민 B 복합체, 비타민 C, 마그네슘, 칼륨, 칼슘, 단백질(혼합 또는 별도 섭취), 크레아틴(선택), 전해질 블렌드",
-      "ms": "Pekerja buruh berat dan pembinaan\r\nFokus: bekalan tenaga tinggi, penguatan otot dan tulang, penggantian elektrolit serta sokongan pemulihan\r\nBahan utama: vitamin B kompleks dos sangat tinggi, vitamin C, magnesium, kalium, kalsium, protein (dicampur atau diambil bersama), kreatina (pilihan) dan campuran elektrolit"
+      "ms": "Pekerja buruh berat dan pembinaan\r\nFokus: bekalan tenaga tinggi, penguatan otot dan tulang, penggantian elektrolit serta sokongan pemulihan\r\nBahan utama: vitamin B kompleks dos sangat tinggi, vitamin C, magnesium, kalium, kalsium, protein (dicampur atau diambil bersama), kreatina (pilihan) dan campuran elektrolit",
+      "km": "Heavy laborers and construction workers\r\nFocus: high energy supply, muscle and bone strengthening, electrolyte replenishment, and recovery support\r\nKey ingredients: very high-dose B-complex vitamins, vitamin C, magnesium, potassium, calcium, protein (included or taken alongside), creatine (optional), and electrolyte blends"
     },
     "image": "https://suppv2.blob.core.windows.net/suppv2/G4.png"
   },
-
   "G5": {
     "messages": {
       "en": "Service-sector employees\r\nFocus: sustaining energy levels, reducing fatigue, easing stress, and supporting leg and vascular health\r\nKey ingredients: B-complex vitamins, magnesium, vitamin C, grape seed extract or gotu kola extract for vascular support, and optionally calming extracts such as chamomile",
@@ -69,11 +69,11 @@
       "ja": "サービス業従業員\r\n重点: エネルギー維持、疲労軽減、ストレス緩和、脚と血管の健康サポート\r\n主成分: ビタミンB群、マグネシウム、ビタミンC、ブドウ種子エキスまたはツボクサエキス（血管サポート）、必要に応じてカモミールなどリラックス系エキス",
       "zh": "服务业员工\r\n重点：维持能量、减少疲劳、缓解压力、支持腿部和血管健康\r\n主要成分：维生素B族、镁、维生素C、葡萄籽提取物或积雪草提取物用于血管支持，可选添加具有放松作用的提取物，如洋甘菊",
       "ko": "서비스업 종사자\r\n중점: 에너지 유지, 피로 감소, 스트레스 완화, 다리·혈관 건강 지원\r\n주요 성분: 비타민 B 복합체, 마그네슘, 비타민 C, 포도씨 추출물 또는 병풀 추출물(혈관 지원), 필요 시 카모마일 등 진정 추출물",
-      "ms": "Pekerja sektor perkhidmatan\r\nFokus: mengekalkan tahap tenaga, mengurangkan keletihan, meredakan tekanan serta menyokong kesihatan kaki dan salur darah\r\nBahan utama: vitamin B kompleks, magnesium, vitamin C, ekstrak biji anggur atau ekstrak gotu kola untuk sokongan vaskular serta ekstrak penenang seperti chamomile"
+      "ms": "Pekerja sektor perkhidmatan\r\nFokus: mengekalkan tahap tenaga, mengurangkan keletihan, meredakan tekanan serta menyokong kesihatan kaki dan salur darah\r\nBahan utama: vitamin B kompleks, magnesium, vitamin C, ekstrak biji anggur atau ekstrak gotu kola untuk sokongan vaskular serta ekstrak penenang seperti chamomile",
+      "km": "Service-sector employees\r\nFocus: sustaining energy levels, reducing fatigue, easing stress, and supporting leg and vascular health\r\nKey ingredients: B-complex vitamins, magnesium, vitamin C, grape seed extract or gotu kola extract for vascular support, and optionally calming extracts such as chamomile"
     },
     "image": "https://suppv2.blob.core.windows.net/suppv2/G5.png"
   },
-
   "G6": {
     "messages": {
       "en": "Farmers and fishers\r\nFocus: energy supply, muscle and bone nourishment, electrolyte replacement, and antioxidants\r\nKey ingredients: B-complex vitamins, mixed electrolytes (sodium, potassium, magnesium), vitamin C, vitamin E, calcium, and optionally antioxidants that help protect against sun exposure",
@@ -84,7 +84,8 @@
       "ja": "農業従事者と漁業従事者\r\n重点: エネルギー供給、筋肉と骨のケア、電解質補給、抗酸化サポート\r\n主成分: ビタミンB群、電解質ブレンド（ナトリウム、カリウム、マグネシウム）、ビタミンC、ビタミンE、カルシウム、さらに日光ダメージから守る抗酸化物質を追加してもよい",
       "zh": "农民和渔民\r\n重点：提供能量、养护肌肉和骨骼、补充电解质、抗氧化\r\n主要成分：维生素B族、混合电解质（钠、钾、镁）、维生素C、维生素E、钙，可选添加防晒抗氧化剂",
       "ko": "농업 및 어업 종사자\r\n중점: 에너지 공급, 근육·뼈 영양, 전해질 보충, 항산화 지원\r\n주요 성분: 비타민 B 복합체, 혼합 전해질(나트륨, 칼륨, 마그네슘), 비타민 C, 비타민 E, 칼슘, 필요 시 햇빛 노출을 방지하는 항산화제",
-      "ms": "Petani dan nelayan\r\nFokus: bekalan tenaga, menyuburkan otot dan tulang, penggantian elektrolit serta antioksidan\r\nBahan utama: vitamin B kompleks, campuran elektrolit (natrium, kalium, magnesium), vitamin C, vitamin E, kalsium serta antioksidan yang membantu melindungi daripada cahaya matahari"
+      "ms": "Petani dan nelayan\r\nFokus: bekalan tenaga, menyuburkan otot dan tulang, penggantian elektrolit serta antioksidan\r\nBahan utama: vitamin B kompleks, campuran elektrolit (natrium, kalium, magnesium), vitamin C, vitamin E, kalsium serta antioksidan yang membantu melindungi daripada cahaya matahari",
+      "km": "Farmers and fishers\r\nFocus: energy supply, muscle and bone nourishment, electrolyte replacement, and antioxidants\r\nKey ingredients: B-complex vitamins, mixed electrolytes (sodium, potassium, magnesium), vitamin C, vitamin E, calcium, and optionally antioxidants that help protect against sun exposure"
     },
     "image": "https://suppv2.blob.core.windows.net/suppv2/G6.png"
   }
