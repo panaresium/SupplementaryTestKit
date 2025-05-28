@@ -137,7 +137,7 @@ new Chart(ctx, {
     data: {
         labels: ['Office/Digital (G1)', 'Medical/Caregiving (G2)', 'Industrial/Factory (G3)', 'Heavy Labor/Construction (G4)', 'Service Sector (G5)', 'Agriculture/Fishery (G6)'],
         datasets: [{
-            label: texts[language_code].scores,
+            label: "{{ texts[language_code].scores }}",
             data: [groupScores.G1, groupScores.G2, groupScores.G3, groupScores.G4, groupScores.G5, groupScores.G6],
             fill: true,
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
