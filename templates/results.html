@@ -297,7 +297,11 @@
             return questionCounts[qid][ans] || 0;
         }),
         backgroundColor: pickColor(idx),
-        borderWidth: 1
+
+        borderWidth: 1,
+        barPercentage: 0.8,
+        categoryPercentage: 0.8
+
     }));
     const ctxQ = document.getElementById('questionChart').getContext('2d');
     const questionChart = new Chart(ctxQ, {
@@ -310,7 +314,12 @@
                 title: { display: true, text: 'Answer Counts Per Question' },
                 legend: { display: false }
             },
-            scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true } }
+
+            scales: {
+                x: { beginAtZero: true },
+                y: { beginAtZero: true }
+            }
+
         }
 
     });
