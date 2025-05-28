@@ -55,7 +55,7 @@ const uiTranslations = {
         back_button: "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
         submit_button: "\u0e2a\u0e48\u0e07\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25"
     },
-	my: { // Burmese
+	my: { 
 		lang_en: "အင်္ဂလိပ်",
 		lang_fr: "ပြင်သစ်",
 		lang_th: "ထိုင်း",
@@ -73,7 +73,7 @@ const uiTranslations = {
 		submit_button: "တင်သွင်းရန်"
 	},
 
-	lo: { // Lao
+	lo: { 
 		lang_en: "ພາສາອັງກິດ",
 		lang_fr: "ພາສາຝຣັ່ງ",
 		lang_th: "ພາສາໄທ",
@@ -91,7 +91,7 @@ const uiTranslations = {
 		submit_button: "ສົ່ງ"
 	},
 
-	ja: { // Japanese
+	ja: { 
 		lang_en: "英語",
 		lang_fr: "フランス語",
 		lang_th: "タイ語",
@@ -109,7 +109,7 @@ const uiTranslations = {
 		submit_button: "送信"
 	},
 
-	zh: { // Chinese (Simplified)
+	zh: { 
 		lang_en: "英语",
 		lang_fr: "法语",
 		lang_th: "泰语",
@@ -127,7 +127,7 @@ const uiTranslations = {
 		submit_button: "提交"
 	},
 
-	ko: { // Korean
+	ko: { 
 		lang_en: "영어",
 		lang_fr: "프랑스어",
 		lang_th: "태국어",
@@ -145,7 +145,7 @@ const uiTranslations = {
 		submit_button: "제출"
 	},
 
-	ms: { // Malay
+	ms: { 
 		lang_en: "Bahasa Inggeris",
 		lang_fr: "Bahasa Perancis",
 		lang_th: "Bahasa Thai",
@@ -161,6 +161,24 @@ const uiTranslations = {
 		next_button: "Seterusnya",
 		back_button: "Kembali",
 		submit_button: "Hantar"
+	},
+
+	km: {
+	  lang_en: "ភាសាអង់គ្លេស",
+	  lang_fr: "ភាសាបារាំង",
+	  lang_th: "ភាសាថៃ",
+	  main_title: "ឧបករណ៍តេស្តបន្ថែម",
+	  generic_health_survey: "ឧបករណ៍តេស្តបន្ថែម",
+	  progress_step: "ជំហាន",
+	  progress_of: "ក្នុងចំណោម",
+	  step1_title: "ព័ត៌មានមូលដ្ឋាន",
+	  step2_title: "បរិស្ថានការងារ",
+	  step3_title: "ការគេង និងអាហារ",
+	  step4_title: "របៀបរស់នៅ និងគោលដៅ",
+	  step5_title: "រោគសញ្ញា",
+	  next_button: "បន្ទាប់",
+	  back_button: "ថយក្រោយ",
+	  submit_button: "បញ្ជូន"
 	}
 };
 

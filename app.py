@@ -116,7 +116,15 @@ GROUP_NAMES_LOCALIZED = {
         "G5": "Sektor Perkhidmatan",
         "G6": "Pertanian/Perikanan",
     },
-    "km": GROUP_NAMES,
+    "km": {
+        "G1": "ការិយាល័យ/ឌីជីថល",
+        "G2": "សុខាភិបាល/ការថែទាំ",
+        "G3": "ឧស្សាហកម្ម/រោងចក្រ",
+        "G4": "ការងារធ្ងន់/សំណង់",
+        "G5": "វិស័យសេវាកម្ម",
+        "G6": "កសិកម្ម/នេសាទ",
+    }
+  }
 }
 
 # Mapping of language codes to human-readable names
@@ -171,6 +179,7 @@ LANGUAGE_LABELS = {
     "zh": "中文",
     "ko": "한국어",
     "ms": "Bahasa Melayu",
+    "km": "ខ្មែរ",
 }
 
 LANGUAGE_FLAGS = {
@@ -183,6 +192,7 @@ LANGUAGE_FLAGS = {
     "zh": "🇨🇳",
     "ko": "🇰🇷",
     "ms": "🇲🇾",
+    "km": "🇰🇭",
 }
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
