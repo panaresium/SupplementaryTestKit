@@ -116,20 +116,24 @@
         <div class="charts-row" style="margin-top:20px;">
             <div class="chart-container">
                 <h3>Category Totals</h3>
+                <label><input type="checkbox" id="categoryLegendToggle" checked> Show Legend</label>
                 <canvas id="categoryChart" height="150"></canvas>
             </div>
             <div class="chart-container">
                 <h3>Responses per Question</h3>
+                <label><input type="checkbox" id="questionLegendToggle" checked> Show Legend</label>
                 <canvas id="questionChart" height="150"></canvas>
             </div>
         </div>
         <div class="charts-row" style="margin-top:20px;">
             <div class="chart-container">
                 <h3>Scores Over Time</h3>
+                <label><input type="checkbox" id="timeLegendToggle" checked> Show Legend</label>
                 <canvas id="timeChart" height="150"></canvas>
             </div>
             <div class="chart-container">
                 <h3>Average Score by Group</h3>
+                <label><input type="checkbox" id="avgLegendToggle" checked> Show Legend</label>
                 <canvas id="avgGroupChart" height="150"></canvas>
             </div>
         </div>
@@ -189,10 +193,18 @@
         });
     });
 
+    const colors = ['#e74c3c','#3498db','#f1c40f','#2ecc71','#9b59b6','#e67e22','#1abc9c'];
+    function pickColor(i){ return colors[i % colors.length]; }
+
     const categoryData = {{ totals | tojson }};
     const ctxCat = document.getElementById('categoryChart').getContext('2d');
 
-    new Chart(ctxCat, {
+    const categoryLegendToggle = document.getElementById('categoryLegendToggle');
+    const questionLegendToggle = document.getElementById('questionLegendToggle');
+    const timeLegendToggle = document.getElementById('timeLegendToggle');
+    const avgLegendToggle = document.getElementById('avgLegendToggle');
+
+    const categoryChart = new Chart(ctxCat, {
         type: 'pie',
         data: {
             labels: Object.keys(categoryData),
@@ -209,6 +221,10 @@
             }
         }
     });
+    categoryLegendToggle.addEventListener('change', () => {
+        categoryChart.options.plugins.legend.display = categoryLegendToggle.checked;
+        categoryChart.update();
+    });
 
     const questionCounts = {{ question_counts | tojson }};
     const qLabels = Object.keys(questionCounts).map(k => 'Q' + k);
@@ -217,8 +233,6 @@
         Object.keys(obj).forEach(k => allAnswers.add(k));
     });
     const answerList = Array.from(allAnswers);
-    const colors = ['#e74c3c','#3498db','#f1c40f','#2ecc71','#9b59b6','#e67e22','#1abc9c'];
-    function pickColor(i){ return colors[i % colors.length]; }
     const datasets = answerList.map((ans, idx) => ({
         label: ans,
         data: qLabels.map((_, qidx) => {
@@ -228,7 +242,7 @@
         backgroundColor: pickColor(idx)
     }));
     const ctxQ = document.getElementById('questionChart').getContext('2d');
-    new Chart(ctxQ, {
+    const questionChart = new Chart(ctxQ, {
         type: 'bar',
         data: { labels: qLabels, datasets: datasets },
         options: {
@@ -241,6 +255,10 @@
         }
 
     });
+    questionLegendToggle.addEventListener('change', () => {
+        questionChart.options.plugins.legend.display = questionLegendToggle.checked;
+        questionChart.update();
+    });
 
     const scoreHistory = {{ score_history | tojson }};
     const timeLabels = scoreHistory.timestamps.map(t => new Date(t).toLocaleDateString());
@@ -252,7 +270,7 @@
         fill: false
     }));
     const ctxTime = document.getElementById('timeChart').getContext('2d');
-    new Chart(ctxTime, {
+    const timeChart = new Chart(ctxTime, {
         type: 'line',
         data: { labels: timeLabels, datasets: timeDatasets },
         options: {
@@ -263,10 +281,14 @@
             }
         }
     });
+    timeLegendToggle.addEventListener('change', () => {
+        timeChart.options.plugins.legend.display = timeLegendToggle.checked;
+        timeChart.update();
+    });
 
     const averagesData = {{ averages | tojson }};
     const ctxAvg = document.getElementById('avgGroupChart').getContext('2d');
-    new Chart(ctxAvg, {
+    const avgChart = new Chart(ctxAvg, {
         type: 'bar',
         data: {
             labels: Object.keys(averagesData),
@@ -283,6 +305,10 @@
             },
             scales: { y: { beginAtZero: true } }
         }
+    });
+    avgLegendToggle.addEventListener('change', () => {
+        avgChart.options.plugins.legend.display = avgLegendToggle.checked;
+        avgChart.update();
     });
 
     const freeTexts = {{ free_texts | tojson }};
