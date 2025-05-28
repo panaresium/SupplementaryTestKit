@@ -34,8 +34,25 @@ GROUP_NAMES = {
     "G6": "Agriculture/Fishery",
 }
 
+# Mapping of group codes to descriptive names for AI prompts
+GROUP_NAMES = {
+    "G1": "Office/Digital",
+    "G2": "Medical/Caregiving",
+    "G3": "Industrial/Factory",
+    "G4": "Heavy Labor/Construction",
+    "G5": "Service Sector",
+    "G6": "Agriculture/Fishery",
+}
+
+# Mapping of language codes to human-readable names
+LANGUAGE_NAMES = {
+    "en": "English",
+    "fr": "French",
+    "th": "Thai",
+}
+
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
-group_texts =""
+
 
 ADMIN_CREDENTIALS = {"username": "admin", "password": "admin"}
 
@@ -202,14 +219,16 @@ def _generate_recommendation(group_scores: dict) -> str:
 
 
 def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
-    """Query OpenAI for a supplement suggestion based on user text and groups."""
+
+    """Query OpenAI for a supplement suggestion based on user text."""
     if not text or not text.strip():
         return ""
     try:
+        language = LANGUAGE_NAMES.get(lang_code, "Thai")
         group_info = ""
         if groups:
-            readable = [f"{GROUP_NAMES.get(g, g)} ({g})" for g in groups]
-            group_info = " The user aligns with: " + ", ".join(readable) + "."
+            names = [GROUP_NAMES.get(g, g) for g in groups]
+            group_info = f" The user aligns with: {', '.join(names)}."
 
         messages = [
             {
@@ -217,7 +236,8 @@ def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
                 "content": (
                     "You are a helpful assistant providing supplement advice. "
                     "You will suggest supplements based on the six groups "
-                    "G1=Office/Digital,G2=Medical/Caregiving,G3=Industrial/Factory," 
+
+                    "G1=Office/Digital,G2=Medical/Caregiving,G3=Industrial/Factory,"
                     "G4=Heavy Labor/Construction,G5=Service Sector,G6=Agriculture/Fishery."
                 ),
             },
@@ -225,8 +245,8 @@ def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
                 "role": "user",
                 "content": (
 
-                    f"Please respond in {lang_code} based on the following concerns: {text}."
-                    f"I'm in group: {group_info} Suggest ways to exercise, relax, and take supplements for better health."
+                    f"Please respond in {language} based on the following concerns: {text}."
+                    f"{group_info} Suggest ways to exercise, relax, and take supplements for better health."
 
                 ),
             },
@@ -255,7 +275,9 @@ def thank_you():
     scores, submitted = _calculate_scores(answers, structure, language)
     recommendation = _generate_recommendation(scores)
 
-    group_info = _load_group_info()
+
+    # Determine the user's top groups for tailored AI advice
+
     top_groups = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
     rec_groups = []
     if top_groups:
@@ -267,6 +289,9 @@ def thank_you():
     last_text = answers.get('10', '')
 
     ai_suggestion = _ai_suggestion(last_text, language, rec_groups)
+
+    group_info = _load_group_info()
+
 
     return render_template(
         'thank_you.html',
