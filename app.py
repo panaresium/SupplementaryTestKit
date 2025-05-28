@@ -386,7 +386,8 @@ def admin_results():
     q_map = {str(q["id"]): q.get("questionText", {}).get("en", f"Q{q['id']}")
              for q in structure.get("questions", [])}
     aggregate_scores = {"G1": 0, "G2": 0, "G3": 0, "G4": 0, "G5": 0, "G6": 0}
-    question_counts = {str(q["id"]): {} for q in structure.get("questions", [])}
+    # exclude Q10 (free text) from answer count chart
+    question_counts = {str(q["id"]): {} for q in structure.get("questions", []) if int(q.get("id", 0)) <= 9}
     free_texts = []
     # store raw history for correlation
     score_history_raw = {"timestamps": [], "G1": [], "G2": [], "G3": [], "G4": [], "G5": [], "G6": []}
