@@ -239,8 +239,10 @@
             return questionCounts[qid][ans] || 0;
         }),
         backgroundColor: pickColor(idx),
-        barThickness: 30,
-        barPercentage: 1.0,
+        /* Allow Chart.js to automatically size bars based on the
+           available width so that all questions remain visible */
+        maxBarThickness: 40,
+        barPercentage: 0.9,
         categoryPercentage: 0.8
     }));
     const ctxQ = document.getElementById('questionChart').getContext('2d');
