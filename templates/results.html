@@ -165,6 +165,7 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <div id="paginationControls" style="margin-top:10px;"></div>
         </div>
         <div id="paginationControls" style="text-align:center; margin-top:10px;">
             <button id="prevPage">Prev</button>
@@ -196,6 +197,7 @@
 
     function applyFilter() {
         const query = filterInput.value.toLowerCase();
+
         filteredRows = allRows.filter(r => r.textContent.toLowerCase().includes(query));
     }
 
@@ -215,14 +217,17 @@
         applyFilter();
         currentPage = 1;
         renderTable();
+
     }
 
     filterInput.addEventListener('input', filterRows);
 
     table.querySelectorAll('th').forEach((th, idx) => {
         th.addEventListener('click', () => {
+
             allRows.sort((a, b) => a.children[idx].textContent.localeCompare(b.children[idx].textContent));
             filterRows();
+
         });
     });
 
@@ -385,6 +390,8 @@
         container.innerHTML = '<h3>Free Text Keywords</h3>';
         container.appendChild(list);
     }
+
+    showPage(1);
 
 
 
