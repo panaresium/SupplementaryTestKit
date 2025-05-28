@@ -1,6 +1,7 @@
 import os
 import sqlite3
 import csv
+import io
 import json # Added json import
 from flask import Flask, request, jsonify, send_from_directory, render_template, session, redirect, url_for, Response
 import openai
@@ -445,6 +446,44 @@ def admin_export_csv():
         mimetype="text/csv",
         headers={"Content-Disposition": "attachment; filename=results.csv"}
     )
+
+
+@app.route('/admin/import_csv', methods=['POST'])
+@admin_required
+def admin_import_csv():
+    """Import survey results from a CSV file."""
+    file = request.files.get('file')
+    if not file or file.filename == '':
+        return redirect(url_for('admin_results'))
+
+    try:
+        stream = io.StringIO(file.read().decode('utf-8'))
+    except Exception:
+        return redirect(url_for('admin_results'))
+
+    reader = csv.DictReader(stream)
+    structure = _load_questionnaire_structure()
+    question_ids = [str(q.get('id')) for q in structure.get('questions', [])]
+
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    for row in reader:
+        response_id = row.get('id') or str(uuid4())
+        timestamp = row.get('timestamp') or datetime.now(timezone.utc).isoformat()
+        answers = {qid: row.get(f'Q{qid}', '') for qid in question_ids if row.get(f'Q{qid}', '')}
+        answers_json = json.dumps(answers)
+        cur.execute('SELECT 1 FROM responses WHERE id=?', (response_id,))
+        if cur.fetchone():
+            continue
+        cur.execute(
+            'INSERT INTO responses (id, timestamp, language_code, answers_json, products) '
+            'VALUES (?, ?, ?, ?, ?)',
+            (response_id, timestamp, '', answers_json, '')
+        )
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('admin_results'))
 
 @app.route('/admin/group_info', methods=['GET', 'POST'])
 @admin_required

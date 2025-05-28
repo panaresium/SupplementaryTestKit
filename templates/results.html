@@ -67,6 +67,10 @@
         <div style="text-align:right; margin-bottom:10px;">
             <a href="{{ url_for('logout') }}" class="btn-secondary">Logout</a>
             <a href="{{ url_for('admin_export_csv') }}" class="btn-secondary">Export CSV</a>
+            <form method="post" action="{{ url_for('admin_import_csv') }}" enctype="multipart/form-data" style="display:inline-block; margin-left:10px;">
+                <input type="file" name="file" accept=".csv" required>
+                <button type="submit" class="btn-secondary">Import CSV</button>
+            </form>
         </div>
         {% if totals %}
         <div>

@@ -55,3 +55,9 @@ Tests can be run with `pytest`.
 
 The questionnaire text and translations are stored in `static/questionnaire_structure.json` and rendered dynamically by `static/script.js`.
 
+### CSV Import/Export
+
+From the admin results page you can export all responses to a CSV file or import
+responses from a CSV created by the same export feature. The import form accepts
+a `.csv` file and adds any new rows to the database.
+
