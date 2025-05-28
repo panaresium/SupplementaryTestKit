@@ -200,19 +200,18 @@ def _generate_recommendation(group_scores: dict) -> str:
 
 def _ai_suggestion(text: str, lang_code: str) -> str:
     """Query OpenAI for a supplement suggestion based on user text."""
-    if not text:
+    if not text or not text.strip():
         return ""
     try:
         messages = [
-            {
-                "role": "system",
-                "content": "You are a helpful assistant providing supplement advice."
-            },
+
+            {"role": "system", "content": "You are a helpful assistant providing supplement advice. where you will suggest supplements based on the 6 groups. G1=Office/Digital,G2=Medical/Caregiving,G3=Industrial/Factory,G4=Heavy Labor/Construction,G5=Service Sector,G6=Agriculture/Fishery"},
             {
                 "role": "user",
                 "content": (
                     f"Please respond in {lang_code} based on the following concerns: {text}. "
                     "Suggest ways to exercise, relax, and take supplements for better health."
+
                 ),
             },
         ]
@@ -240,8 +239,10 @@ def thank_you():
     scores, submitted = _calculate_scores(answers, structure, language)
     recommendation = _generate_recommendation(scores)
 
+
     # Use the freetext from the last question for AI suggestion
     last_text = answers.get('10', '')
+
     ai_suggestion = _ai_suggestion(last_text, language)
 
     group_info = _load_group_info()
