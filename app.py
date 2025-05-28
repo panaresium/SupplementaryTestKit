@@ -34,16 +34,6 @@ GROUP_NAMES = {
     "G6": "Agriculture/Fishery",
 }
 
-# Mapping of group codes to descriptive names for AI prompts
-GROUP_NAMES = {
-    "G1": "Office/Digital",
-    "G2": "Medical/Caregiving",
-    "G3": "Industrial/Factory",
-    "G4": "Heavy Labor/Construction",
-    "G5": "Service Sector",
-    "G6": "Agriculture/Fishery",
-}
-
 # Mapping of language codes to human-readable names
 LANGUAGE_NAMES = {
     "en": "English",
@@ -224,7 +214,8 @@ def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
     if not text or not text.strip():
         return ""
     try:
-        language = LANGUAGE_NAMES.get(lang_code, "Thai")
+
+        language_name = LANGUAGE_NAMES.get(lang_code, LANGUAGE_NAMES.get("th", "Thai"))
         group_info = ""
         if groups:
             names = [GROUP_NAMES.get(g, g) for g in groups]
@@ -236,7 +227,6 @@ def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
                 "content": (
                     "You are a helpful assistant providing supplement advice. "
                     "You will suggest supplements based on the six groups "
-
                     "G1=Office/Digital,G2=Medical/Caregiving,G3=Industrial/Factory,"
                     "G4=Heavy Labor/Construction,G5=Service Sector,G6=Agriculture/Fishery."
                 ),
@@ -244,8 +234,7 @@ def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
             {
                 "role": "user",
                 "content": (
-
-                    f"Please respond in {language} based on the following concerns: {text}."
+                    f"Please respond in {language_name} based on the following concerns: {text}. "
                     f"{group_info} Suggest ways to exercise, relax, and take supplements for better health."
 
                 ),
