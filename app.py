@@ -204,7 +204,7 @@ def _ai_suggestion(text: str, lang_code: str) -> str:
         return ""
     try:
         messages = [
-            {"role": "system", "content": "You are a helpful assistant providing supplement advice."},
+            {"role": "system", "content": "You are a helpful assistant providing supplement advice. where you will suggest supplements based on the 6 groups. G1=Office/Digital,G2=Medical/Caregiving,G3=Industrial/Factory,G4=Heavy Labor/Construction,G5=Service Sector,G6=Agriculture/Fishery"},
             {
                 "role": "user",
                 "content": (
