@@ -296,6 +296,7 @@
         data: qKeys.map(qid => questionCounts[qid][ans] || 0),
         backgroundColor: pickColor(idx),
         borderWidth: 1
+
     }));
     const ctxQ = document.getElementById('questionChart').getContext('2d');
     const questionChart = new Chart(ctxQ, {
@@ -308,10 +309,12 @@
                 title: { display: true, text: 'Answer Counts Per Question' },
                 legend: { display: false }
             },
+
             scales: {
                 x: { beginAtZero: true },
                 y: { stacked: false }
             }
+
         }
 
     });
