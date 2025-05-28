@@ -25,7 +25,6 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 
-langcode = ""
 
 ADMIN_CREDENTIALS = {"username": "admin", "password": "admin"}
 
@@ -199,15 +198,23 @@ def _generate_recommendation(group_scores: dict) -> str:
     return f"Your profile suggests you align with: {' and '.join(group_texts)}."
 
 
-def _ai_suggestion(text: str) -> str:
+def _ai_suggestion(text: str, lang_code: str) -> str:
     """Query OpenAI for a supplement suggestion based on user text."""
-    if not text:
+    if not text or not text.strip():
         return ""
     try:
         messages = [
             {"role": "system", "content": "You are a helpful assistant providing supplement advice."},
-
-            {"role": "user", "content": "Please return the suggestion in " +langcode+" language code where the symptom is follow: " + text +". You will return what should I do to have better health including how to exercise, relax, and use supplements."},
+            {
+                "role": "user",
+                "content": (
+                    "Please return the suggestion in "
+                    + lang_code
+                    + " language code where the symptom is follow: "
+                    + text
+                    + ". You will return what should I do to have better health including how to exercise, relax, and use supplements."
+                ),
+            },
         ]
         resp = openai.ChatCompletion.create(model="gpt-4.1", messages=messages)
 
@@ -234,9 +241,9 @@ def thank_you():
     scores, submitted = _calculate_scores(answers, structure, language)
     recommendation = _generate_recommendation(scores)
 
-    # Use the freetext from the last question (id 26) for AI suggestion
-    last_text = answers.get('26', '')
-    ai_suggestion = _ai_suggestion(last_text)
+    # Use the free-text "symptoms_other_concerns" question for AI suggestion
+    last_text = answers.get('symptoms_other_concerns', '')
+    ai_suggestion = _ai_suggestion(last_text, language)
 
     group_info = _load_group_info()
     top_groups = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
@@ -277,7 +284,6 @@ def init_db():
 def submit():
     data = request.get_json(force=True)
     language_code = data.get('language')
-    langcode = language_code
     answers_dict = data.get('answers')
     products_data = "" # Default to empty string
 
