@@ -284,16 +284,18 @@
     });
 
     const questionCounts = {{ question_counts | tojson }};
-    const qKeys = Object.keys(questionCounts).filter(k => parseInt(k) <= 9);
-    const qLabels = qKeys.map(k => 'Q' + k);
+    const qIds = Object.keys(questionCounts).sort((a,b)=>parseInt(a)-parseInt(b));
+    const qLabels = qIds.map(k => 'Q' + k);
+
     const allAnswers = new Set();
-    Object.values(questionCounts).forEach(obj => {
+    qIds.forEach(id => {
+        const obj = questionCounts[id];
         Object.keys(obj).forEach(k => allAnswers.add(k));
     });
     const answerList = Array.from(allAnswers);
     const datasets = answerList.map((ans, idx) => ({
         label: ans,
-        data: qKeys.map(qid => questionCounts[qid][ans] || 0),
+        data: qIds.map(qid => questionCounts[qid][ans] || 0),
         backgroundColor: pickColor(idx),
         borderWidth: 1
 
@@ -309,11 +311,7 @@
                 title: { display: true, text: 'Answer Counts Per Question' },
                 legend: { display: false }
             },
-
-            scales: {
-                x: { beginAtZero: true },
-                y: { stacked: false }
-            }
+            scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true } }
 
         }
 
