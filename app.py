@@ -390,6 +390,7 @@ def admin_results():
         str(q["id"]): {a.get("value"): 0 for a in q.get("answers", [])}
         for q in structure.get("questions", []) if q.get("type") != "freetext"
     }
+
     free_texts = []
     # store raw history for correlation
     score_history_raw = {"timestamps": [], "G1": [], "G2": [], "G3": [], "G4": [], "G5": [], "G6": []}
