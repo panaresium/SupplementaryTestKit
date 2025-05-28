@@ -297,23 +297,20 @@
             return questionCounts[qid][ans] || 0;
         }),
         backgroundColor: pickColor(idx),
-        /* Allow Chart.js to automatically size bars based on the
-           available width so that all questions remain visible */
-        maxBarThickness: 40,
-        barPercentage: 0.9,
-        categoryPercentage: 0.8
+        borderWidth: 1
     }));
     const ctxQ = document.getElementById('questionChart').getContext('2d');
     const questionChart = new Chart(ctxQ, {
         type: 'bar',
         data: { labels: qLabels, datasets: datasets },
         options: {
+            indexAxis: 'y',
             responsive: true,
             plugins: {
                 title: { display: true, text: 'Answer Counts Per Question' },
                 legend: { display: false }
             },
-            scales: { x: { stacked: false }, y: { beginAtZero: true } }
+            scales: { x: { stacked: true, beginAtZero: true }, y: { stacked: true } }
         }
 
     });
