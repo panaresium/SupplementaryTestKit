@@ -160,6 +160,31 @@ LANGUAGE_FLAGS = {
     "km": "🇰🇭",
 }
 
+# Labels and flag emojis used on the language selection page
+LANGUAGE_LABELS = {
+    "en": "English",
+    "fr": "Français",
+    "th": "ไทย",
+    "my": "မြန်မာ",
+    "lo": "ລາວ",
+    "ja": "日本語",
+    "zh": "中文",
+    "ko": "한국어",
+    "ms": "Bahasa Melayu",
+}
+
+LANGUAGE_FLAGS = {
+    "en": "🇬🇧",
+    "fr": "🇫🇷",
+    "th": "🇹🇭",
+    "my": "🇲🇲",
+    "lo": "🇱🇦",
+    "ja": "🇯🇵",
+    "zh": "🇨🇳",
+    "ko": "🇰🇷",
+    "ms": "🇲🇾",
+}
+
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 
 

@@ -27,6 +27,7 @@ def test_index_route(client):
     assert '🇰🇭'.encode('utf-8') in res.data
 
 
+
 def test_submit_and_admin_results(client):
     payload = {"language": "en", "answers": {"1": "a1"}}
     res = client.post('/api/submit', json=payload)
