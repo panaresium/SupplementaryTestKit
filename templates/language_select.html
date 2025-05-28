@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Select Language</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        #languageOptions {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .language-option {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .language-option .icon {
+            font-size: 48px;
+        }
+        .language-option:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Select your language</h1>
+
+    <div id="languageOptions">
+        {% for code, label in labels.items() %}
+        <div class="language-option" data-lang="{{ code }}">
+            <div class="icon" role="img" aria-label="{{ label }}">{{ flags.get(code, '') }}</div>
+            <div class="lang-label">{{ label }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.language-option').forEach(function(el) {
+        el.addEventListener('click', function() {
+            var lang = el.getAttribute('data-lang');
+            localStorage.setItem('language', lang);
+            window.location.href = '/questionnaire';
+        });
+    });
+</script>
+</body>
+</html>

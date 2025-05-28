@@ -131,6 +131,31 @@ LANGUAGE_NAMES = {
     "ms": "Malay",
 }
 
+# Labels and flag emojis used on the language selection page
+LANGUAGE_LABELS = {
+    "en": "English",
+    "fr": "Français",
+    "th": "ไทย",
+    "my": "မြန်မာ",
+    "lo": "ລາວ",
+    "ja": "日本語",
+    "zh": "中文",
+    "ko": "한국어",
+    "ms": "Bahasa Melayu",
+}
+
+LANGUAGE_FLAGS = {
+    "en": "🇬🇧",
+    "fr": "🇫🇷",
+    "th": "🇹🇭",
+    "my": "🇲🇲",
+    "lo": "🇱🇦",
+    "ja": "🇯🇵",
+    "zh": "🇨🇳",
+    "ko": "🇰🇷",
+    "ms": "🇲🇾",
+}
+
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 
 
@@ -151,7 +176,7 @@ def admin_required(f):
 @app.route('/')
 def index():
     """Landing page that lets the user choose a language."""
-    return send_from_directory('static', 'language_select.html')
+    return render_template('language_select.html', labels=LANGUAGE_LABELS, flags=LANGUAGE_FLAGS)
 
 @app.route('/questionnaire')
 def questionnaire():
