@@ -85,32 +85,6 @@
         </div>
         {% endif %}
 
-        <input type="text" id="filterInput" placeholder="Filter results" style="margin-top:10px;">
-        {% if results %}
-        <div class="table-container" style="overflow-x:auto; margin-top:20px;">
-
-            <table id="resultsTable">
-                <thead>
-                    <tr>
-                        {% for h in headers %}
-                        <th>{{ q_map.get(h, h) }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                {% for row in results %}
-                    <tr>
-                        {% for h in headers %}
-                        <td>{{ row[h] }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% else %}
-            <p>No survey results found.</p>
-        {% endif %}
 
 
         <div class="charts-row" style="margin-top:20px;">
@@ -163,6 +137,33 @@
                 </tbody>
             </table>
         </div>
+        {% endif %}
+
+        <input type="text" id="filterInput" placeholder="Filter results" style="margin-top:10px;">
+        {% if results %}
+        <div class="table-container" style="overflow-x:auto; margin-top:20px;">
+
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        {% for h in headers %}
+                        <th>{{ q_map.get(h, h) }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                {% for row in results %}
+                    <tr>
+                        {% for h in headers %}
+                        <td>{{ row[h] }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p>No survey results found.</p>
         {% endif %}
 
     </div>
