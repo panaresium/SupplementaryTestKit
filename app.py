@@ -46,6 +46,9 @@ GROUP_NAMES = {
     "G6": "Agriculture/Fishery",
 }
 
+# Group IDs in use
+GROUP_IDS = list(GROUP_NAMES.keys())
+
 # Localized versions of group names for the supported languages
 GROUP_NAMES_LOCALIZED = {
     "en": GROUP_NAMES,
@@ -205,30 +208,39 @@ KEYWORD_FILE = os.path.join(os.path.dirname(__file__), 'thai_keywords.json')
 
 
 def _load_group_info() -> dict:
+    """Load group info from JSON and ensure required structure."""
+    data = {}
     if os.path.exists(GROUP_INFO_FILE):
-
         with open(GROUP_INFO_FILE, 'r', encoding='utf-8') as f:
-
             try:
-                return json.load(f)
+                data = json.load(f)
             except json.JSONDecodeError:
-                pass
-    # Default structure if file does not exist or is invalid
-    return {
-        "G1": {"message": "", "image": ""},
-        "G2": {"message": "", "image": ""},
-        "G3": {"message": "", "image": ""},
-        "G4": {"message": "", "image": ""},
-        "G5": {"message": "", "image": ""},
-        "G6": {"message": "", "image": ""},
-    }
+                data = {}
+
+    # Ensure expected structure
+    for gid in GROUP_IDS:
+        info = data.get(gid, {})
+        # Migrate old single "message" field to per-language messages
+        messages = info.get('messages')
+        if messages is None:
+            msg = info.get('message', '')
+            messages = {lang: msg for lang in LANGUAGE_NAMES.keys()}
+        else:
+            for lang in LANGUAGE_NAMES.keys():
+                messages.setdefault(lang, '')
+        info['messages'] = messages
+        info.setdefault('image', '')
+        info.pop('message', None)
+        data[gid] = info
+
+    return data
 
 
 def _save_group_info(data: dict):
 
     with open(GROUP_INFO_FILE, 'w', encoding='utf-8') as f:
 
-        json.dump(data, f, indent=2)
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
 
 def _load_keywords() -> dict:
@@ -760,11 +772,13 @@ def admin_import_csv():
 def admin_group_info():
     group_info = _load_group_info()
     if request.method == 'POST':
-        for gid in group_info.keys():
-            group_info[gid]['message'] = request.form.get(f'{gid}_message', '')
+        for gid in GROUP_IDS:
+            for lang in LANGUAGE_NAMES.keys():
+                field = f'{gid}_message_{lang}'
+                group_info[gid]['messages'][lang] = request.form.get(field, '')
             group_info[gid]['image'] = request.form.get(f'{gid}_image', '')
         _save_group_info(group_info)
-    return render_template('group_info.html', group_info=group_info)
+    return render_template('group_info.html', group_info=group_info, languages=LANGUAGE_NAMES)
 
 if __name__ == '__main__':
     if not os.path.exists(DB_PATH):
