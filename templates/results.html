@@ -166,6 +166,11 @@
                 </tbody>
             </table>
         </div>
+        <div id="paginationControls" style="text-align:center;margin-top:10px;">
+            <button id="prevPage">&lt;</button>
+            <span id="pageInfo"></span>
+            <button id="nextPage">&gt;</button>
+        </div>
         {% else %}
             <p>No survey results found.</p>
         {% endif %}
@@ -175,17 +180,46 @@
     <script>
     const filterInput = document.getElementById('filterInput');
     const table = document.getElementById('resultsTable');
+    const prevBtn = document.getElementById('prevPage');
+    const nextBtn = document.getElementById('nextPage');
+    const pageInfo = document.getElementById('pageInfo');
+    const rowsPerPage = 100;
+    let currentPage = 1;
 
-    function filterRows() {
-        const query = filterInput.value.toLowerCase();
-        const rows = table.querySelectorAll('tbody tr');
-        rows.forEach(r => {
-            const text = r.textContent.toLowerCase();
-            r.style.display = text.includes(query) ? '' : 'none';
+    table.querySelectorAll('tbody tr').forEach(r => r.dataset.visible = '1');
+
+    function getVisibleRows(){
+        return Array.from(table.querySelectorAll('tbody tr')).filter(r => r.dataset.visible === '1');
+    }
+
+    function updatePagination(){
+        const rows = getVisibleRows();
+        const totalPages = Math.ceil(rows.length / rowsPerPage) || 1;
+        if(currentPage > totalPages) currentPage = totalPages;
+        rows.forEach((r, i) => {
+            r.style.display = (i >= (currentPage-1)*rowsPerPage && i < currentPage*rowsPerPage) ? '' : 'none';
         });
+        pageInfo.textContent = currentPage + '/' + totalPages;
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages;
+    }
+
+    function filterRows(){
+        const query = filterInput.value.toLowerCase();
+        table.querySelectorAll('tbody tr').forEach(r => {
+            const text = r.textContent.toLowerCase();
+            r.dataset.visible = text.includes(query) ? '1' : '0';
+        });
+        currentPage = 1;
+        updatePagination();
     }
 
     filterInput.addEventListener('input', filterRows);
+    prevBtn.addEventListener('click', () => { if(currentPage>1){ currentPage--; updatePagination(); } });
+    nextBtn.addEventListener('click', () => {
+        const total = Math.ceil(getVisibleRows().length / rowsPerPage) || 1;
+        if(currentPage < total){ currentPage++; updatePagination(); }
+    });
 
     table.querySelectorAll('th').forEach((th, idx) => {
         th.addEventListener('click', () => {
@@ -194,6 +228,7 @@
             const tbody = table.querySelector('tbody');
             tbody.innerHTML = '';
             sorted.forEach(r => tbody.appendChild(r));
+            updatePagination();
         });
     });
 
@@ -270,7 +305,7 @@
     });
 
     const scoreHistory = {{ score_history | tojson }};
-    const timeLabels = scoreHistory.timestamps.map(t => new Date(t).toLocaleDateString());
+    const timeLabels = scoreHistory.dates;
     const groups = ['G1','G2','G3','G4','G5','G6'];
     const timeDatasets = groups.map((g, idx) => ({
         label: g,
@@ -320,16 +355,18 @@
         avgChart.update();
     });
 
-    const freeTexts = {{ free_texts | tojson }};
-    if (freeTexts.length) {
+    updatePagination();
+
+    const keywordCounts = {{ keyword_counts | tojson }};
+    if (Object.keys(keywordCounts).length) {
         const container = document.getElementById('freeTextContainer');
         const list = document.createElement('ul');
-        freeTexts.forEach(t => {
+        Object.entries(keywordCounts).sort((a,b)=>b[1]-a[1]).forEach(([word,count]) => {
             const li = document.createElement('li');
-            li.textContent = t;
+            li.textContent = `${word}: ${count}`;
             list.appendChild(li);
         });
-        container.innerHTML = '<h3>Free Text Responses</h3>';
+        container.innerHTML = '<h3>Free Text Keywords</h3>';
         container.appendChild(list);
     }
 
