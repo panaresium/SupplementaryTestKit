@@ -592,6 +592,7 @@ async function submitAnswers() {
     document.body.appendChild(pleaseWaitMessage);
     console.log('pleaseWaitMessage appended to body');
 
+    let submissionSuccessful = false; // Flag for successful submission
     try {
         const res = await fetch('/api/submit', {
             method: 'POST',
@@ -602,6 +603,7 @@ async function submitAnswers() {
         if (res.ok) {
             const responseData = await res.json();
             if (responseData.status === 'success') {
+                submissionSuccessful = true; // Set flag before redirection
                 // Pass the collected answersData to thank_you.html
                 const answersJson = JSON.stringify(answersData);
                 const encodedAnswers = encodeURIComponent(answersJson);
@@ -623,11 +625,15 @@ async function submitAnswers() {
         console.log('Error caught, re-enabling buttons');
         buttons.forEach(button => button.disabled = false); // Re-enable buttons
     } finally {
-        console.log('Finally block: removing pleaseWaitMessage');
-        // Remove "Please wait" message
-        const messageElement = document.getElementById('pleaseWaitMessage');
-        if (messageElement) {
-            document.body.removeChild(messageElement);
+        console.log('Finally block entered. submissionSuccessful:', submissionSuccessful);
+        if (!submissionSuccessful) {
+            console.log('Submission not successful or error occurred, removing pleaseWaitMessage');
+            const messageElement = document.getElementById('pleaseWaitMessage');
+            if (messageElement) {
+                document.body.removeChild(messageElement);
+            }
+        } else {
+            console.log('Submission successful, pleaseWaitMessage will remain until page redirects.');
         }
     }
 }
