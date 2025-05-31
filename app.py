@@ -34,6 +34,7 @@ CORS(app)
 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
+client = openai.OpenAI()
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1")
 
 # Mapping of group IDs to descriptive names
@@ -168,37 +169,12 @@ LANGUAGE_FLAGS = {
     "km": "🇰🇭",
 }
 
-# Labels and flag emojis used on the language selection page
-LANGUAGE_LABELS = {
-    "en": "English",
-    "fr": "Français",
-    "th": "ไทย",
-    "my": "မြန်မာ",
-    "lo": "ລາວ",
-    "ja": "日本語",
-    "zh": "中文",
-    "ko": "한국어",
-    "ms": "Bahasa Melayu",
-    "km": "ខ្មែរ",
-}
-
-LANGUAGE_FLAGS = {
-    "en": "🇬🇧",
-    "fr": "🇫🇷",
-    "th": "🇹🇭",
-    "my": "🇲🇲",
-    "lo": "🇱🇦",
-    "ja": "🇯🇵",
-    "zh": "🇨🇳",
-    "ko": "🇰🇷",
-    "ms": "🇲🇾",
-    "km": "🇰🇭",
-}
-
 DB_PATH = os.path.join(os.path.dirname(__file__), 'responses.db')
 
 
-ADMIN_CREDENTIALS = {"username": "admin", "password": "admin"}
+ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin")
+ADMIN_CREDENTIALS = {"username": ADMIN_USERNAME, "password": ADMIN_PASSWORD}
 
 from functools import wraps
 
@@ -359,9 +335,11 @@ def _calculate_scores(
                 opt = next((o for o in q.get('answers', []) if o.get('value') == val), None)
                 if opt:
                     display = opt.get('text', {}).get(lang_code, opt.get('text', {}).get('en', val))
-                    for g, w in opt.get('weights', {}).items():
-                        if g in group_scores and isinstance(w, (int, float)) and qid not in exclude_set:
-                            group_scores[g] += w
+                    # Add if opt: check
+                    if opt:
+                        for g, w in opt.get('weights', {}).items():
+                            if g in group_scores and isinstance(w, (int, float)) and qid not in exclude_set:
+                                group_scores[g] += w
                 else:
                     display = f"Selected value not found: {val}"
         elif q.get('type') == 'checkbox_group':
@@ -371,9 +349,11 @@ def _calculate_scores(
                     opt = next((o for o in q.get('answers', []) if o.get('value') == choice), None)
                     if opt:
                         texts.append(opt.get('text', {}).get(lang_code, opt.get('text', {}).get('en', choice)))
-                        for g, w in opt.get('weights', {}).items():
-                            if g in group_scores and isinstance(w, (int, float)) and qid not in exclude_set:
-                                group_scores[g] += w
+                        # Add if opt: check
+                        if opt:
+                            for g, w in opt.get('weights', {}).items():
+                                if g in group_scores and isinstance(w, (int, float)) and qid not in exclude_set:
+                                    group_scores[g] += w
                     else:
                         texts.append(f"Value not found: {choice}")
                 display = ", ".join(texts)
@@ -397,10 +377,20 @@ def _generate_recommendation(group_scores: dict, lang_code: str = "en") -> str:
 
     scores = sorted(group_scores.items(), key=lambda kv: kv[1], reverse=True)
     recs = []
-    if scores:
+    # Define a minimum significant score, e.g., 3. This could be a constant.
+    MIN_SIGNIFICANT_SCORE = 3
+    # Only add recommendations if the top score is significant
+    if scores and scores[0][1] >= MIN_SIGNIFICANT_SCORE:
         recs.append(scores[0])
-        if len(scores) > 1 and (scores[0][1] - scores[1][1] <= 5):
+        # Also ensure the second score is significant and close enough
+        if len(scores) > 1 and scores[1][1] >= MIN_SIGNIFICANT_SCORE and \
+           (scores[0][1] - scores[1][1] <= 5):
             recs.append(scores[1])
+        # If the second score is not significant enough on its own, but the primary is,
+        # we might still want to check if it's positive and close, if that's desired.
+        # For now, require second to also be "significant" if included as a pair.
+        # Alternative: if len(scores) > 1 and scores[1][1] > 0 and (scores[0][1] - scores[1][1] <= 5):
+            # recs.append(scores[1]) # This would allow a non-significant (e.g. 1 or 2) if close to a significant one
 
     if not recs:
         no_data = {
@@ -504,8 +494,10 @@ def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
                 ),
             },
         ]
-        resp = openai.ChatCompletion.create(model=OPENAI_MODEL, messages=messages)
-        return resp.choices[0].message["content"].strip()
+        # resp = openai.ChatCompletion.create(model=OPENAI_MODEL, messages=messages) # Old call
+        # return resp.choices[0].message["content"].strip() # Old access
+        resp = client.chat.completions.create(model=OPENAI_MODEL, messages=messages)
+        return resp.choices[0].message.content.strip() # New access for content
     except Exception as exc:
         return f"AI suggestion unavailable: {exc}"
 
@@ -513,9 +505,10 @@ def _ai_suggestion(text: str, lang_code: str, groups=None) -> str:
 @app.route('/thank_you.html')
 def thank_you():
     data_param = request.args.get('data')
+    language = request.args.get('lang', 'en') # Get language early for default use
     if not data_param:
         return render_template('thank_you.html', submitted_answers=None, group_scores=None,
-                               recommendation_text=None)
+                               recommendation_text=None, language_code=language, ai_suggestion=None, group_info=_load_group_info(), rec_groups=[])
 
     try:
         decoded = unquote(data_param)
@@ -526,7 +519,7 @@ def thank_you():
     language = request.args.get('lang', 'th')
     structure = _load_questionnaire_structure()
     scores, submitted = _calculate_scores(answers, structure, language)
-    recommendation = _generate_recommendation(scores, language)
+    recommendation = _generate_recommendation(scores, language) # language is already defined
 
 
     # Determine the user's top groups for tailored AI advice
@@ -552,9 +545,9 @@ def thank_you():
         group_scores=scores,
         recommendation_text=recommendation,
         ai_suggestion=ai_suggestion,
-        group_info=group_info,
+        group_info=group_info, # group_info already loaded
         rec_groups=rec_groups,
-        language_code=language,
+        language_code=language, # language is already defined
     )
 
 def init_db():
@@ -682,9 +675,11 @@ def admin_results():
                         parsed = ast.literal_eval(val)
                         if isinstance(parsed, list):
                             choices = parsed
-                    except Exception:
-                        choices = []
-                elif val:
+                    except (ValueError, SyntaxError) as e: # Catch more specific errors like ValueError, SyntaxError
+                        choices = [] # Keep as empty list on error
+                        # Optionally, log this: app.logger.warning(f"Could not parse checkbox value: {val}")
+                        app.logger.warning(f"Could not parse checkbox value via ast.literal_eval: {val}. Error: {e}")
+                elif val: # If val is a single string not starting with '[' (e.g. old data)
                     choices = [val]
                 for choice in choices:
                     question_counts[qid][choice] = question_counts[qid].get(choice, 0) + 1
@@ -778,12 +773,13 @@ def admin_export_csv():
     writer.writerow(headers)
     for row in results:
         row_dict = dict(row)
-        answers = {}
+        answers = {} # Initialize here
         if row_dict.get("answers_json"):
             try:
                 answers = json.loads(row_dict["answers_json"])
             except json.JSONDecodeError:
-                answers = {}
+                # answers remains {} as initialized, optionally log error
+                pass # Or app.logger.error(f"Could not decode answers_json for row {row_dict.get('id')}")
         scores, _ = _calculate_scores(answers, structure)
         values = [row_dict["timestamp"], row_dict["id"]]
         for qid in q_map.keys():
@@ -809,8 +805,14 @@ def admin_import_csv():
 
     try:
         stream = io.StringIO(file.read().decode('utf-8'))
-    except Exception:
-        return redirect(url_for('admin_results'))
+    except Exception as e:
+        # Add a flash message or return a rendered template with an error
+        # For now, let's assume Flask's flash messaging is set up or we can add it.
+        # If not, an error page would be better than a silent redirect.
+        # For this subtask, we'll just log and redirect, but note this limitation.
+        app.logger.error(f"Error decoding CSV upload: {e}") # Requires app.logger configuration
+        # Ideally, we'd use flash messages: flash(f"Error decoding CSV: {e}", "error")
+        return redirect(url_for('admin_results')) # Keep redirect for now
 
     reader = csv.DictReader(stream)
     structure = _load_questionnaire_structure()
