@@ -569,6 +569,32 @@ async function submitAnswers() {
         answers: answersData // Sending the structured answers object
     };
 
+    // Get all buttons and disable them
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => button.disabled = true);
+
+    // Create and display "Please wait" message
+    const pleaseWaitMessage = document.createElement('div');
+    pleaseWaitMessage.id = 'pleaseWaitMessage';
+    pleaseWaitMessage.style.position = 'fixed';
+    pleaseWaitMessage.style.top = '50%';
+    pleaseWaitMessage.style.left = '50%';
+    pleaseWaitMessage.style.transform = 'translate(-50%, -50%)';
+    pleaseWaitMessage.style.padding = '20px';
+    pleaseWaitMessage.style.backgroundColor = 'white';
+    pleaseWaitMessage.style.border = '1px solid #ccc';
+    pleaseWaitMessage.style.zIndex = '1000';
+
+    const messageText = document.createElement('div');
+    messageText.textContent = 'Please wait...'; // Consider internationalizing this
+    pleaseWaitMessage.appendChild(messageText);
+
+    const loader = document.createElement('div');
+    loader.className = 'loader'; // Assuming CSS for .loader exists
+    pleaseWaitMessage.appendChild(loader);
+
+    document.body.appendChild(pleaseWaitMessage);
+
     try {
         const res = await fetch('/api/submit', {
             method: 'POST',
@@ -586,13 +612,22 @@ async function submitAnswers() {
                 window.location.href = `thank_you.html?data=${encodedAnswers}&lang=${encodedLang}`;
             } else {
                 alert(`Submission was not successful. Server responded with: ${responseData.message || 'Unknown error'}`);
+                buttons.forEach(button => button.disabled = false); // Re-enable buttons
             }
         } else {
             alert(`There was an issue submitting your answers. Server responded with status: ${res.status}`);
+            buttons.forEach(button => button.disabled = false); // Re-enable buttons
         }
     } catch (e) {
         alert('Error submitting answers. Please try again.');
         console.error("Error submitting answers:", e);
+        buttons.forEach(button => button.disabled = false); // Re-enable buttons
+    } finally {
+        // Remove "Please wait" message
+        const messageElement = document.getElementById('pleaseWaitMessage');
+        if (messageElement) {
+            document.body.removeChild(messageElement);
+        }
     }
 }
 
