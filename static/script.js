@@ -533,6 +533,7 @@ function prevStep() {
 
 // --- 8. submitAnswers() ---
 async function submitAnswers() {
+    console.log('submitAnswers called');
     if (!questionnaireDef) {
         console.error("Questionnaire definition not loaded. Cannot submit.");
         alert("Error: Data definition not loaded. Please refresh.");
@@ -572,18 +573,12 @@ async function submitAnswers() {
     // Get all buttons and disable them
     const buttons = document.querySelectorAll('button');
     buttons.forEach(button => button.disabled = true);
+    console.log('Buttons disabled:', buttons);
 
     // Create and display "Please wait" message
     const pleaseWaitMessage = document.createElement('div');
     pleaseWaitMessage.id = 'pleaseWaitMessage';
-    pleaseWaitMessage.style.position = 'fixed';
-    pleaseWaitMessage.style.top = '50%';
-    pleaseWaitMessage.style.left = '50%';
-    pleaseWaitMessage.style.transform = 'translate(-50%, -50%)';
-    pleaseWaitMessage.style.padding = '20px';
-    pleaseWaitMessage.style.backgroundColor = 'white';
-    pleaseWaitMessage.style.border = '1px solid #ccc';
-    pleaseWaitMessage.style.zIndex = '1000';
+    // Inline styles removed
 
     const messageText = document.createElement('div');
     messageText.textContent = 'Please wait...'; // Consider internationalizing this
@@ -592,8 +587,10 @@ async function submitAnswers() {
     const loader = document.createElement('div');
     loader.className = 'loader'; // Assuming CSS for .loader exists
     pleaseWaitMessage.appendChild(loader);
+    console.log('pleaseWaitMessage element created:', pleaseWaitMessage);
 
     document.body.appendChild(pleaseWaitMessage);
+    console.log('pleaseWaitMessage appended to body');
 
     try {
         const res = await fetch('/api/submit', {
@@ -612,17 +609,21 @@ async function submitAnswers() {
                 window.location.href = `thank_you.html?data=${encodedAnswers}&lang=${encodedLang}`;
             } else {
                 alert(`Submission was not successful. Server responded with: ${responseData.message || 'Unknown error'}`);
+                console.log('Submission failed, re-enabling buttons');
                 buttons.forEach(button => button.disabled = false); // Re-enable buttons
             }
         } else {
             alert(`There was an issue submitting your answers. Server responded with status: ${res.status}`);
+            console.log('HTTP error, re-enabling buttons');
             buttons.forEach(button => button.disabled = false); // Re-enable buttons
         }
     } catch (e) {
         alert('Error submitting answers. Please try again.');
         console.error("Error submitting answers:", e);
+        console.log('Error caught, re-enabling buttons');
         buttons.forEach(button => button.disabled = false); // Re-enable buttons
     } finally {
+        console.log('Finally block: removing pleaseWaitMessage');
         // Remove "Please wait" message
         const messageElement = document.getElementById('pleaseWaitMessage');
         if (messageElement) {
