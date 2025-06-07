@@ -147,13 +147,13 @@
     }
 } %}
 <div class="container">
-<!--    <div class="thank-you-container">
+    <div class="thank-you-container">
         <h1>{{ texts[language_code].title }}</h1>
         <p>{{ texts[language_code].message }}</p>
 
         {% if submitted_answers %}
--->
-        <div class="results-display">
+
+<!--        <div class="results-display">
             <h3>{{ texts[language_code].answers }}</h3>
             <dl>
                 {% for q, a in submitted_answers %}
@@ -162,7 +162,7 @@
                 {% endfor %}
             </dl>
         </div>
-
+-->
         <div class="results-display" id="groupScoresDisplay">
             <h3>{{ texts[language_code].scores }}</h3>
             <dl>
@@ -219,7 +219,7 @@ const ctx = document.getElementById('profileRadarChart').getContext('2d');
 new Chart(ctx, {
     type: 'radar',
     data: {
-        labels: ['Office/Digital (G1)', 'Medical/Caregiving (G2)', 'Industrial/Factory (G3)', 'Heavy Labor/Construction (G4)', 'Service Sector (G5)', 'Agriculture/Fishery (G6)'],
+        labels: ['(G1)', '(G2)', '(G3)', '(G4)', '(G5)', '(G6)'],
         datasets: [{
             label: "{{ texts[language_code].scores }}",
             data: [groupScores.G1, groupScores.G2, groupScores.G3, groupScores.G4, groupScores.G5, groupScores.G6],
